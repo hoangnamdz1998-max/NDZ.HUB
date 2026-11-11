@@ -1,8 +1,0 @@
-{
-  "name": "ndzhub",
-  "version": "1.0.0",
-  "description": "ESP Web Flasher Pro",
-  "scripts": {
-    "start": "node local-server.js"
-  }
-}
