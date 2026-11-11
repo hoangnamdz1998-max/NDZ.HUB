@@ -1,17 +1,8 @@
 {
-  "name": "web-nap-fw",
+  "name": "ndzhub",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "ESP Web Flasher Pro",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "type": "commonjs",
-  "dependencies": {
-    "esptool-js": "^0.7.1",
-    "spark-md5": "^3.0.2"
+    "start": "node local-server.js"
   }
 }
