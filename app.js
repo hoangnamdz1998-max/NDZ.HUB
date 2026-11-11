@@ -568,13 +568,13 @@ function updatePaymentQR() {
   bankContent.textContent = orderInfo;
 
   // Tạo URL VietQR chuẩn
-  const qrUrl = `https://img.vietqr.io/image/TPBANK-00450516106-compact2.png?amount=${cleanPrice}&addInfo=${encodeURIComponent(orderInfo)}&accountName=NGUYEN%20VAN%20VIEN`;
+  const qrUrl = `https://img.vietqr.io/image/ACB-28723067-compact2.png?amount=${cleanPrice}&addInfo=${encodeURIComponent(orderInfo)}&accountName=DO%20HOANG%20NAM`;
   vietqrImg.src = qrUrl;
 }
 
 btnCopyStk.addEventListener("click", () => {
-  navigator.clipboard.writeText("00450516106");
-  alert("Đã sao chép Số tài khoản: 00450516106");
+  navigator.clipboard.writeText("28723067");
+  alert("Đã sao chép Số tài khoản: 28723067");
 });
 
 btnCopyContent.addEventListener("click", () => {
