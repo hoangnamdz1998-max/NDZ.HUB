@@ -668,6 +668,31 @@ header.site-header {
   line-height: 1.4;
 }
 
+/* Limit Rule Box (Free 1-time per chip) */
+.limit-rule-box {
+  background: #f0fdf4;
+  border: 1px solid #bbf7d0;
+  border-radius: var(--radius-md);
+  padding: 14px 16px;
+  margin-top: 18px;
+}
+
+.limit-rule-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: #166534;
+  margin-bottom: 6px;
+}
+
+.limit-rule-box p {
+  font-size: 0.84rem;
+  color: #15803d;
+  line-height: 1.5;
+}
+
 /* License Box */
 .license-box {
   background: var(--bg-subtle);

@@ -32,11 +32,64 @@ const selectVersion = document.getElementById("select-version");
 const modeCardUpdate = document.getElementById("mode-card-update");
 const modeCardClean = document.getElementById("mode-card-clean");
 
-// License elements
-const inputLicense = document.getElementById("input-license");
-const btnVerifyLicense = document.getElementById("btn-verify-license");
-const licenseTag = document.getElementById("license-tag");
-const btnOpenPayment = document.getElementById("btn-open-payment");
+// ============================================================================
+// HỆ THỐNG QUẢN LÝ LƯỢT NẠP (MỖI CHIP ĐƯỢC NẠP 1 LẦN DUY NHẤT)
+// ============================================================================
+const FLASH_HISTORY_KEY = "ndz_flashed_devices_v1";
+
+function getFlashedDevices() {
+  try {
+    return JSON.parse(localStorage.getItem(FLASH_HISTORY_KEY) || "{}");
+  } catch (e) {
+    return {};
+  }
+}
+
+function checkDeviceFlashed(mac) {
+  if (!mac || mac === "Unknown") return { flashed: false };
+  const cleanMac = mac.replace(/[^a-zA-Z0-9]/g, "").toUpperCase();
+  const devices = getFlashedDevices();
+  return {
+    flashed: !!devices[cleanMac],
+    info: devices[cleanMac] || null
+  };
+}
+
+function recordDeviceFlashed(mac, productName) {
+  if (!mac || mac === "Unknown") return;
+  const cleanMac = mac.replace(/[^a-zA-Z0-9]/g, "").toUpperCase();
+  const devices = getFlashedDevices();
+  const now = new Date();
+  devices[cleanMac] = {
+    flashedAt: now.toLocaleString("vi-VN"),
+    timestamp: now.getTime(),
+    product: productName || "ESP32 Firmware"
+  };
+  localStorage.setItem(FLASH_HISTORY_KEY, JSON.stringify(devices));
+}
+
+function updateDeviceFlashStatus(mac) {
+  if (!chipLicenseTag) return;
+  if (!mac || mac === "Unknown") {
+    chipLicenseTag.textContent = "Chờ cắm thiết bị";
+    chipLicenseTag.style.color = "#64748b";
+    return;
+  }
+
+  const { flashed, info } = checkDeviceFlashed(mac);
+  if (flashed) {
+    chipLicenseTag.textContent = "❌ Đã nạp 1 lần (Hết lượt)";
+    chipLicenseTag.style.color = "#dc2626";
+    btnFlash.disabled = true;
+    progressStatusText.textContent = `Thiết bị đã nạp lúc ${info.flashedAt}. Hết lượt miễn phí.`;
+    logSystem(`[Cảnh báo] Chip MAC [${mac}] đã từng được nạp vào lúc ${info.flashedAt}. Mỗi thiết bị chỉ được nạp miễn phí 1 lần duy nhất!`, "warn");
+  } else {
+    chipLicenseTag.textContent = "✅ Còn 1 lượt nạp miễn phí";
+    chipLicenseTag.style.color = "#059669";
+    btnFlash.disabled = false;
+    logSystem(`[Thông báo] Nhận diện chip MAC [${mac}] hợp lệ. Thiết bị có 1 lượt nạp firmware miễn phí.`, "info");
+  }
+}
 
 // Custom files elements
 const customFilesContainer = document.getElementById("custom-files-container");
@@ -60,15 +113,6 @@ const inputMonitorSend = document.getElementById("input-monitor-send");
 const btnMonitorSend = document.getElementById("btn-monitor-send");
 
 // Modals
-const modalPayment = document.getElementById("modal-payment");
-const btnClosePayment = document.getElementById("btn-close-payment");
-const vietqrImg = document.getElementById("vietqr-img");
-const bankAmount = document.getElementById("bank-amount");
-const bankContent = document.getElementById("bank-content");
-const btnCopyStk = document.getElementById("btn-copy-stk");
-const btnCopyContent = document.getElementById("btn-copy-content");
-const btnConfirmPaid = document.getElementById("btn-confirm-paid");
-
 const modalDriver = document.getElementById("modal-driver");
 const btnDriverGuide = document.getElementById("btn-driver-guide");
 const btnCloseDriver = document.getElementById("btn-close-driver");
@@ -166,8 +210,6 @@ function onProductChange() {
     if (idx === 0) opt.selected = true;
     selectVersion.appendChild(opt);
   });
-
-  updatePaymentQR();
 }
 
 // 3. Quản lý Main Top Navigation Tabs (Nạp Firmware, Sản Phẩm, Serial Monitor, Hướng Dẫn)
@@ -211,18 +253,6 @@ document.querySelectorAll(".btn-select-product").forEach(btn => {
     const flasherTabBtn = document.querySelector('[data-nav="view-flasher"]');
     if (flasherTabBtn) flasherTabBtn.click();
     window.scrollTo({ top: 0, behavior: "smooth" });
-  });
-});
-
-document.querySelectorAll(".btn-buy-product").forEach(btn => {
-  btn.addEventListener("click", () => {
-    const prodId = btn.dataset.productId;
-    if (prodId && selectProduct) {
-      selectProduct.value = prodId;
-      onProductChange();
-    }
-    updatePaymentQR();
-    modalPayment.classList.add("open");
   });
 });
 
@@ -298,7 +328,7 @@ async function connectESP() {
     btnMonitorToggle.disabled = false;
 
     logSystem(`Nhận diện vi điều khiển: ${chipName} | MAC: ${currentChipMac} | Flash: ${flashSize}`, "success");
-    updatePaymentQR();
+    updateDeviceFlashStatus(currentChipMac);
 
   } catch (err) {
     logSystem(`Lỗi kết nối: ${err.message}`, "error");
@@ -323,8 +353,7 @@ async function disconnectESP() {
   chipType.textContent = "--";
   chipMac.textContent = "--:--:--:--:--:--";
   chipFlashSize.textContent = "--";
-  chipLicenseTag.textContent = "Chưa kích hoạt";
-  chipLicenseTag.style.color = "#fbbf24";
+  updateDeviceFlashStatus("");
 
   btnConnectText.textContent = "Chọn Cổng COM & Kết Nối";
   btnConnect.classList.replace("btn-outline", "btn-primary");
@@ -334,28 +363,6 @@ async function disconnectESP() {
 
   logSystem("Đã ngắt kết nối thiết bị.");
 }
-
-// 5. Kiểm tra Bản quyền / License
-btnVerifyLicense.addEventListener("click", () => {
-  const key = inputLicense.value.trim().toUpperCase();
-  if (!key) {
-    alert("Vui lòng nhập mã kích hoạt hoặc license key.");
-    return;
-  }
-
-  // Giả lập kiểm tra License (hỗ trợ các key demo hoặc bất kỳ key nào hợp lệ)
-  if (key.length >= 6) {
-    licenseTag.className = "license-status-tag verified";
-    licenseTag.textContent = "ĐÃ KÍCH HOẠT HỢP LỆ";
-    chipLicenseTag.textContent = "Đã cấp phép bản quyền";
-    chipLicenseTag.style.color = "#34d399";
-    logSystem(`Kích hoạt thành công License [${key}] cho thiết bị MAC [${currentChipMac || 'Chưa cắm'}]`, "success");
-  } else {
-    licenseTag.className = "license-status-tag unverified";
-    licenseTag.textContent = "MÃ KHÔNG HỢP LỆ";
-    alert("Mã kích hoạt không đúng hoặc chưa được thanh toán.");
-  }
-});
 
 // 6. Quản lý nạp file tùy chọn (Tab 2)
 btnAddFileRow.addEventListener("click", () => {
@@ -385,6 +392,14 @@ document.querySelectorAll(".btn-remove-row").forEach(bindRemoveRow);
 btnFlash.addEventListener("click", async () => {
   if (!isConnected || !esploader) {
     alert("Vui lòng kết nối ESP32 trước khi nạp.");
+    return;
+  }
+
+  // Kiểm tra giới hạn 1 lần nạp cho mỗi chip ESP32
+  const flashCheck = checkDeviceFlashed(currentChipMac);
+  if (flashCheck.flashed) {
+    alert(`Thiết bị này (MAC: ${currentChipMac}) đã từng được nạp lúc: ${flashCheck.info.flashedAt}.\nMỗi bo mạch ESP32 chỉ được nạp miễn phí 1 lần duy nhất!`);
+    btnFlash.disabled = true;
     return;
   }
 
@@ -484,6 +499,11 @@ btnFlash.addEventListener("click", async () => {
     progressStatusText.textContent = "Nạp thành công! Đang khởi động lại chip...";
     logSystem("Nạp hoàn tất! Đang Reset vi điều khiển...", "success");
 
+    // Ghi nhận thiết bị đã được nạp 1 lần duy nhất
+    const currentProd = manifestData?.products?.find(p => p.id === selectProduct?.value);
+    recordDeviceFlashed(currentChipMac, currentProd?.name || "ESP32 Firmware");
+    updateDeviceFlashStatus(currentChipMac);
+
     // Khởi động lại ESP32
     try {
       await esploader.hardReset();
@@ -498,7 +518,7 @@ btnFlash.addEventListener("click", async () => {
     alert(`Lỗi nạp firmware: ${err.message}`);
   } finally {
     isFlashing = false;
-    btnFlash.disabled = false;
+    btnFlash.disabled = checkDeviceFlashed(currentChipMac).flashed;
     btnErase.disabled = false;
     btnConnect.disabled = false;
   }
@@ -600,80 +620,26 @@ btnMonitorClear.addEventListener("click", () => {
   if (monitorScreen) monitorScreen.textContent = "";
 });
 
-// 10. Thanh toán VietQR Modal
-btnOpenPayment.addEventListener("click", () => {
-  updatePaymentQR();
-  modalPayment.classList.add("open");
-});
-
-btnClosePayment.addEventListener("click", () => {
-  modalPayment.classList.remove("open");
-});
-
-function updatePaymentQR() {
-  if (!manifestData || !manifestData.products) return;
-  const prodId = selectProduct.value;
-  const prod = manifestData.products.find(p => p.id === prodId) || manifestData.products[0];
-  if (!prod) return;
-  
-  const cleanPrice = prod.price ? (prod.price.replace(/[^\d]/g, "") || "0") : "0";
-  const cleanMac = (currentChipMac || "DEMOMAC").replace(/[^a-zA-Z0-9]/g, "");
-  const shortMac = cleanMac.length >= 6 ? cleanMac.substring(cleanMac.length - 6) : cleanMac;
-  const orderInfo = `FW NDZ ${shortMac}`;
-
-  bankAmount.textContent = prod.price || "Liên hệ";
-  bankContent.textContent = orderInfo;
-
-  // Tạo URL VietQR chuẩn
-  const qrUrl = `https://img.vietqr.io/image/ACB-28723067-compact2.png?amount=${cleanPrice}&addInfo=${encodeURIComponent(orderInfo)}&accountName=DO%20HOANG%20NAM`;
-  vietqrImg.src = qrUrl;
-}
-
-btnCopyStk.addEventListener("click", () => {
-  navigator.clipboard.writeText("28723067");
-  alert("Đã sao chép Số tài khoản: 28723067");
-});
-
-btnCopyContent.addEventListener("click", () => {
-  navigator.clipboard.writeText(bankContent.textContent);
-  alert(`Đã sao chép nội dung chuyển khoản: ${bankContent.textContent}`);
-});
-
-btnConfirmPaid.addEventListener("click", () => {
-  btnConfirmPaid.disabled = true;
-  btnConfirmPaid.textContent = "Đang kiểm tra giao dịch...";
-  
-  setTimeout(() => {
-    modalPayment.classList.remove("open");
-    btnConfirmPaid.disabled = false;
-    btnConfirmPaid.textContent = "Tôi đã chuyển khoản";
-
-    // Tự sinh License Key demo
-    const generatedKey = `NDZ-${Math.random().toString(36).substring(2, 7).toUpperCase()}-${(currentChipMac || 'DEMO').replace(/:/g, '').slice(-4)}`;
-    inputLicense.value = generatedKey;
-    btnVerifyLicense.click();
-    alert(`Xác nhận thanh toán thành công!\nMã kích hoạt tự động điền: ${generatedKey}\nBây giờ bạn có thể bấm 'Bắt Đầu Nạp Firmware'.`);
-  }, 2000);
-});
-
-// 11. Modal Hướng dẫn Driver & Chuyển Tab
+// 10. Modal Hướng dẫn Driver & Chuyển Tab
 btnDriverGuide.addEventListener("click", () => {
   const guideTabBtn = document.querySelector('[data-nav="view-guide"]');
   if (guideTabBtn) {
     guideTabBtn.click();
     window.scrollTo({ top: 0, behavior: "smooth" });
-  } else {
+  } else if (modalDriver) {
     modalDriver.classList.add("open");
   }
 });
-btnCloseDriver.addEventListener("click", () => modalDriver.classList.remove("open"));
+if (btnCloseDriver) {
+  btnCloseDriver.addEventListener("click", () => modalDriver.classList.remove("open"));
+}
 
 // Close modals on overlay click
-[modalPayment, modalDriver].forEach(modal => {
-  modal.addEventListener("click", (e) => {
-    if (e.target === modal) modal.classList.remove("open");
+if (modalDriver) {
+  modalDriver.addEventListener("click", (e) => {
+    if (e.target === modalDriver) modalDriver.classList.remove("open");
   });
-});
+}
 
 // Copy & Clear Log
 btnCopyLog.addEventListener("click", () => {
