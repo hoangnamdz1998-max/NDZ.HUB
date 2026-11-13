@@ -162,8 +162,12 @@
                     <span class="val" id="chip-flash-size">--</span>
                   </div>
                   <div class="chip-detail-item">
-                    <span class="label">Lượt nạp miễn phí:</span>
-                    <span class="val" id="chip-license-tag" style="color: #059669;">Chờ cắm thiết bị</span>
+                    <span class="label">Lượt nạp của máy này:</span>
+                    <span class="val" id="machine-license-tag" style="color: #059669;">Còn 1 lượt nạp</span>
+                  </div>
+                  <div class="chip-detail-item">
+                    <span class="label">Trạng thái chip cắm vào:</span>
+                    <span class="val" id="chip-license-tag" style="color: #64748b;">Chờ cắm thiết bị</span>
                   </div>
                 </div>
               </div>
@@ -241,15 +245,15 @@
                   </div>
                 </div>
 
-                <!-- Chính sách nạp miễn phí 1 lần/chip -->
-                <div class="limit-rule-box">
-                  <div class="limit-rule-header">
+                <!-- Chính sách nạp miễn phí 1 lần/máy tính -->
+                <div class="limit-rule-box" id="limit-rule-box">
+                  <div class="limit-rule-header" id="limit-rule-header">
                     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2.5">
                       <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
                     </svg>
-                    <span>Chính Sách Nạp Miễn Phí (1 Lần / Chip):</span>
+                    <span id="limit-rule-title">Chính Sách Nạp Miễn Phí (1 Lần / Mỗi Máy Tính):</span>
                   </div>
-                  <p>Hệ thống không thu phí. Mỗi bo mạch ESP32 được cấp <b>1 lượt nạp miễn phí duy nhất</b> theo mã định danh phần cứng (MAC ID) của chip.</p>
+                  <p id="limit-rule-desc">Hệ thống miễn phí 100%. Mỗi máy tính chỉ được cấp <b>1 lượt nạp miễn phí duy nhất</b>. Khi đã nạp thành công 1 chip, máy tính này sẽ <b>không thể nạp thêm chip thứ 2</b>.</p>
                 </div>
               </div>
 
@@ -328,8 +332,8 @@
       <section id="view-products" class="main-view-panel">
         
         <div class="catalog-header">
-          <h2>Danh Mục Sản Phẩm (Miễn Phí 1 Lần / Chip)</h2>
-          <p>Hệ thống hỗ trợ nạp firmware miễn phí cho mỗi vi điều khiển ESP32 đúng 1 lần duy nhất theo mã định danh phần cứng (MAC ID).</p>
+          <h2>Danh Mục Sản Phẩm (Miễn Phí 1 Lần / Mỗi Máy Tính)</h2>
+          <p>Hệ thống hỗ trợ nạp firmware miễn phí cho mỗi máy tính đúng 1 lần duy nhất. Sau khi nạp 1 chip thành công, máy tính sẽ không thể nạp thêm chip thứ 2.</p>
         </div>
 
         <div class="products-grid">
@@ -341,7 +345,7 @@
               <h3>ROBOT BÁNH XÍCH N1</h3>
               <div class="price-row">
                 <span class="price" style="font-size: 1.3rem; color: #059669;">Miễn Phí</span>
-                <span class="price-note">/ 1 lần nạp cho mỗi chip</span>
+                <span class="price-note">/ 1 lần nạp cho mỗi máy tính</span>
               </div>
               <p class="product-desc" style="min-height: 40px; color: var(--text-muted);">
                 <!-- Để trống cho bạn cập nhật mô tả sau -->
@@ -361,7 +365,7 @@
               <h3>ROBOT BÁNH XÍCH T1</h3>
               <div class="price-row">
                 <span class="price" style="font-size: 1.3rem; color: #059669;">Miễn Phí</span>
-                <span class="price-note">/ 1 lần nạp cho mỗi chip</span>
+                <span class="price-note">/ 1 lần nạp cho mỗi máy tính</span>
               </div>
               <p class="product-desc" style="min-height: 40px; color: var(--text-muted);">
                 <!-- Để trống cho bạn cập nhật mô tả sau -->
@@ -381,7 +385,7 @@
               <h3>HUB MÀN HÌNH CẢM ỨNG</h3>
               <div class="price-row">
                 <span class="price" style="font-size: 1.3rem; color: #059669;">Miễn Phí</span>
-                <span class="price-note">/ 1 lần nạp cho mỗi chip</span>
+                <span class="price-note">/ 1 lần nạp cho mỗi máy tính</span>
               </div>
               <p class="product-desc" style="min-height: 40px; color: var(--text-muted);">
                 <!-- Để trống cho bạn cập nhật mô tả sau -->
@@ -526,13 +530,13 @@
           <div class="guide-card">
             <h3>
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
-              4. Quy Trình Nạp Miễn Phí (1 Lần/Chip)
+              4. Quy Trình Nạp Miễn Phí (1 Lần / Mỗi Máy Tính)
             </h3>
-            <p>Chính sách nạp firmware miễn phí của NDZ HUB:</p>
+            <p>Chính sách giới hạn nạp của NDZ HUB:</p>
             <ol>
-              <li>Cắm bo mạch ESP32 và bấm kết nối để hệ thống tự động đọc <b>MAC ID</b> phần cứng.</li>
-              <li>Chọn Firmware tương ứng cần nạp (Robot N1, T1 hoặc Hub Cảm Ứng).</li>
-              <li>Bấm <b>"Bắt Đầu Nạp Firmware"</b> hoàn toàn miễn phí. Mỗi chip ESP32 được cấp 1 lượt nạp thành công duy nhất.</li>
+              <li>Mỗi máy tính chỉ được cấp <b>1 lượt nạp firmware miễn phí duy nhất</b>.</li>
+              <li>Khi cắm chip ESP32 đầu tiên vào và nạp hoàn tất 100%, máy tính sẽ tự động hết lượt.</li>
+              <li>Nếu tiếp tục cắm con chip thứ 2 vào máy tính này, hệ thống sẽ <b>tự động khóa và từ chối nạp</b>.</li>
             </ol>
           </div>
 

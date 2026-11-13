@@ -668,13 +668,19 @@ header.site-header {
   line-height: 1.4;
 }
 
-/* Limit Rule Box (Free 1-time per chip) */
+/* Limit Rule Box (Free 1-time per machine) */
 .limit-rule-box {
   background: #f0fdf4;
   border: 1px solid #bbf7d0;
   border-radius: var(--radius-md);
   padding: 14px 16px;
   margin-top: 18px;
+  transition: all 0.2s ease;
+}
+
+.limit-rule-box.locked {
+  background: #fef2f2 !important;
+  border-color: #fecaca !important;
 }
 
 .limit-rule-header {
@@ -687,10 +693,22 @@ header.site-header {
   margin-bottom: 6px;
 }
 
+.limit-rule-box.locked .limit-rule-header {
+  color: #991b1b !important;
+}
+
+.limit-rule-box.locked svg {
+  stroke: #dc2626 !important;
+}
+
 .limit-rule-box p {
   font-size: 0.84rem;
   color: #15803d;
   line-height: 1.5;
+}
+
+.limit-rule-box.locked p {
+  color: #b91c1c !important;
 }
 
 /* License Box */

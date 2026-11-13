@@ -22,6 +22,10 @@ const chipType = document.getElementById("chip-type");
 const chipMac = document.getElementById("chip-mac");
 const chipFlashSize = document.getElementById("chip-flash-size");
 const chipLicenseTag = document.getElementById("chip-license-tag");
+const machineLicenseTag = document.getElementById("machine-license-tag");
+const limitRuleBox = document.getElementById("limit-rule-box");
+const limitRuleTitle = document.getElementById("limit-rule-title");
+const limitRuleDesc = document.getElementById("limit-rule-desc");
 
 // Product elements
 const selectProduct = document.getElementById("select-product");
@@ -33,61 +37,207 @@ const modeCardUpdate = document.getElementById("mode-card-update");
 const modeCardClean = document.getElementById("mode-card-clean");
 
 // ============================================================================
-// HỆ THỐNG QUẢN LÝ LƯỢT NẠP (MỖI CHIP ĐƯỢC NẠP 1 LẦN DUY NHẤT)
+// HỆ THỐNG QUẢN LÝ LƯỢT NẠP (MỖI MÁY TÍNH CHỈ ĐƯỢC NẠP 1 LẦN DUY NHẤT)
 // ============================================================================
-const FLASH_HISTORY_KEY = "ndz_flashed_devices_v1";
+const MACHINE_FLASH_KEY = "ndz_machine_flashed_v2";
+const CHIP_FLASH_KEY = "ndz_chip_flashed_v2";
 
-function getFlashedDevices() {
+// 1. Lấy thông tin lượt nạp từ lưu trữ đa tầng (localStorage + Cookie)
+function getMachineFlashRecord() {
   try {
-    return JSON.parse(localStorage.getItem(FLASH_HISTORY_KEY) || "{}");
-  } catch (e) {
-    return {};
+    const raw = localStorage.getItem(MACHINE_FLASH_KEY);
+    if (raw) return JSON.parse(raw);
+  } catch (e) {}
+
+  try {
+    const match = document.cookie.match(new RegExp('(?:^|; )' + MACHINE_FLASH_KEY + '=([^;]+)'));
+    if (match) return JSON.parse(decodeURIComponent(match[1]));
+  } catch (e) {}
+
+  return null;
+}
+
+function isMachineFlashed() {
+  const rec = getMachineFlashRecord();
+  return !!(rec && rec.flashed);
+}
+
+// 2. IndexedDB Backup
+function openSecurityDB() {
+  return new Promise((resolve) => {
+    if (!window.indexedDB) return resolve(null);
+    try {
+      const req = indexedDB.open("NDZ_Security_DB", 1);
+      req.onupgradeneeded = (e) => {
+        const db = e.target.result;
+        if (!db.objectStoreNames.contains("security")) {
+          db.createObjectStore("security", { keyPath: "key" });
+        }
+      };
+      req.onsuccess = (e) => resolve(e.target.result);
+      req.onerror = () => resolve(null);
+    } catch (e) {
+      resolve(null);
+    }
+  });
+}
+
+async function syncIndexedDB() {
+  try {
+    const db = await openSecurityDB();
+    if (!db) return;
+
+    if (!isMachineFlashed()) {
+      const tx = db.transaction("security", "readonly");
+      const store = tx.objectStore("security");
+      const req = store.get(MACHINE_FLASH_KEY);
+      req.onsuccess = () => {
+        if (req.result && req.result.val && req.result.val.flashed) {
+          const valStr = JSON.stringify(req.result.val);
+          try { localStorage.setItem(MACHINE_FLASH_KEY, valStr); } catch (e) {}
+          setMachineCookie(valStr);
+          updateFlashAllowanceUI();
+        }
+      };
+    }
+  } catch (e) {}
+}
+
+function setMachineCookie(valStr) {
+  try {
+    const d = new Date();
+    d.setFullYear(d.getFullYear() + 10);
+    document.cookie = `${MACHINE_FLASH_KEY}=${encodeURIComponent(valStr)};expires=${d.toUTCString()};path=/;SameSite=Lax`;
+  } catch (e) {}
+}
+
+async function markMachineAsFlashed(mac, productName) {
+  const now = new Date();
+  const record = {
+    flashed: true,
+    flashedAt: now.toLocaleString("vi-VN"),
+    timestamp: now.getTime(),
+    mac: mac || "UNKNOWN_MAC",
+    product: productName || "ESP32 Firmware"
+  };
+
+  const str = JSON.stringify(record);
+
+  // 1. localStorage
+  try { localStorage.setItem(MACHINE_FLASH_KEY, str); } catch (e) {}
+
+  // 2. Cookie (10 năm)
+  setMachineCookie(str);
+
+  // 3. IndexedDB
+  try {
+    const db = await openSecurityDB();
+    if (db) {
+      const tx = db.transaction("security", "readwrite");
+      tx.objectStore("security").put({ key: MACHINE_FLASH_KEY, val: record });
+    }
+  } catch (e) {}
+
+  // 4. Lưu lại MAC của chip đã nạp
+  if (mac && mac !== "Unknown") {
+    const cleanMac = mac.replace(/[^a-zA-Z0-9]/g, "").toUpperCase();
+    try {
+      const chips = JSON.parse(localStorage.getItem(CHIP_FLASH_KEY) || "{}");
+      chips[cleanMac] = record;
+      localStorage.setItem(CHIP_FLASH_KEY, JSON.stringify(chips));
+    } catch (e) {}
   }
 }
 
-function checkDeviceFlashed(mac) {
-  if (!mac || mac === "Unknown") return { flashed: false };
-  const cleanMac = mac.replace(/[^a-zA-Z0-9]/g, "").toUpperCase();
-  const devices = getFlashedDevices();
-  return {
-    flashed: !!devices[cleanMac],
-    info: devices[cleanMac] || null
-  };
-}
+function updateFlashAllowanceUI() {
+  const flashed = isMachineFlashed();
+  const info = getMachineFlashRecord();
 
-function recordDeviceFlashed(mac, productName) {
-  if (!mac || mac === "Unknown") return;
-  const cleanMac = mac.replace(/[^a-zA-Z0-9]/g, "").toUpperCase();
-  const devices = getFlashedDevices();
-  const now = new Date();
-  devices[cleanMac] = {
-    flashedAt: now.toLocaleString("vi-VN"),
-    timestamp: now.getTime(),
-    product: productName || "ESP32 Firmware"
-  };
-  localStorage.setItem(FLASH_HISTORY_KEY, JSON.stringify(devices));
+  if (flashed) {
+    if (machineLicenseTag) {
+      machineLicenseTag.textContent = "❌ Đã hết lượt (Đã nạp 1 lần)";
+      machineLicenseTag.style.color = "#dc2626";
+    }
+    if (limitRuleBox) {
+      limitRuleBox.classList.add("locked");
+    }
+    if (limitRuleTitle) {
+      limitRuleTitle.textContent = "Máy Tính Này Đã Sử Dụng Hết Lượt Nạp!";
+    }
+    if (limitRuleDesc) {
+      limitRuleDesc.innerHTML = `Máy tính này đã từng nạp firmware vào lúc: <b>${info?.flashedAt || ''}</b> (Mã chip: <code>${info?.mac || 'Đã nạp'}</code>).<br><span style="color:#b91c1c; font-weight:700;">Theo chính sách, mỗi máy tính chỉ được nạp 1 lần. Bạn KHÔNG thể nạp thêm chip thứ 2 trên máy tính này!</span>`;
+    }
+    if (btnFlash) {
+      btnFlash.disabled = true;
+    }
+  } else {
+    if (machineLicenseTag) {
+      machineLicenseTag.textContent = "✅ Còn 1 lượt nạp";
+      machineLicenseTag.style.color = "#059669";
+    }
+    if (limitRuleBox) {
+      limitRuleBox.classList.remove("locked");
+    }
+    if (limitRuleTitle) {
+      limitRuleTitle.textContent = "Chính Sách Nạp Miễn Phí (1 Lần / Mỗi Máy Tính):";
+    }
+    if (limitRuleDesc) {
+      limitRuleDesc.innerHTML = `Hệ thống miễn phí 100%. Mỗi máy tính chỉ được cấp <b>1 lượt nạp duy nhất</b>. Khi đã nạp thành công 1 chip, máy tính này sẽ <b>không thể nạp thêm chip thứ 2</b>.`;
+    }
+  }
 }
 
 function updateDeviceFlashStatus(mac) {
-  if (!chipLicenseTag) return;
-  if (!mac || mac === "Unknown") {
-    chipLicenseTag.textContent = "Chờ cắm thiết bị";
-    chipLicenseTag.style.color = "#64748b";
+  updateFlashAllowanceUI();
+
+  const flashed = isMachineFlashed();
+  const info = getMachineFlashRecord();
+
+  // NẾU MÁY TÍNH NÀY ĐÃ TỪNG NẠP 1 LẦN -> KHÓA NGAY LẬP TỨC (DÙ LÀ CHIP NÀO ĐI NỮA)
+  if (flashed) {
+    if (chipLicenseTag) {
+      chipLicenseTag.textContent = "⛔ TỪ CHỐI (Máy đã nạp 1 lần)";
+      chipLicenseTag.style.color = "#dc2626";
+    }
+    if (btnFlash) btnFlash.disabled = true;
+    progressStatusText.textContent = `Máy tính này đã hết lượt nạp. Không thể nạp thêm chip thứ 2!`;
+    logSystem(`[CẢNH BÁO TỪ CHỐI] Máy tính này đã từng nạp firmware vào lúc ${info?.flashedAt} (Mã chip cũ: ${info?.mac}).`, "error");
+    logSystem(`[CHÍNH SÁCH 1 LẦN / MÁY] Bạn đang cắm chip [MAC: ${mac || 'Đang kết nối'}], nhưng máy tính này đã sử dụng hết lượt nạp miễn phí. Vui lòng không nạp thêm chip thứ 2!`, "error");
     return;
   }
 
-  const { flashed, info } = checkDeviceFlashed(mac);
-  if (flashed) {
-    chipLicenseTag.textContent = "❌ Đã nạp 1 lần (Hết lượt)";
-    chipLicenseTag.style.color = "#dc2626";
-    btnFlash.disabled = true;
-    progressStatusText.textContent = `Thiết bị đã nạp lúc ${info.flashedAt}. Hết lượt miễn phí.`;
-    logSystem(`[Cảnh báo] Chip MAC [${mac}] đã từng được nạp vào lúc ${info.flashedAt}. Mỗi thiết bị chỉ được nạp miễn phí 1 lần duy nhất!`, "warn");
+  // Nếu máy tính chưa nạp:
+  if (!mac || mac === "Unknown") {
+    if (chipLicenseTag) {
+      chipLicenseTag.textContent = "Chờ cắm thiết bị";
+      chipLicenseTag.style.color = "#64748b";
+    }
+    return;
+  }
+
+  // Kiểm tra thêm: nếu chip này đã từng bị nạp ở máy khác
+  const cleanMac = mac.replace(/[^a-zA-Z0-9]/g, "").toUpperCase();
+  let chipAlreadyFlashed = false;
+  try {
+    const chips = JSON.parse(localStorage.getItem(CHIP_FLASH_KEY) || "{}");
+    if (chips[cleanMac]) chipAlreadyFlashed = true;
+  } catch (e) {}
+
+  if (chipAlreadyFlashed) {
+    if (chipLicenseTag) {
+      chipLicenseTag.textContent = "❌ Chip này đã từng được nạp";
+      chipLicenseTag.style.color = "#dc2626";
+    }
+    if (btnFlash) btnFlash.disabled = true;
+    progressStatusText.textContent = `Bo mạch này đã từng được nạp trước đó.`;
+    logSystem(`[Cảnh báo] Bo mạch MAC [${mac}] đã có lịch sử nạp firmware.`, "warn");
   } else {
-    chipLicenseTag.textContent = "✅ Còn 1 lượt nạp miễn phí";
-    chipLicenseTag.style.color = "#059669";
-    btnFlash.disabled = false;
-    logSystem(`[Thông báo] Nhận diện chip MAC [${mac}] hợp lệ. Thiết bị có 1 lượt nạp firmware miễn phí.`, "info");
+    if (chipLicenseTag) {
+      chipLicenseTag.textContent = "✅ Sẵn sàng nạp";
+      chipLicenseTag.style.color = "#059669";
+    }
+    if (btnFlash) btnFlash.disabled = false;
+    logSystem(`[Thông báo] Nhận diện chip MAC [${mac}] thành công. Máy tính này còn 1 lượt nạp miễn phí.`, "info");
   }
 }
 
@@ -395,10 +545,10 @@ btnFlash.addEventListener("click", async () => {
     return;
   }
 
-  // Kiểm tra giới hạn 1 lần nạp cho mỗi chip ESP32
-  const flashCheck = checkDeviceFlashed(currentChipMac);
-  if (flashCheck.flashed) {
-    alert(`Thiết bị này (MAC: ${currentChipMac}) đã từng được nạp lúc: ${flashCheck.info.flashedAt}.\nMỗi bo mạch ESP32 chỉ được nạp miễn phí 1 lần duy nhất!`);
+  // KIỂM TRA CHÍNH SÁCH 1 LẦN / MỖI MÁY TÍNH
+  if (isMachineFlashed()) {
+    const info = getMachineFlashRecord();
+    alert(`MÁY TÍNH NÀY ĐÃ HẾT LƯỢT NẠP!\n\nThời gian nạp trước đó: ${info?.flashedAt || 'Gần đây'}\nThiết bị đã nạp: ${info?.product || 'Firmware'} (MAC: ${info?.mac || 'Đã nạp'})\n\nTheo quy định của NDZ HUB, mỗi máy tính chỉ được cấp đúng 1 lượt nạp miễn phí. Bạn không thể nạp thêm chip thứ 2 trên cùng một máy tính!`);
     btnFlash.disabled = true;
     return;
   }
@@ -499,9 +649,9 @@ btnFlash.addEventListener("click", async () => {
     progressStatusText.textContent = "Nạp thành công! Đang khởi động lại chip...";
     logSystem("Nạp hoàn tất! Đang Reset vi điều khiển...", "success");
 
-    // Ghi nhận thiết bị đã được nạp 1 lần duy nhất
+    // Ghi nhận máy tính đã hoàn thành lượt nạp (Khóa vĩnh viễn không cho nạp chip thứ 2)
     const currentProd = manifestData?.products?.find(p => p.id === selectProduct?.value);
-    recordDeviceFlashed(currentChipMac, currentProd?.name || "ESP32 Firmware");
+    await markMachineAsFlashed(currentChipMac, currentProd?.name || "ESP32 Firmware");
     updateDeviceFlashStatus(currentChipMac);
 
     // Khởi động lại ESP32
@@ -518,7 +668,7 @@ btnFlash.addEventListener("click", async () => {
     alert(`Lỗi nạp firmware: ${err.message}`);
   } finally {
     isFlashing = false;
-    btnFlash.disabled = checkDeviceFlashed(currentChipMac).flashed;
+    btnFlash.disabled = isMachineFlashed();
     btnErase.disabled = false;
     btnConnect.disabled = false;
   }
@@ -655,3 +805,5 @@ btnClearLog.addEventListener("click", () => {
 selectProduct.addEventListener("change", onProductChange);
 checkBrowserSupport();
 loadManifest();
+syncIndexedDB();
+updateFlashAllowanceUI();
