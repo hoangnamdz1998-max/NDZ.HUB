@@ -150,16 +150,19 @@ function onProductChange() {
   const prod = manifestData.products.find(p => p.id === prodId);
   if (!prod) return;
 
-  productDesc.textContent = prod.description;
-  productChipBadge.textContent = prod.chipFamily;
-  productPriceBadge.textContent = `Giá: ${prod.price}`;
+  productDesc.textContent = prod.description || "";
+  productChipBadge.textContent = prod.chipFamily || "ESP32";
+  productPriceBadge.textContent = prod.price ? `Giá: ${prod.price}` : "";
+  productPriceBadge.style.display = prod.price ? "inline-block" : "none";
 
   // Populate versions
   selectVersion.innerHTML = "";
   prod.versions.forEach((v, idx) => {
     const opt = document.createElement("option");
     opt.value = v.version;
-    opt.textContent = `${v.version} (${v.releaseDate}) - ${v.changelog}`;
+    const dateStr = v.releaseDate ? ` (${v.releaseDate})` : "";
+    const logStr = v.changelog ? ` - ${v.changelog}` : "";
+    opt.textContent = `${v.version}${dateStr}${logStr}`;
     if (idx === 0) opt.selected = true;
     selectVersion.appendChild(opt);
   });
@@ -167,15 +170,59 @@ function onProductChange() {
   updatePaymentQR();
 }
 
-// 3. Quản lý Tabs
-document.querySelectorAll(".tab-btn").forEach(btn => {
+// 3. Quản lý Main Top Navigation Tabs (Nạp Firmware, Sản Phẩm, Serial Monitor, Hướng Dẫn)
+const navTabBtns = document.querySelectorAll(".nav-tab-btn");
+const mainViewPanels = document.querySelectorAll(".main-view-panel");
+
+navTabBtns.forEach(btn => {
   btn.addEventListener("click", () => {
-    document.querySelectorAll(".tab-btn").forEach(b => b.classList.remove("active"));
-    document.querySelectorAll(".tab-content").forEach(c => c.classList.remove("active"));
+    navTabBtns.forEach(b => b.classList.remove("active"));
+    mainViewPanels.forEach(p => p.classList.remove("active"));
+
+    btn.classList.add("active");
+    const target = document.getElementById(btn.dataset.nav);
+    if (target) {
+      target.classList.add("active");
+    }
+  });
+});
+
+// Quản lý Sub-Tabs bên trong Tab Nạp Firmware (Sản phẩm vs File .bin)
+document.querySelectorAll(".sub-tabs-nav .tab-btn").forEach(btn => {
+  btn.addEventListener("click", () => {
+    document.querySelectorAll(".sub-tabs-nav .tab-btn").forEach(b => b.classList.remove("active"));
+    document.querySelectorAll(".col-flashing .tab-content").forEach(c => c.classList.remove("active"));
 
     btn.classList.add("active");
     const target = document.getElementById(btn.dataset.tab);
     if (target) target.classList.add("active");
+  });
+});
+
+// Tương tác trên thẻ Sản Phẩm (Catalog Tab)
+document.querySelectorAll(".btn-select-product").forEach(btn => {
+  btn.addEventListener("click", () => {
+    const prodId = btn.dataset.productId;
+    if (prodId && selectProduct) {
+      selectProduct.value = prodId;
+      onProductChange();
+    }
+    // Chuyển sang Tab Nạp Firmware
+    const flasherTabBtn = document.querySelector('[data-nav="view-flasher"]');
+    if (flasherTabBtn) flasherTabBtn.click();
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  });
+});
+
+document.querySelectorAll(".btn-buy-product").forEach(btn => {
+  btn.addEventListener("click", () => {
+    const prodId = btn.dataset.productId;
+    if (prodId && selectProduct) {
+      selectProduct.value = prodId;
+      onProductChange();
+    }
+    updatePaymentQR();
+    modalPayment.classList.add("open");
   });
 });
 
@@ -341,7 +388,7 @@ btnFlash.addEventListener("click", async () => {
     return;
   }
 
-  const activeTab = document.querySelector(".tab-btn.active").dataset.tab;
+  const activeTab = (document.querySelector(".sub-tabs-nav .tab-btn.active") || document.querySelector(".tab-btn.active"))?.dataset?.tab || "tab-product";
   let fileArray = [];
   let shouldErase = false;
 
@@ -532,6 +579,12 @@ async function readSerialLoop() {
         span.textContent = value;
         terminalBody.appendChild(span);
         terminalBody.scrollTop = terminalBody.scrollHeight;
+
+        const monitorScreen = document.getElementById("monitor-screen");
+        if (monitorScreen) {
+          monitorScreen.textContent += value;
+          monitorScreen.scrollTop = monitorScreen.scrollHeight;
+        }
       }
     }
   } catch (err) {
@@ -543,6 +596,8 @@ async function readSerialLoop() {
 
 btnMonitorClear.addEventListener("click", () => {
   terminalBody.textContent = "";
+  const monitorScreen = document.getElementById("monitor-screen");
+  if (monitorScreen) monitorScreen.textContent = "";
 });
 
 // 10. Thanh toán VietQR Modal
@@ -556,15 +611,17 @@ btnClosePayment.addEventListener("click", () => {
 });
 
 function updatePaymentQR() {
-  if (!manifestData) return;
+  if (!manifestData || !manifestData.products) return;
   const prodId = selectProduct.value;
   const prod = manifestData.products.find(p => p.id === prodId) || manifestData.products[0];
+  if (!prod) return;
   
-  const cleanPrice = prod.price.replace(/[^\d]/g, "") || "99000";
+  const cleanPrice = prod.price ? (prod.price.replace(/[^\d]/g, "") || "0") : "0";
   const cleanMac = (currentChipMac || "DEMOMAC").replace(/[^a-zA-Z0-9]/g, "");
-  const orderInfo = `FW ${prod.id.toUpperCase().substring(0, 8)} ${cleanMac.substring(cleanMac.length - 6)}`;
+  const shortMac = cleanMac.length >= 6 ? cleanMac.substring(cleanMac.length - 6) : cleanMac;
+  const orderInfo = `FW NDZ ${shortMac}`;
 
-  bankAmount.textContent = prod.price;
+  bankAmount.textContent = prod.price || "Liên hệ";
   bankContent.textContent = orderInfo;
 
   // Tạo URL VietQR chuẩn
@@ -591,16 +648,24 @@ btnConfirmPaid.addEventListener("click", () => {
     btnConfirmPaid.disabled = false;
     btnConfirmPaid.textContent = "Tôi đã chuyển khoản";
 
-    // Tự sinh License Key demo cho khách
-    const generatedKey = `TING-${Math.random().toString(36).substring(2, 7).toUpperCase()}-${(currentChipMac || 'DEMO').replace(/:/g, '').slice(-4)}`;
+    // Tự sinh License Key demo
+    const generatedKey = `NDZ-${Math.random().toString(36).substring(2, 7).toUpperCase()}-${(currentChipMac || 'DEMO').replace(/:/g, '').slice(-4)}`;
     inputLicense.value = generatedKey;
     btnVerifyLicense.click();
     alert(`Xác nhận thanh toán thành công!\nMã kích hoạt tự động điền: ${generatedKey}\nBây giờ bạn có thể bấm 'Bắt Đầu Nạp Firmware'.`);
   }, 2000);
 });
 
-// 11. Modal Hướng dẫn Driver
-btnDriverGuide.addEventListener("click", () => modalDriver.classList.add("open"));
+// 11. Modal Hướng dẫn Driver & Chuyển Tab
+btnDriverGuide.addEventListener("click", () => {
+  const guideTabBtn = document.querySelector('[data-nav="view-guide"]');
+  if (guideTabBtn) {
+    guideTabBtn.click();
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  } else {
+    modalDriver.classList.add("open");
+  }
+});
 btnCloseDriver.addEventListener("click", () => modalDriver.classList.remove("open"));
 
 // Close modals on overlay click

@@ -1,96 +1,70 @@
 {
   "products": [
     {
-      "id": "loa-ting-s3",
-      "name": "Loa Ting AI - ESP32-S3 (LCDWIKI ES3C28P)",
-      "chipFamily": "ESP32-S3",
-      "description": "Firmware Loa thông minh AI, hỗ trợ Tiếng Việt, hiển thị HUD Waze, đồng hồ, lịch âm, trợ lý giọng nói Xiaozhi.",
-      "price": "99.000đ",
-      "versions": [
-        {
-          "version": "v2.5.0-latest",
-          "releaseDate": "2026-03-15",
-          "changelog": "Tối ưu độ trễ âm thanh, thêm tính năng hiển thị HUD dẫn đường Waze, cập nhật giao diện mới.",
-          "modes": {
-            "update": {
-              "title": "Cập nhật ứng dụng (Giữ cài đặt Wi-Fi & Token)",
-              "description": "Chỉ ghi đè phân vùng App, không xóa cấu hình mạng và tài khoản đã lưu.",
-              "erase": false,
-              "parts": [
-                { "path": "firmware/demo_app.bin", "offset": "0x10000" }
-              ]
-            },
-            "clean": {
-              "title": "Cài mới hoàn toàn (Xóa trắng phân vùng)",
-              "description": "Nạp đầy đủ Bootloader, Partition table và ứng dụng từ đầu.",
-              "erase": true,
-              "parts": [
-                { "path": "firmware/demo_bootloader.bin", "offset": "0x0000" },
-                { "path": "firmware/demo_partitions.bin", "offset": "0x8000" },
-                { "path": "firmware/demo_app.bin", "offset": "0x10000" }
-              ]
-            }
-          }
-        },
-        {
-          "version": "v2.4.2-stable",
-          "releaseDate": "2026-01-10",
-          "changelog": "Bản ổn định cho mạch ES3C28P 16MB Flash, 8MB PSRAM.",
-          "modes": {
-            "update": {
-              "title": "Cập nhật ứng dụng",
-              "erase": false,
-              "parts": [
-                { "path": "firmware/demo_app.bin", "offset": "0x10000" }
-              ]
-            }
-          }
-        }
-      ]
-    },
-    {
-      "id": "waze-hud-c3",
-      "name": "HUD Hiển Thị Tốc Độ & Cảnh Báo (ESP32-C3)",
-      "chipFamily": "ESP32-C3",
-      "description": "Mạch hiển thị kính lái HUD ô tô kết nối Bluetooth/Wi-Fi với điện thoại, cảnh báo tốc độ Waze/Google Maps.",
-      "price": "149.000đ",
-      "versions": [
-        {
-          "version": "v1.2.0",
-          "releaseDate": "2026-02-20",
-          "changelog": "Hỗ trợ màn hình OLED 1.3 inch và LED Matrix.",
-          "modes": {
-            "clean": {
-              "title": "Nạp trọn bộ",
-              "erase": true,
-              "parts": [
-                { "path": "firmware/demo_bootloader.bin", "offset": "0x0000" },
-                { "path": "firmware/demo_partitions.bin", "offset": "0x8000" },
-                { "path": "firmware/demo_app.bin", "offset": "0x10000" }
-              ]
-            }
-          }
-        }
-      ]
-    },
-    {
-      "id": "smarthome-hub",
-      "name": "Bộ Điều Khiển Nhà Thông Minh Matter/HomeKit (ESP32 DevKit)",
+      "id": "robot-n1",
+      "name": "ROBOT BÁNH XÍCH N1",
       "chipFamily": "ESP32",
-      "description": "Điều khiển công tắc, cảm biến nhiệt độ, kết nối Home Assistant và Apple Home qua Matter.",
-      "price": "199.000đ",
+      "description": "",
+      "price": "",
       "versions": [
         {
-          "version": "v3.1.0",
-          "releaseDate": "2026-03-01",
-          "changelog": "Hỗ trợ chuẩn Matter 1.3 mới nhất.",
+          "version": "v1.0.0",
+          "releaseDate": "",
+          "changelog": "",
           "modes": {
             "clean": {
-              "title": "Cài đặt toàn bộ hệ thống",
+              "title": "Cài mới Firmware",
+              "description": "",
               "erase": true,
               "parts": [
-                { "path": "firmware/demo_bootloader.bin", "offset": "0x1000" },
-                { "path": "firmware/demo_partitions.bin", "offset": "0x8000" },
+                { "path": "firmware/demo_app.bin", "offset": "0x10000" }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "robot-t1",
+      "name": "ROBOT BÁNH XÍCH T1",
+      "chipFamily": "ESP32",
+      "description": "",
+      "price": "",
+      "versions": [
+        {
+          "version": "v1.0.0",
+          "releaseDate": "",
+          "changelog": "",
+          "modes": {
+            "clean": {
+              "title": "Cài mới Firmware",
+              "description": "",
+              "erase": true,
+              "parts": [
+                { "path": "firmware/demo_app.bin", "offset": "0x10000" }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "hub-touch",
+      "name": "HUB MÀN HÌNH CẢM ỨNG",
+      "chipFamily": "ESP32-S3",
+      "description": "",
+      "price": "",
+      "versions": [
+        {
+          "version": "v1.0.0",
+          "releaseDate": "",
+          "changelog": "",
+          "modes": {
+            "clean": {
+              "title": "Cài mới Firmware",
+              "description": "",
+              "erase": true,
+              "parts": [
                 { "path": "firmware/demo_app.bin", "offset": "0x10000" }
               ]
             }

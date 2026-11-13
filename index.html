@@ -10,7 +10,7 @@
 </head>
 <body>
 
-  <!-- Header -->
+  <!-- Site Header -->
   <header class="site-header">
     <div class="container header-inner">
       <div class="brand">
@@ -21,7 +21,7 @@
         </div>
         <div class="brand-text">
           <h1>NDZ HUB <span class="brand-badge">FLASHER PRO</span></h1>
-          <p>Nạp Firmware & Quản lý bản quyền thiết bị</p>
+          <p>Nền tảng Nạp Firmware & Bản Quyền Phần Cứng IoT</p>
         </div>
       </div>
 
@@ -34,7 +34,7 @@
           </svg>
           Driver & Trợ giúp
         </button>
-        <a href="https://zalo.me/g/cmx8rrljb8wxfl5uehfn" target="_blank" rel="noopener" class="btn-header btn-zalo">
+        <a href="#" class="btn-header btn-zalo" onclick="return false;">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
             <path d="M12 2C6.48 2 2 6.03 2 11c0 2.87 1.5 5.43 3.84 7.04L5 22l4.24-1.41C10.13 20.84 11.05 21 12 21c5.52 0 10-4.03 10-9s-4.48-9-10-9z"/>
           </svg>
@@ -43,6 +43,45 @@
       </div>
     </div>
   </header>
+
+  <!-- Main Top Navigation Tabs (White Theme) -->
+  <nav class="main-nav-container">
+    <div class="container">
+      <div class="nav-tabs-wrapper">
+        <button class="nav-tab-btn active" data-nav="view-flasher">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+          </svg>
+          Nạp Firmware
+        </button>
+
+        <button class="nav-tab-btn" data-nav="view-products">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <path d="M16 10a4 4 0 0 1-8 0"></path>
+          </svg>
+          Sản Phẩm & Bản Quyền
+        </button>
+
+        <button class="nav-tab-btn" data-nav="view-monitor">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="4 17 10 11 4 5"></polyline>
+            <line x1="12" y1="19" x2="20" y2="19"></line>
+          </svg>
+          Serial Monitor
+        </button>
+
+        <button class="nav-tab-btn" data-nav="view-guide">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
+            <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
+          </svg>
+          Hướng Dẫn & Cài Driver
+        </button>
+      </div>
+    </div>
+  </nav>
 
   <!-- Browser Support Warning -->
   <div class="browser-alert" id="browser-alert" hidden>
@@ -56,248 +95,467 @@
 
   <main class="main-content">
     <div class="container">
-      
-      <div class="intro-box">
-        <h2>Công Cụ Nạp Firmware Bản Quyền & Tùy Chỉnh</h2>
-        <p>Cắm cáp USB kết nối bo mạch ESP32, chọn phiên bản firmware đã mua hoặc file của bạn, nạp trực tiếp chỉ với một cú nhấp chuột.</p>
-      </div>
 
-      <div class="layout-grid">
+      <!-- ====================================================================
+           TAB VIEW 1: NẠP FIRMWARE (FLASHER)
+           ==================================================================== -->
+      <section id="view-flasher" class="main-view-panel active">
         
-        <!-- Cột trái: Kết nối & Thông tin phần cứng -->
-        <div class="col-hardware">
-          <div class="card">
-            <div class="card-title">
-              <span class="step-num">1</span>
-              <span>Kết nối Phần cứng</span>
-            </div>
+        <!-- Intro Hero Box -->
+        <div class="intro-box">
+          <div class="intro-box-text">
+            <h2>Nạp Firmware Trực Tiếp Qua Trình Duyệt</h2>
+            <p>Kết nối cáp USB với máy tính, chọn cổng COM và nạp firmware cho dòng chip ESP32/ESP32-S3/ESP32-C3 chỉ trong vài giây mà không cần cài đặt Arduino IDE.</p>
+          </div>
+          <div class="intro-quick-badges">
+            <span class="quick-badge">⚡ Web Serial API</span>
+            <span class="quick-badge">🛡️ esptool-js 5.6</span>
+            <span class="quick-badge">🚀 Tốc độ 921600</span>
+          </div>
+        </div>
 
-            <div class="form-group">
-              <label for="select-baud">Tốc độ nạp (Baudrate):</label>
-              <select id="select-baud" class="form-select">
-                <option value="921600" selected>921600 (Siêu tốc - Khuyên dùng)</option>
-                <option value="460800">460800 (Nhanh & Ổn định)</option>
-                <option value="115200">115200 (Tiêu chuẩn - Chống nhiễu cáp)</option>
+        <div class="layout-grid">
+          
+          <!-- Cột 1 (Trái): Kết nối & Thông tin phần cứng -->
+          <div class="col-hardware">
+            <div class="card">
+              <div class="card-title">
+                <span class="step-num">1</span>
+                <span>Kết nối Thiết bị</span>
+              </div>
+
+              <div class="form-group">
+                <label for="select-baud">Tốc độ nạp (Baudrate):</label>
+                <select id="select-baud" class="form-select">
+                  <option value="921600" selected>921600 (Siêu tốc - Khuyên dùng)</option>
+                  <option value="460800">460800 (Nhanh & Ổn định)</option>
+                  <option value="115200">115200 (Tiêu chuẩn - Chống nhiễu cáp)</option>
+                </select>
+              </div>
+
+              <button id="btn-connect" class="btn btn-primary">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect>
+                  <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
+                </svg>
+                <span id="btn-connect-text">Chọn Cổng COM & Kết Nối</span>
+              </button>
+
+              <!-- Box thông tin chip sau khi kết nối -->
+              <div class="chip-info-box" id="chip-info-box">
+                <div class="chip-status-badge">
+                  <span class="status-dot" id="status-dot"></span>
+                  <span id="chip-status-text">Chưa cắm thiết bị</span>
+                </div>
+                
+                <div class="chip-details-list">
+                  <div class="chip-detail-item">
+                    <span class="label">Dòng vi điều khiển:</span>
+                    <span class="val" id="chip-type">--</span>
+                  </div>
+                  <div class="chip-detail-item">
+                    <span class="label">Định danh MAC (Chip ID):</span>
+                    <span class="val" id="chip-mac">--:--:--:--:--:--</span>
+                  </div>
+                  <div class="chip-detail-item">
+                    <span class="label">Dung lượng Flash:</span>
+                    <span class="val" id="chip-flash-size">--</span>
+                  </div>
+                  <div class="chip-detail-item">
+                    <span class="label">Bản quyền phần cứng:</span>
+                    <span class="val" id="chip-license-tag" style="color: #d97706;">Chưa kích hoạt</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Mẹo nút BOOT -->
+              <div style="margin-top: 14px; font-size: 0.82rem; color: var(--text-muted); line-height: 1.5; background: #fffbeb; border: 1px solid #fde68a; border-radius: var(--radius-sm); padding: 10px 12px;">
+                💡 <b>Mẹo khi mạch không nhận:</b> Nhấn giữ nút <b>BOOT</b> trên bo mạch, nhấn nhả nút <b>EN (RST)</b> rồi nhả nút <b>BOOT</b> ra để vào chế độ nạp (Download Mode).
+              </div>
+            </div>
+          </div>
+
+          <!-- Cột 2 (Phải): Chọn Firmware, Bản quyền & Nạp -->
+          <div class="col-flashing">
+            <div class="card">
+              
+              <div class="card-title">
+                <span class="step-num">2</span>
+                <span>Cấu hình Firmware & Nạp</span>
+              </div>
+
+              <!-- Sub Tabs (Sản phẩm vs File Custom) -->
+              <div class="sub-tabs-nav">
+                <button class="tab-btn active" data-tab="tab-product">
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
+                    <line x1="3" y1="6" x2="21" y2="6"></line>
+                    <path d="M16 10a4 4 0 0 1-8 0"></path>
+                  </svg>
+                  Firmware Sản Phẩm NDZ
+                </button>
+                <button class="tab-btn" data-tab="tab-custom">
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                    <polyline points="14 2 14 8 20 8"></polyline>
+                  </svg>
+                  File .BIN Tự Chọn (DIY)
+                </button>
+              </div>
+
+              <!-- SUB TAB 1: SẢN PHẨM THƯƠNG MẠI & BẢN QUYỀN -->
+              <div id="tab-product" class="tab-content active">
+                <div class="form-group">
+                  <label for="select-product">Chọn sản phẩm thương mại:</label>
+                  <select id="select-product" class="form-select"></select>
+                </div>
+
+                <!-- Product description box -->
+                <div class="product-meta" id="product-meta">
+                  <div class="desc" id="product-desc">Đang tải thông tin sản phẩm...</div>
+                  <div class="tags">
+                    <span class="tag-badge" id="product-chip-badge">ESP32-S3</span>
+                    <span class="tag-badge" id="product-price-badge" style="color: #059669;">Giá: 99.000đ</span>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label for="select-version">Phiên bản Firmware:</label>
+                  <select id="select-version" class="form-select"></select>
+                </div>
+
+                <!-- Chế độ nạp (Cập nhật vs Cài mới) -->
+                <div class="form-group">
+                  <label>Chế độ cài đặt:</label>
+                  <div class="mode-options">
+                    <label class="mode-card selected" id="mode-card-update">
+                      <input type="radio" name="flash-mode" value="update" checked>
+                      <div class="title">Cập nhật ứng dụng</div>
+                      <div class="sub">Giữ nguyên cấu hình Wi-Fi, NVS và License cũ trong chip.</div>
+                    </label>
+                    <label class="mode-card" id="mode-card-clean">
+                      <input type="radio" name="flash-mode" value="clean">
+                      <div class="title">Cài mới hoàn toàn</div>
+                      <div class="sub">Xóa trắng bộ nhớ, nạp lại Bootloader + App sạch từ đầu.</div>
+                    </label>
+                  </div>
+                </div>
+
+                <!-- License Verification Box -->
+                <div class="license-box">
+                  <div class="license-header">
+                    <span>Mã Kích Hoạt / License Key Bản Quyền:</span>
+                    <span class="license-status-tag unverified" id="license-tag">Chưa kiểm tra</span>
+                  </div>
+                  <div class="license-input-wrap">
+                    <input type="text" id="input-license" class="form-control" placeholder="Ví dụ: NDZ-PRO-8899-ABCD" autocomplete="off">
+                    <button type="button" class="btn btn-outline btn-verify-license" id="btn-verify-license">Kiểm Tra</button>
+                  </div>
+                  <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 10px;">
+                    <span style="font-size: 0.8rem; color: var(--text-muted);">Chưa có mã kích hoạt cho thiết bị này?</span>
+                    <button type="button" id="btn-open-payment" class="btn-header" style="background: #ecfdf5; color: #059669; border-color: #a7f3d0; font-size: 0.82rem; padding: 4px 12px;">
+                      Mua mã bản quyền (VietQR)
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <!-- SUB TAB 2: NẠP FILE TÙY CHỌN .BIN -->
+              <div id="tab-custom" class="tab-content">
+                <p style="font-size: 0.86rem; color: var(--text-muted); margin-bottom: 14px;">
+                  Dành cho lập trình viên nạp file tự biên dịch từ Arduino IDE hoặc ESP-IDF. Nhập địa chỉ phân vùng (Offset) dạng Hex (ví dụ: 0x0000, 0x8000, 0x10000).
+                </p>
+                
+                <div id="custom-files-container">
+                  <div class="custom-file-row">
+                    <input type="text" class="form-control file-offset" value="0x10000" placeholder="0x10000">
+                    <input type="file" class="form-control file-input" accept=".bin">
+                    <button type="button" class="btn-remove-row" title="Xóa dòng">&times;</button>
+                  </div>
+                </div>
+
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 12px; margin-bottom: 16px;">
+                  <button type="button" id="btn-add-file-row" class="btn btn-outline" style="width: auto; padding: 6px 14px; font-size: 0.84rem;">
+                    + Thêm file phân vùng
+                  </button>
+                  <label style="font-size: 0.85rem; color: var(--text-secondary); display: flex; align-items: center; gap: 6px; cursor: pointer;">
+                    <input type="checkbox" id="check-custom-erase">
+                    Xóa trắng Flash trước khi nạp
+                  </label>
+                </div>
+              </div>
+
+              <!-- FLASH PROGRESS & ACTION BUTTONS -->
+              <div class="progress-container">
+                <div class="progress-header">
+                  <span class="status-text" id="progress-status-text">Sẵn sàng</span>
+                  <span id="progress-percent" style="font-weight: 700; color: var(--accent);">0%</span>
+                </div>
+                <div class="progress-track">
+                  <div class="progress-fill" id="progress-fill"></div>
+                </div>
+              </div>
+
+              <div style="display: grid; grid-template-columns: 1fr 140px; gap: 12px;">
+                <button id="btn-flash" class="btn btn-success" disabled>
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                    <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+                  </svg>
+                  <span>Bắt Đầu Nạp Firmware</span>
+                </button>
+
+                <button id="btn-erase" class="btn btn-danger" disabled title="Xóa sạch toàn bộ bộ nhớ flash của ESP">
+                  Xóa Flash
+                </button>
+              </div>
+
+              <!-- TERMINAL CONSOLE -->
+              <div class="terminal-card">
+                <div class="terminal-header">
+                  <span>Nhật ký nạp (Console Log):</span>
+                  <div class="actions">
+                    <button type="button" class="terminal-btn" id="btn-copy-log">Sao chép</button>
+                    <button type="button" class="terminal-btn" id="btn-clear-log">Xóa</button>
+                  </div>
+                </div>
+                <div class="terminal-body" id="terminal-body">
+<span class="log-info">[Hệ thống] Sẵn sàng. Vui lòng cắm cáp USB và bấm 'Chọn Cổng COM & Kết Nối'.</span>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- ====================================================================
+           TAB VIEW 2: SẢN PHẨM & BÁO GIÁ (CATALOG)
+           ==================================================================== -->
+      <section id="view-products" class="main-view-panel">
+        
+        <div class="catalog-header">
+          <h2>Danh Mục Firmware Thương Mại NDZ HUB</h2>
+          <p>Các giải pháp firmware nhúng IoT tối ưu hóa hiệu năng, tích hợp bản quyền theo định danh chip (MAC ID), sẵn sàng thương mại hóa.</p>
+        </div>
+
+        <div class="products-grid">
+          
+          <!-- Product Card 1 -->
+          <div class="product-card featured">
+            <div class="product-card-top">
+              <span class="product-chip-badge">ESP32</span>
+              <h3>ROBOT BÁNH XÍCH N1</h3>
+              <div class="price-row">
+                <span class="price">--</span>
+                <span class="price-note">/ bản quyền thiết bị</span>
+              </div>
+              <p class="product-desc" style="min-height: 40px; color: var(--text-muted);">
+                <!-- Để trống cho bạn cập nhật mô tả sau -->
+              </p>
+            </div>
+            <div class="product-card-actions">
+              <button type="button" class="btn btn-primary btn-select-product" data-product-id="robot-n1">
+                ⚡ Chọn Nạp Firmware Này
+              </button>
+              <button type="button" class="btn btn-outline btn-buy-product" data-product-id="robot-n1">
+                💳 Mua Bản Quyền VietQR
+              </button>
+            </div>
+          </div>
+
+          <!-- Product Card 2 -->
+          <div class="product-card">
+            <div class="product-card-top">
+              <span class="product-chip-badge">ESP32</span>
+              <h3>ROBOT BÁNH XÍCH T1</h3>
+              <div class="price-row">
+                <span class="price">--</span>
+                <span class="price-note">/ bản quyền thiết bị</span>
+              </div>
+              <p class="product-desc" style="min-height: 40px; color: var(--text-muted);">
+                <!-- Để trống cho bạn cập nhật mô tả sau -->
+              </p>
+            </div>
+            <div class="product-card-actions">
+              <button type="button" class="btn btn-primary btn-select-product" data-product-id="robot-t1">
+                ⚡ Chọn Nạp Firmware Này
+              </button>
+              <button type="button" class="btn btn-outline btn-buy-product" data-product-id="robot-t1">
+                💳 Mua Bản Quyền VietQR
+              </button>
+            </div>
+          </div>
+
+          <!-- Product Card 3 -->
+          <div class="product-card">
+            <div class="product-card-top">
+              <span class="product-chip-badge">ESP32-S3</span>
+              <h3>HUB MÀN HÌNH CẢM ỨNG</h3>
+              <div class="price-row">
+                <span class="price">--</span>
+                <span class="price-note">/ bản quyền thiết bị</span>
+              </div>
+              <p class="product-desc" style="min-height: 40px; color: var(--text-muted);">
+                <!-- Để trống cho bạn cập nhật mô tả sau -->
+              </p>
+            </div>
+            <div class="product-card-actions">
+              <button type="button" class="btn btn-primary btn-select-product" data-product-id="hub-touch">
+                ⚡ Chọn Nạp Firmware Này
+              </button>
+              <button type="button" class="btn btn-outline btn-buy-product" data-product-id="hub-touch">
+                💳 Mua Bản Quyền VietQR
+              </button>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Trust & Support Info Banner -->
+        <div class="trust-banner">
+          <div class="trust-item">
+            <div class="trust-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+            </div>
+            <div class="trust-text">
+              <h4>Bản Quyền Theo MAC</h4>
+              <p>Mỗi key gắn chặt với chip phần cứng của bạn, an toàn tuyệt đối và vĩnh viễn.</p>
+            </div>
+          </div>
+
+          <div class="trust-item">
+            <div class="trust-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline><polyline points="17 6 23 6 23 12"></polyline></svg>
+            </div>
+            <div class="trust-text">
+              <h4>Cập Nhật Trực Tuyến</h4>
+              <p>Dễ dàng nạp các bản cập nhật mới nhất từ NDZ HUB chỉ với 1 cú click chuột.</p>
+            </div>
+          </div>
+
+          <div class="trust-item">
+            <div class="trust-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+            </div>
+            <div class="trust-text">
+              <h4>Hỗ Trợ Kỹ Thuật Zalo</h4>
+              <p>Hỗ trợ cấu hình từ xa qua Ultraview/AnyDesk khi gặp khó khăn phần cứng.</p>
+            </div>
+          </div>
+        </div>
+
+      </section>
+
+      <!-- ====================================================================
+           TAB VIEW 3: SERIAL MONITOR FULL VIEW
+           ==================================================================== -->
+      <section id="view-monitor" class="main-view-panel">
+        <div class="monitor-view-card">
+          <div class="monitor-toolbar">
+            <div class="monitor-toolbar-left">
+              <button type="button" id="btn-monitor-toggle" class="btn btn-primary" style="width: auto; padding: 8px 16px;" disabled>
+                Bắt đầu đọc Serial
+              </button>
+              <button type="button" id="btn-monitor-clear" class="btn btn-outline" style="width: auto; padding: 8px 16px;">
+                Xóa màn hình
+              </button>
+              <select id="select-monitor-baud" class="form-select" style="width: auto; padding: 8px 12px; font-size: 0.85rem;">
+                <option value="115200" selected>115200 baud</option>
+                <option value="9600">9600 baud</option>
+                <option value="74880">74880 baud (ESP Boot)</option>
+                <option value="921600">921600 baud</option>
               </select>
             </div>
+            <div style="font-size: 0.85rem; color: var(--text-muted);">
+              Đọc dữ liệu debug thời gian thực từ chip ESP32
+            </div>
+          </div>
 
-            <button id="btn-connect" class="btn btn-primary">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect>
-                <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
-              </svg>
-              <span id="btn-connect-text">Chọn Cổng COM & Kết Nối</span>
+          <div class="monitor-screen" id="monitor-screen">
+[Serial Monitor] Sẵn sàng. Vui lòng kết nối cổng COM ở tab 'Nạp Firmware' trước khi bắt đầu đọc log.
+          </div>
+
+          <div class="monitor-input-row">
+            <input type="text" id="input-monitor-send" class="form-control" placeholder="Nhập chuỗi lệnh AT hoặc ký tự gửi xuống ESP32..." disabled>
+            <button type="button" id="btn-monitor-send" class="btn btn-primary" style="width: 120px;" disabled>
+              Gửi (Send)
             </button>
-
-            <!-- Box thông tin chip sau khi kết nối -->
-            <div class="chip-info-box" id="chip-info-box">
-              <div class="chip-status-badge">
-                <span class="status-dot" id="status-dot"></span>
-                <span id="chip-status-text">Chưa cắm thiết bị</span>
-              </div>
-              
-              <div class="chip-details-list">
-                <div class="chip-detail-item">
-                  <span class="label">Dòng vi điều khiển:</span>
-                  <span class="val" id="chip-type">--</span>
-                </div>
-                <div class="chip-detail-item">
-                  <span class="label">Định danh MAC (Chip ID):</span>
-                  <span class="val" id="chip-mac">--:--:--:--:--:--</span>
-                </div>
-                <div class="chip-detail-item">
-                  <span class="label">Dung lượng Flash:</span>
-                  <span class="val" id="chip-flash-size">--</span>
-                </div>
-                <div class="chip-detail-item">
-                  <span class="label">Bản quyền phần cứng:</span>
-                  <span class="val" id="chip-license-tag" style="color: #fbbf24;">Chưa kích hoạt</span>
-                </div>
-              </div>
-            </div>
-
-            <!-- Tip nút BOOT -->
-            <div style="margin-top: 14px; font-size: 0.8rem; color: var(--text-sub); line-height: 1.4;">
-              💡 <b>Mẹo khi không kết nối được:</b> Nhấn giữ nút <b>BOOT</b> trên mạch, nhấn nhả nút <b>EN (RST)</b> rồi thả nút <b>BOOT</b> để vào chế độ Download Mode.
-            </div>
           </div>
         </div>
+      </section>
 
-        <!-- Cột phải: Chọn Firmware, Bản quyền & Nạp -->
-        <div class="col-flashing">
-          <div class="card">
-            
-            <div class="card-title">
-              <span class="step-num">2</span>
-              <span>Cấu hình Firmware & Bản quyền</span>
-            </div>
-
-            <!-- Nav Tabs -->
-            <div class="tabs-nav">
-              <button class="tab-btn active" data-tab="tab-product">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
-                  <line x1="3" y1="6" x2="21" y2="6"></line>
-                  <path d="M16 10a4 4 0 0 1-8 0"></path>
-                </svg>
-                Firmware Bán Hàng
-              </button>
-              <button class="tab-btn" data-tab="tab-custom">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
-                  <polyline points="14 2 14 8 20 8"></polyline>
-                </svg>
-                File .BIN Tùy Chọn
-              </button>
-              <button class="tab-btn" data-tab="tab-monitor">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <polyline points="4 17 10 11 4 5"></polyline>
-                  <line x1="12" y1="19" x2="20" y2="19"></line>
-                </svg>
-                Serial Monitor
-              </button>
-            </div>
-
-            <!-- TAB 1: SẢN PHẨM BÁN HÀNG & BẢN QUYỀN -->
-            <div id="tab-product" class="tab-content active">
-              <div class="form-group">
-                <label for="select-product">Chọn sản phẩm thương mại:</label>
-                <select id="select-product" class="form-select"></select>
-              </div>
-
-              <!-- Product description box -->
-              <div class="product-meta" id="product-meta">
-                <div class="desc" id="product-desc">Đang tải thông tin sản phẩm...</div>
-                <div class="tags">
-                  <span class="tag-badge" id="product-chip-badge">ESP32-S3</span>
-                  <span class="tag-badge" id="product-price-badge" style="color: #4ade80;">Giá: 99.000đ</span>
+      <!-- ====================================================================
+           TAB VIEW 4: HƯỚNG DẪN & CÀI ĐẶT DRIVER
+           ==================================================================== -->
+      <section id="view-guide" class="main-view-panel">
+        
+        <div class="guide-grid">
+          
+          <div class="guide-card">
+            <h3>
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
+              1. Cài đặt Driver USB Serial
+            </h3>
+            <p>Hầu hết bo mạch ESP32 giao tiếp với máy tính qua chip nạp UART **CH340** hoặc **CP2102**. Nếu bấm "Chọn Cổng COM" mà danh sách trống:</p>
+            <div class="driver-download-box">
+              <div class="driver-item">
+                <div>
+                  <b>Driver CH340 / CH341 (Phổ biến nhất)</b>
+                  <div style="font-size: 0.8rem; color: var(--text-muted);">Dành cho hầu hết các kit ESP32 giá rẻ, NodeMCU</div>
                 </div>
+                <a href="https://www.wch-ic.com/downloads/CH341SER_EXE.html" target="_blank" rel="noopener" class="btn btn-outline" style="width: auto; padding: 6px 12px; font-size: 0.82rem;">Tải Driver</a>
               </div>
-
-              <div class="form-group">
-                <label for="select-version">Phiên bản Firmware:</label>
-                <select id="select-version" class="form-select"></select>
-              </div>
-
-              <!-- Kiểu nạp (Cập nhật vs Cài mới) -->
-              <div class="form-group">
-                <label>Chế độ cài đặt:</label>
-                <div class="mode-options">
-                  <label class="mode-card selected" id="mode-card-update">
-                    <input type="radio" name="flash-mode" value="update" checked>
-                    <div class="title">Cập nhật ứng dụng</div>
-                    <div class="sub">Giữ nguyên cấu hình Wi-Fi, NVS và License cũ trong chip.</div>
-                  </label>
-                  <label class="mode-card" id="mode-card-clean">
-                    <input type="radio" name="flash-mode" value="clean">
-                    <div class="title">Cài mới hoàn toàn</div>
-                    <div class="sub">Xóa trắng bộ nhớ, nạp lại Bootloader + App sạch từ đầu.</div>
-                  </label>
+              <div class="driver-item">
+                <div>
+                  <b>Driver Silicon Labs CP210x</b>
+                  <div style="font-size: 0.8rem; color: var(--text-muted);">Dành cho ESP32 DevKit chính hãng, Doit</div>
                 </div>
-              </div>
-
-              <!-- License Verification Box -->
-              <div class="license-box">
-                <div class="license-header">
-                  <span>Mã Kích Hoạt / License Key Bản Quyền:</span>
-                  <span class="license-status-tag unverified" id="license-tag">Chưa kiểm tra</span>
-                </div>
-                <div class="license-input-wrap">
-                  <input type="text" id="input-license" class="form-control" placeholder="Ví dụ: TING-PRO-8899-ABCD" autocomplete="off">
-                  <button type="button" class="btn btn-outline btn-verify-license" id="btn-verify-license">Kiểm Tra</button>
-                </div>
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 10px;">
-                  <span style="font-size: 0.78rem; color: var(--text-sub);">Chưa có mã bản quyền cho thiết bị này?</span>
-                  <button type="button" id="btn-open-payment" class="btn-header" style="background: rgba(16, 185, 129, 0.15); color: #34d399; border-color: rgba(16, 185, 129, 0.3); font-size: 0.8rem; padding: 4px 10px;">
-                    Mua mã bản quyền (VietQR)
-                  </button>
-                </div>
+                <a href="https://www.silabs.com/developers/usb-to-uart-bridge-vcp-drivers" target="_blank" rel="noopener" class="btn btn-outline" style="width: auto; padding: 6px 12px; font-size: 0.82rem;">Tải Driver</a>
               </div>
             </div>
-
-            <!-- TAB 2: NẠP FILE TÙY CHỌN .BIN -->
-            <div id="tab-custom" class="tab-content">
-              <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 12px;">
-                Dành cho lập trình viên nạp file tự biên dịch. Nhập địa chỉ phân vùng (Offset) ở dạng Hex (ví dụ: 0x0000, 0x8000, 0x10000).
-              </p>
-              
-              <div id="custom-files-container">
-                <div class="custom-file-row">
-                  <input type="text" class="form-control file-offset" value="0x10000" placeholder="0x10000">
-                  <input type="file" class="form-control file-input" accept=".bin">
-                  <button type="button" class="btn-remove-row" title="Xóa dòng">&times;</button>
-                </div>
-              </div>
-
-              <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 10px; margin-bottom: 14px;">
-                <button type="button" id="btn-add-file-row" class="btn btn-outline" style="width: auto; padding: 6px 14px; font-size: 0.82rem;">
-                  + Thêm file phân vùng
-                </button>
-                <label style="font-size: 0.85rem; color: var(--text-muted); display: flex; align-items: center; gap: 6px; cursor: pointer;">
-                  <input type="checkbox" id="check-custom-erase">
-                  Xóa trắng Flash trước khi nạp
-                </label>
-              </div>
-            </div>
-
-            <!-- TAB 3: SERIAL MONITOR -->
-            <div id="tab-monitor" class="tab-content">
-              <div class="serial-monitor-controls">
-                <button type="button" id="btn-monitor-toggle" class="btn btn-primary" style="width: auto;" disabled>
-                  Bắt đầu đọc Serial
-                </button>
-                <button type="button" id="btn-monitor-clear" class="btn btn-outline" style="width: auto;">
-                  Xóa màn hình
-                </button>
-              </div>
-              <div class="form-group" style="display: flex; gap: 8px;">
-                <input type="text" id="input-monitor-send" class="form-control" placeholder="Gửi chuỗi lệnh qua Serial..." disabled>
-                <button type="button" id="btn-monitor-send" class="btn btn-outline" style="width: auto;" disabled>Gửi</button>
-              </div>
-            </div>
-
-            <!-- FLASH PROGRESS & NÚT NẠP -->
-            <div class="progress-container">
-              <div class="progress-header">
-                <span class="status-text" id="progress-status-text">Sẵn sàng</span>
-                <span id="progress-percent" style="font-weight: 700;">0%</span>
-              </div>
-              <div class="progress-track">
-                <div class="progress-fill" id="progress-fill"></div>
-              </div>
-            </div>
-
-            <div style="display: grid; grid-template-columns: 1fr 140px; gap: 12px;">
-              <button id="btn-flash" class="btn btn-success" disabled>
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-                  <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
-                </svg>
-                <span>Bắt Đầu Nạp Firmware</span>
-              </button>
-
-              <button id="btn-erase" class="btn btn-danger" disabled title="Xóa sạch toàn bộ bộ nhớ flash của ESP">
-                Xóa Flash
-              </button>
-            </div>
-
-            <!-- TERMINAL CONSOLE -->
-            <div class="terminal-card">
-              <div class="terminal-header">
-                <span>Nhật ký nạp (Console Log):</span>
-                <div class="actions">
-                  <button type="button" class="terminal-btn" id="btn-copy-log">Sao chép</button>
-                  <button type="button" class="terminal-btn" id="btn-clear-log">Xóa</button>
-                </div>
-              </div>
-              <div class="terminal-body" id="terminal-body">
-<span class="log-info">[Hệ thống] Sẵn sàng. Vui lòng cắm cáp USB và bấm 'Chọn Cổng COM & Kết Nối'.</span>
-              </div>
-            </div>
-
           </div>
+
+          <div class="guide-card">
+            <h3>
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 14 14"></polyline></svg>
+              2. Mẹo Nhấn Nút BOOT & EN
+            </h3>
+            <p>Một số bo mạch không có mạch tự động kích hoạt Download Mode (DTR/RTS). Khi gặp thông báo lỗi kết nối hoặc Timeout:</p>
+            <ol>
+              <li>Dùng ngón tay <b>nhấn và giữ nút BOOT</b> (hoặc IO0) trên bo mạch.</li>
+              <li>Nhấn nhanh rồi nhả nút <b>EN (hoặc RST)</b>.</li>
+              <li>Thả ngón tay khỏi nút <b>BOOT</b>.</li>
+              <li>Bấm lại nút <b>"Chọn Cổng COM & Kết Nối"</b> trên trang web.</li>
+            </ol>
+          </div>
+
+          <div class="guide-card">
+            <h3>
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg>
+              3. Lưu ý về Cáp USB
+            </h3>
+            <p>Rất nhiều loại cáp điện thoại giá rẻ chỉ có 2 dây truyền điện (chỉ dùng sạc pin), <b>hoàn toàn không có 2 dây truyền dữ liệu (D+ và D-)</b>.</p>
+            <p>Vui lòng đảm bảo bạn sử dụng cáp dữ liệu (Data Cable) chất lượng tốt, cắm trực tiếp vào cổng USB sau máy tính (tránh cắm qua Hub nối dài giá rẻ).</p>
+          </div>
+
+          <div class="guide-card">
+            <h3>
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect><line x1="1" y1="10" x2="23" y2="10"></line></svg>
+              4. Mua & Kích Hoạt Bản Quyền
+            </h3>
+            <p>Quy trình mua và kích hoạt bản quyền firmware NDZ HUB:</p>
+            <ol>
+              <li>Cắm bo mạch ESP32 và bấm kết nối để hệ thống tự động đọc <b>MAC ID</b> phần cứng.</li>
+              <li>Bấm "Mua mã bản quyền (VietQR)", quét mã QR ngân hàng ACB đã tự điền sẵn mã MAC của chip.</li>
+              <li>Nhập mã License nhận được vào ô kích hoạt và bấm nạp firmware.</li>
+            </ol>
+          </div>
+
         </div>
 
-      </div>
+      </section>
+
     </div>
   </main>
 
@@ -305,12 +563,12 @@
   <div class="modal-overlay" id="modal-payment">
     <div class="modal-box">
       <div class="modal-header">
-        <h3>Mua Bản Quyền Firmware</h3>
+        <h3>Thanh Toán Bản Quyền VietQR</h3>
         <button type="button" class="modal-close" id="btn-close-payment">&times;</button>
       </div>
       <div class="modal-body vietqr-card">
         <p style="font-size: 0.88rem; color: var(--text-muted); margin-bottom: 14px;">
-          Quét mã QR dưới đây bằng app Ngân hàng để thanh toán và kích hoạt license tự động cho thiết bị.
+          Quét mã QR dưới đây bằng app Ngân hàng để thanh toán và kích hoạt bản quyền tự động cho chip ESP32.
         </p>
 
         <div class="vietqr-img-wrap">
@@ -320,7 +578,7 @@
         <div class="bank-info-table">
           <div class="bank-row">
             <span class="k">Ngân hàng:</span>
-            <span class="v" style="color: #a855f7;">ACB (Á Châu)</span>
+            <span class="v" style="color: #2563eb;">ACB (Á Châu)</span>
           </div>
           <div class="bank-row">
             <span class="k">Số tài khoản:</span>
@@ -332,11 +590,11 @@
           </div>
           <div class="bank-row">
             <span class="k">Số tiền:</span>
-            <span class="v" id="bank-amount" style="color: #4ade80;">99.000 VNĐ</span>
+            <span class="v" id="bank-amount" style="color: #059669;">99.000 VNĐ</span>
           </div>
           <div class="bank-row">
             <span class="k">Nội dung CK:</span>
-            <span class="v" id="bank-content" style="color: #facc15;">FW LOATING MAC</span>
+            <span class="v" id="bank-content" style="color: #d97706;">FW NDZ HUB MAC</span>
           </div>
         </div>
 
@@ -362,24 +620,24 @@
         <h3>Hướng Dẫn Cài Driver & Kết Nối</h3>
         <button type="button" class="modal-close" id="btn-close-driver">&times;</button>
       </div>
-      <div class="modal-body" style="font-size: 0.9rem; color: var(--text-muted); line-height: 1.6;">
-        <h4 style="color: #fff; margin-bottom: 6px;">1. Máy tính không nhận cổng COM?</h4>
+      <div class="modal-body" style="font-size: 0.9rem; color: var(--text-secondary); line-height: 1.6;">
+        <h4 style="color: var(--text-main); margin-bottom: 6px;">1. Máy tính không nhận cổng COM?</h4>
         <p style="margin-bottom: 12px;">Hầu hết các mạch ESP32 sử dụng chip nạp UART USB CH340 hoặc CP2102. Nếu bấm kết nối mà không thấy cổng nào xuất hiện:</p>
         <ul style="padding-left: 20px; margin-bottom: 16px;">
           <li><a href="https://www.wch-ic.com/downloads/CH341SER_EXE.html" target="_blank" rel="noopener">Tải Driver CH340 / CH341 (Windows)</a></li>
           <li><a href="https://www.silabs.com/developers/usb-to-uart-bridge-vcp-drivers" target="_blank" rel="noopener">Tải Driver CP210x (Windows / macOS)</a></li>
         </ul>
 
-        <h4 style="color: #fff; margin-bottom: 6px;">2. Cáp USB sạc hay cáp dữ liệu?</h4>
+        <h4 style="color: var(--text-main); margin-bottom: 6px;">2. Cáp USB sạc hay cáp dữ liệu?</h4>
         <p style="margin-bottom: 16px;">Rất nhiều loại cáp điện thoại giá rẻ chỉ có 2 dây nguồn để sạc, không có 2 dây truyền dữ liệu (D+/D-). Vui lòng đổi sang cáp truyền dữ liệu tốt.</p>
 
-        <h4 style="color: #fff; margin-bottom: 6px;">3. Lỗi Timeout / Không vào được Bootloader</h4>
+        <h4 style="color: var(--text-main); margin-bottom: 6px;">3. Lỗi Timeout / Không vào được Bootloader</h4>
         <p>Nếu gặp lỗi <i>"Failed to connect to ESP32: Timed out waiting for packet header"</i>:</p>
         <ol style="padding-left: 20px;">
           <li>Nhấn và giữ nút <b>BOOT</b> trên bo mạch.</li>
           <li>Nhấn rồi thả nút <b>EN (hoặc RST)</b>.</li>
           <li>Thả nút <b>BOOT</b> ra.</li>
-          <li>Bấm lại nút <b>Kết nối</b> trên trang web.</li>
+          <li>Bấm lại nút <b>Chọn Cổng COM & Kết Nối</b> trên trang web.</li>
         </ol>
       </div>
     </div>
