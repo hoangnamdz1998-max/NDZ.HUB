@@ -456,22 +456,41 @@ function onProductChange() {
 const allNavBtns = document.querySelectorAll(".nav-tab-btn, .dock-btn");
 const mainViewPanels = document.querySelectorAll(".main-view-panel");
 
+function switchNavTab(targetNav, smoothScroll = true) {
+  if (!targetNav) return;
+  allNavBtns.forEach(b => {
+    b.classList.toggle("active", b.dataset.nav === targetNav);
+  });
+
+  mainViewPanels.forEach(p => {
+    p.classList.toggle("active", p.id === targetNav);
+  });
+
+  if (smoothScroll) {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }
+}
+
 allNavBtns.forEach(btn => {
   btn.addEventListener("click", () => {
     const targetNav = btn.dataset.nav;
     if (!targetNav) return;
-
-    allNavBtns.forEach(b => {
-      b.classList.toggle("active", b.dataset.nav === targetNav);
-    });
-
-    mainViewPanels.forEach(p => {
-      p.classList.toggle("active", p.id === targetNav);
-    });
-
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    if (window.location.hash !== `#${targetNav}`) {
+      window.history.pushState(null, "", `#${targetNav}`);
+    }
+    switchNavTab(targetNav, true);
   });
 });
+
+// Hỗ trợ mở trực tiếp tab qua URL hash (ví dụ: #view-products)
+function handleUrlHash() {
+  const hash = window.location.hash.replace("#", "");
+  if (hash) {
+    switchNavTab(hash, false);
+  }
+}
+window.addEventListener("hashchange", handleUrlHash);
+handleUrlHash();
 
 // Quản lý Sub-Tabs bên trong Tab Nạp Firmware (Sản phẩm vs File .bin)
 document.querySelectorAll(".sub-tabs-nav .tab-btn").forEach(btn => {
