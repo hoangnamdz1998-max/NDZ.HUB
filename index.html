@@ -6,7 +6,7 @@
   <title>NDZ HUB · Nạp Firmware ESP32 Trực Tuyến</title>
   <meta name="description" content="Nạp firmware cho ESP32, ESP32-S3, ESP32-C3 trực tiếp trên trình duyệt Web qua cổng Serial. Quản lý bản quyền phần cứng NDZ HUB.">
   <link rel="stylesheet" href="style.css">
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚡</text></svg>">
+  <link rel="icon" type="image/jpeg" href="assets/ndz-logo.jpg">
 </head>
 <body>
 
@@ -14,10 +14,8 @@
   <header class="site-header">
     <div class="container header-inner">
       <div class="brand">
-        <div class="brand-logo">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-            <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
-          </svg>
+        <div class="brand-logo" title="NDZ HUB">
+          <img src="assets/ndz-logo.jpg" alt="NDZ Logo" class="brand-logo-img">
         </div>
         <div class="brand-text">
           <h1>NDZ HUB <span class="brand-badge">FLASHER PRO</span></h1>
@@ -103,6 +101,9 @@
         
         <!-- Intro Hero Box -->
         <div class="intro-box">
+          <div class="intro-box-logo">
+            <img src="assets/ndz-logo.jpg" alt="NDZ HUB Logo" class="hero-logo-img">
+          </div>
           <div class="intro-box-text">
             <h2>Nạp Firmware Trực Tiếp Qua Trình Duyệt</h2>
             <p>Kết nối cáp USB với máy tính, chọn cổng COM và nạp firmware cho dòng chip ESP32/ESP32-S3/ESP32-C3 chỉ trong vài giây mà không cần cài đặt Arduino IDE.</p>
@@ -367,6 +368,12 @@
       <section id="view-products" class="main-view-panel">
         
         <div class="catalog-header">
+          <div class="catalog-header-badge-row">
+            <div class="catalog-logo-badge">
+              <img src="assets/ndz-logo.jpg" alt="NDZ Logo" class="catalog-logo-img">
+            </div>
+            <span class="catalog-brand-label">HỆ SINH THÁI IOT CHÍNH HÃNG NDZ</span>
+          </div>
           <h2>Hệ Sinh Thái Sản Phẩm NDZ HUB</h2>
           <p>Khám phá trọn bộ <b>Firmware nạp trực tuyến</b>, <b>Thiết bị hoàn thiện</b> sẵn sàng chạy và <b>Vỏ nhựa in 3D</b> chất lượng cao.</p>
         </div>
@@ -945,9 +952,9 @@
         <span>Sản phẩm</span>
       </button>
 
-      <!-- Center Cute Mascot Avatar -->
-      <div class="dock-mascot" title="NDZ Hub Bot">
-        <div class="mascot-face">🤖</div>
+      <!-- Center NDZ Logo Dock Mascot -->
+      <div class="dock-mascot" title="NDZ HUB">
+        <img src="assets/ndz-logo.jpg" alt="NDZ Logo" class="dock-mascot-logo">
       </div>
 
       <button type="button" class="dock-btn" data-nav="view-monitor">
@@ -971,8 +978,12 @@
 
   <!-- Footer -->
   <footer class="site-footer">
-    <div class="container">
-      <p>© 2026 NDZ HUB · Nền Tảng Nạp Firmware ESP32 Trực Tuyến Thông Minh.</p>
+    <div class="container footer-inner">
+      <div class="footer-brand">
+        <img src="assets/ndz-logo.jpg" alt="NDZ Logo" class="footer-logo-img">
+        <span class="footer-brand-text">NDZ HUB</span>
+      </div>
+      <p>© 2026 NDZ HUB · Nền Tảng Nạp Firmware ESP32 Trực Tuyến & Hệ Sinh Thái Phần Cứng Thông Minh.</p>
     </div>
   </footer>
 
