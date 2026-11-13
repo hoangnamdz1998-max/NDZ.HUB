@@ -282,6 +282,41 @@
                 </div>
               </div>
 
+              <!-- CÁC BƯỚC TÍCH XÁC NHẬN AN TOÀN TRƯỚC KHI NẠP -->
+              <div class="pre-flash-checklist" id="pre-flash-checklist">
+                <div class="checklist-header">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                    <path d="M9 11l3 3L22 4"></path>
+                    <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path>
+                  </svg>
+                  <span>Các Bước Tích Xác Nhận Bắt Buộc Trước Khi Nạp:</span>
+                </div>
+
+                <div class="checklist-items">
+                  <!-- Tích 1: Xác nhận đã cắm mạch vào -->
+                  <label class="checklist-item" id="item-check-plugged">
+                    <input type="checkbox" id="check-board-plugged">
+                    <div class="check-content">
+                      <span class="check-title">1. Xác nhận đã cắm mạch:</span>
+                      <span class="check-desc">Tôi xác nhận đã cắm bo mạch ESP32 vào cổng USB máy tính qua cáp truyền dữ liệu và đã bấm kết nối thành công.</span>
+                    </div>
+                  </label>
+
+                  <!-- Tích 2: Xác nhận mạch đó là mạch nào -->
+                  <label class="checklist-item" id="item-check-board-type">
+                    <input type="checkbox" id="check-board-type">
+                    <div class="check-content">
+                      <span class="check-title">2. Xác nhận đúng loại mạch:</span>
+                      <span class="check-desc">
+                        Tôi xác nhận bo mạch đang cầm trên tay đúng là: 
+                        <b class="highlight-target-board" id="confirm-board-name">ROBOT BÁNH XÍCH N1</b> 
+                        (khớp với phần cứng cần nạp, tránh nạp nhầm gây hỏng mạch).
+                      </span>
+                    </div>
+                  </label>
+                </div>
+              </div>
+
               <!-- FLASH PROGRESS & ACTION BUTTONS -->
               <div class="progress-container">
                 <div class="progress-header">
@@ -530,13 +565,14 @@
           <div class="guide-card">
             <h3>
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
-              4. Quy Trình Nạp Miễn Phí (2 Lần / Mỗi Máy Tính)
+              4. Quy Trình Nạp & Các Bước Tích Xác Nhận
             </h3>
-            <p>Chính sách giới hạn nạp của NDZ HUB:</p>
+            <p>Quy trình các bước nạp an toàn của NDZ HUB:</p>
             <ol>
-              <li>Mỗi máy tính được cấp tối đa <b>2 lượt nạp firmware miễn phí</b>.</li>
-              <li>Bạn có thể cắm và nạp cho 2 bo mạch ESP32 khác nhau (hoặc 2 lần nạp).</li>
-              <li>Sau khi hoàn thành đủ 2 lượt nạp, hệ thống sẽ <b>tự động khóa và từ chối nạp lần thứ 3</b>.</li>
+              <li><b>Cắm & Kết nối:</b> Cắm bo mạch ESP32 vào máy tính qua cáp dữ liệu và bấm <b>"Chọn Cổng COM & Kết Nối"</b>.</li>
+              <li><b>Tích xác nhận 1:</b> Tích vào ô xác nhận đã cắm bo mạch chắc chắn vào máy tính.</li>
+              <li><b>Tích xác nhận 2:</b> Chọn đúng sản phẩm (Robot N1, T1 hoặc Hub Cảm Ứng) và tích xác nhận đúng loại mạch bạn đang cầm trên tay.</li>
+              <li><b>Bắt đầu nạp:</b> Khi hoàn tất đủ 2 tích xác nhận an toàn, nút <b>"Bắt Đầu Nạp Firmware"</b> sẽ sáng lên để bạn nạp miễn phí (Tối đa 2 lần cho mỗi máy tính).</li>
             </ol>
           </div>
 

@@ -711,6 +711,92 @@ header.site-header {
   color: #b91c1c !important;
 }
 
+/* Pre-flash Checklist */
+.pre-flash-checklist {
+  background: #f8fafc;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 14px 16px;
+  margin-top: 18px;
+  margin-bottom: 6px;
+}
+
+.checklist-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: var(--text-main);
+  margin-bottom: 12px;
+}
+
+.checklist-header svg {
+  stroke: var(--accent);
+}
+
+.checklist-items {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.checklist-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  background: #ffffff;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 10px 12px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  user-select: none;
+}
+
+.checklist-item:hover {
+  border-color: #cbd5e1;
+  background: #fdfefe;
+}
+
+.checklist-item input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  accent-color: var(--accent);
+  margin-top: 2px;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.checklist-item.checked {
+  border-color: #93c5fd;
+  background: #eff6ff;
+}
+
+.checklist-item .check-content {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  font-size: 0.84rem;
+}
+
+.checklist-item .check-title {
+  font-weight: 700;
+  color: var(--text-main);
+}
+
+.checklist-item .check-desc {
+  color: var(--text-secondary);
+  line-height: 1.45;
+}
+
+.checklist-item .highlight-target-board {
+  color: #2563eb;
+  background: #dbeafe;
+  padding: 1px 6px;
+  border-radius: 4px;
+}
+
 /* License Box */
 .license-box {
   background: var(--bg-subtle);

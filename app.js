@@ -284,6 +284,67 @@ const btnMonitorClear = document.getElementById("btn-monitor-clear");
 const inputMonitorSend = document.getElementById("input-monitor-send");
 const btnMonitorSend = document.getElementById("btn-monitor-send");
 
+// Pre-flash Checklist Elements
+const checkBoardPlugged = document.getElementById("check-board-plugged");
+const checkBoardType = document.getElementById("check-board-type");
+const itemCheckPlugged = document.getElementById("item-check-plugged");
+const itemCheckBoardType = document.getElementById("item-check-board-type");
+const confirmBoardName = document.getElementById("confirm-board-name");
+
+function canFlashNow() {
+  const count = getMachineFlashCount();
+  if (count >= MAX_FLASH_COUNT) return false;
+  if (!isConnected || !esploader) return false;
+  if (!checkBoardPlugged || !checkBoardPlugged.checked) return false;
+  if (!checkBoardType || !checkBoardType.checked) return false;
+  return true;
+}
+
+function refreshFlashButtonState() {
+  if (isFlashing) return;
+  const count = getMachineFlashCount();
+  if (count >= MAX_FLASH_COUNT) {
+    btnFlash.disabled = true;
+    return;
+  }
+  if (!isConnected) {
+    btnFlash.disabled = true;
+    return;
+  }
+  btnFlash.disabled = !canFlashNow();
+}
+
+function updateConfirmedBoardName() {
+  if (!confirmBoardName) return;
+  const activeTab = (document.querySelector(".sub-tabs-nav .tab-btn.active") || document.querySelector(".tab-btn.active"))?.dataset?.tab || "tab-product";
+  if (activeTab === "tab-custom") {
+    confirmBoardName.textContent = "Bo mạch DIY (File .BIN tự chọn)";
+  } else {
+    const prod = manifestData?.products?.find(p => p.id === selectProduct?.value);
+    confirmBoardName.textContent = prod?.name || "ROBOT BÁNH XÍCH N1";
+  }
+}
+
+if (checkBoardPlugged) {
+  checkBoardPlugged.addEventListener("change", () => {
+    if (itemCheckPlugged) itemCheckPlugged.classList.toggle("checked", checkBoardPlugged.checked);
+    refreshFlashButtonState();
+    if (checkBoardPlugged.checked) {
+      logSystem("[Xác nhận] Đã tích: Xác nhận đã cắm bo mạch ESP32 vào máy tính.", "info");
+    }
+  });
+}
+
+if (checkBoardType) {
+  checkBoardType.addEventListener("change", () => {
+    if (itemCheckBoardType) itemCheckBoardType.classList.toggle("checked", checkBoardType.checked);
+    refreshFlashButtonState();
+    if (checkBoardType.checked) {
+      logSystem(`[Xác nhận] Đã tích: Xác nhận đúng loại bo mạch [${confirmBoardName?.textContent || ''}].`, "info");
+    }
+  });
+}
+
 // Modals
 const modalDriver = document.getElementById("modal-driver");
 const btnDriverGuide = document.getElementById("btn-driver-guide");
@@ -382,6 +443,13 @@ function onProductChange() {
     if (idx === 0) opt.selected = true;
     selectVersion.appendChild(opt);
   });
+
+  updateConfirmedBoardName();
+  if (checkBoardType) {
+    checkBoardType.checked = false;
+    if (itemCheckBoardType) itemCheckBoardType.classList.remove("checked");
+  }
+  refreshFlashButtonState();
 }
 
 // 3. Quản lý Main Top Navigation Tabs (Nạp Firmware, Sản Phẩm, Serial Monitor, Hướng Dẫn)
@@ -410,6 +478,13 @@ document.querySelectorAll(".sub-tabs-nav .tab-btn").forEach(btn => {
     btn.classList.add("active");
     const target = document.getElementById(btn.dataset.tab);
     if (target) target.classList.add("active");
+
+    updateConfirmedBoardName();
+    if (checkBoardType) {
+      checkBoardType.checked = false;
+      if (itemCheckBoardType) itemCheckBoardType.classList.remove("checked");
+    }
+    refreshFlashButtonState();
   });
 });
 
@@ -495,12 +570,18 @@ async function connectESP() {
 
     btnConnectText.textContent = "Ngắt Kết Nối";
     btnConnect.classList.replace("btn-primary", "btn-outline");
-    btnFlash.disabled = false;
     btnErase.disabled = false;
     btnMonitorToggle.disabled = false;
 
+    // Tự động tích xác nhận 1 khi kết nối COM thành công
+    if (checkBoardPlugged) {
+      checkBoardPlugged.checked = true;
+      if (itemCheckPlugged) itemCheckPlugged.classList.add("checked");
+    }
+
     logSystem(`Nhận diện vi điều khiển: ${chipName} | MAC: ${currentChipMac} | Flash: ${flashSize}`, "success");
     updateDeviceFlashStatus(currentChipMac);
+    refreshFlashButtonState();
 
   } catch (err) {
     logSystem(`Lỗi kết nối: ${err.message}`, "error");
@@ -525,7 +606,18 @@ async function disconnectESP() {
   chipType.textContent = "--";
   chipMac.textContent = "--:--:--:--:--:--";
   chipFlashSize.textContent = "--";
+
+  if (checkBoardPlugged) {
+    checkBoardPlugged.checked = false;
+    if (itemCheckPlugged) itemCheckPlugged.classList.remove("checked");
+  }
+  if (checkBoardType) {
+    checkBoardType.checked = false;
+    if (itemCheckBoardType) itemCheckBoardType.classList.remove("checked");
+  }
+
   updateDeviceFlashStatus("");
+  refreshFlashButtonState();
 
   btnConnectText.textContent = "Chọn Cổng COM & Kết Nối";
   btnConnect.classList.replace("btn-outline", "btn-primary");
@@ -571,7 +663,14 @@ btnFlash.addEventListener("click", async () => {
   if (isMachineFlashLimitReached()) {
     const count = getMachineFlashCount();
     alert(`MÁY TÍNH NÀY ĐÃ HẾT LƯỢT NẠP!\n\nBạn đã sử dụng hết ${count}/${MAX_FLASH_COUNT} lượt nạp miễn phí trên máy tính này.\n\nTheo quy định của NDZ HUB, mỗi máy tính chỉ được cấp tối đa 2 lượt nạp. Bạn không thể nạp thêm lần thứ 3 trên cùng một máy tính!`);
-    btnFlash.disabled = true;
+    refreshFlashButtonState();
+    return;
+  }
+
+  // KIỂM TRA CÁC BƯỚC TÍCH XÁC NHẬN AN TOÀN
+  if (!checkBoardPlugged || !checkBoardPlugged.checked || !checkBoardType || !checkBoardType.checked) {
+    alert(`VUI LÒNG TÍCH ĐỦ CẢ 2 BƯỚC XÁC NHẬN TRƯỚC KHI NẠP:\n\n1. Tích xác nhận đã cắm bo mạch ESP32 vào máy tính.\n2. Tích xác nhận đúng loại bo mạch bạn đang cầm trên tay (${confirmBoardName?.textContent || 'đúng sản phẩm'}).\n\nThao tác này giúp tránh nạp nhầm firmware gây hỏng bo mạch!`);
+    refreshFlashButtonState();
     return;
   }
 
@@ -697,7 +796,7 @@ btnFlash.addEventListener("click", async () => {
     alert(`Lỗi nạp firmware: ${err.message}`);
   } finally {
     isFlashing = false;
-    btnFlash.disabled = isMachineFlashLimitReached();
+    refreshFlashButtonState();
     btnErase.disabled = false;
     btnConnect.disabled = false;
   }
@@ -836,3 +935,5 @@ checkBrowserSupport();
 loadManifest();
 syncIndexedDB();
 updateFlashAllowanceUI();
+updateConfirmedBoardName();
+refreshFlashButtonState();
