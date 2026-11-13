@@ -180,7 +180,7 @@ function updateFlashAllowanceUI() {
   if (count >= MAX_FLASH_COUNT) {
     if (machineLicenseTag) {
       machineLicenseTag.textContent = `❌ Đã hết lượt (Đã nạp ${count}/${MAX_FLASH_COUNT} lần)`;
-      machineLicenseTag.style.color = "#dc2626";
+      machineLicenseTag.style.color = "#ef4444";
     }
     if (limitRuleBox) {
       limitRuleBox.classList.add("locked");
@@ -190,7 +190,7 @@ function updateFlashAllowanceUI() {
     }
     if (limitRuleDesc) {
       const detailFlashes = (rec?.flashes || []).map((f, i) => `Lần ${i+1}: <b>${f.flashedAt}</b> (${f.mac})`).join(" | ");
-      limitRuleDesc.innerHTML = `Máy tính này đã hoàn tất đủ <b>2/2 lượt nạp miễn phí</b> (${detailFlashes}).<br><span style="color:#b91c1c; font-weight:700;">Theo chính sách, bạn KHÔNG thể nạp thêm lần thứ 3 trên máy tính này!</span>`;
+      limitRuleDesc.innerHTML = `Máy tính này đã hoàn tất đủ <b>2/2 lượt nạp miễn phí</b> (${detailFlashes}).<br><span style="color:#f87171; font-weight:700;">Theo chính sách, bạn KHÔNG thể nạp thêm lần thứ 3 trên máy tính này!</span>`;
     }
     if (btnFlash) {
       btnFlash.disabled = true;
@@ -198,7 +198,7 @@ function updateFlashAllowanceUI() {
   } else if (count === 1) {
     if (machineLicenseTag) {
       machineLicenseTag.textContent = `⚠️ Đã dùng 1/2 lượt (Còn 1 lượt)`;
-      machineLicenseTag.style.color = "#d97706";
+      machineLicenseTag.style.color = "#f59e0b";
     }
     if (limitRuleBox) {
       limitRuleBox.classList.remove("locked");
@@ -212,7 +212,7 @@ function updateFlashAllowanceUI() {
   } else {
     if (machineLicenseTag) {
       machineLicenseTag.textContent = `✅ Còn 2/2 lượt nạp`;
-      machineLicenseTag.style.color = "#059669";
+      machineLicenseTag.style.color = "#10b981";
     }
     if (limitRuleBox) {
       limitRuleBox.classList.remove("locked");
@@ -236,7 +236,7 @@ function updateDeviceFlashStatus(mac) {
   if (count >= MAX_FLASH_COUNT) {
     if (chipLicenseTag) {
       chipLicenseTag.textContent = "⛔ TỪ CHỐI (Máy đã nạp đủ 2 lần)";
-      chipLicenseTag.style.color = "#dc2626";
+      chipLicenseTag.style.color = "#ef4444";
     }
     if (btnFlash) btnFlash.disabled = true;
     progressStatusText.textContent = `Máy tính này đã hoàn thành tối đa 2 lượt nạp. Hết lượt!`;
@@ -249,7 +249,7 @@ function updateDeviceFlashStatus(mac) {
   if (!mac || mac === "Unknown") {
     if (chipLicenseTag) {
       chipLicenseTag.textContent = "Chờ cắm thiết bị";
-      chipLicenseTag.style.color = "#64748b";
+      chipLicenseTag.style.color = "#94a3b8";
     }
     return;
   }
@@ -257,7 +257,7 @@ function updateDeviceFlashStatus(mac) {
   const remaining = MAX_FLASH_COUNT - count;
   if (chipLicenseTag) {
     chipLicenseTag.textContent = `✅ Sẵn sàng nạp (Lượt ${count + 1}/${MAX_FLASH_COUNT})`;
-    chipLicenseTag.style.color = "#059669";
+    chipLicenseTag.style.color = "#10b981";
   }
   if (btnFlash) btnFlash.disabled = false;
   logSystem(`[Thông báo] Nhận diện chip MAC [${mac}] thành công. Máy tính này còn ${remaining}/${MAX_FLASH_COUNT} lượt nạp.`, "info");
