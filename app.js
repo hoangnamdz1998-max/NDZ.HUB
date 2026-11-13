@@ -507,6 +507,75 @@ document.querySelectorAll(".btn-select-product").forEach(btn => {
   });
 });
 
+// Bộ lọc danh mục sản phẩm: Tất cả, Firmware (FW), Hoàn thiện, Vỏ nhựa in 3D
+const catFilterBtns = document.querySelectorAll(".cat-filter-btn");
+const productCards = document.querySelectorAll(".product-card[data-category]");
+const catalogSections = document.querySelectorAll(".catalog-section[data-category-section]");
+
+catFilterBtns.forEach(btn => {
+  btn.addEventListener("click", () => {
+    const filter = btn.dataset.filter;
+    catFilterBtns.forEach(b => b.classList.remove("active"));
+    btn.classList.add("active");
+
+    if (filter === "all") {
+      catalogSections.forEach(s => s.style.display = "");
+      productCards.forEach(c => c.style.display = "");
+    } else {
+      catalogSections.forEach(s => {
+        if (s.dataset.categorySection === filter) {
+          s.style.display = "";
+        } else {
+          s.style.display = "none";
+        }
+      });
+      productCards.forEach(c => {
+        if (c.dataset.category === filter) {
+          c.style.display = "";
+        } else {
+          c.style.display = "none";
+        }
+      });
+    }
+  });
+});
+
+// Modal Tư vấn & Đặt hàng sản phẩm / Đặt in vỏ 3D
+const modalOrder = document.getElementById("modal-order");
+const btnCloseOrder = document.getElementById("btn-close-order");
+const btnOrderCloseConfirm = document.getElementById("btn-order-close-confirm");
+const orderProductTitle = document.getElementById("order-product-title");
+
+document.querySelectorAll(".btn-order-action").forEach(btn => {
+  btn.addEventListener("click", () => {
+    const prodName = btn.dataset.productName;
+    if (orderProductTitle) {
+      orderProductTitle.textContent = prodName ? `Đặt Hàng: ${prodName}` : "Tư Vấn & Đặt Hàng NDZ HUB";
+    }
+    if (modalOrder) {
+      modalOrder.classList.add("active");
+    }
+  });
+});
+
+if (btnCloseOrder && modalOrder) {
+  btnCloseOrder.addEventListener("click", () => {
+    modalOrder.classList.remove("active");
+  });
+}
+if (btnOrderCloseConfirm && modalOrder) {
+  btnOrderCloseConfirm.addEventListener("click", () => {
+    modalOrder.classList.remove("active");
+  });
+}
+if (modalOrder) {
+  modalOrder.addEventListener("click", (e) => {
+    if (e.target === modalOrder) {
+      modalOrder.classList.remove("active");
+    }
+  });
+}
+
 // Mode card radio toggle
 modeCardUpdate.addEventListener("click", () => {
   modeCardUpdate.classList.add("selected");

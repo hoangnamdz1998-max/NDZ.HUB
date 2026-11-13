@@ -367,72 +367,348 @@
       <section id="view-products" class="main-view-panel">
         
         <div class="catalog-header">
-          <h2>Danh Mục Sản Phẩm (Miễn Phí 2 Lần / Mỗi Máy Tính)</h2>
-          <p>Hệ thống hỗ trợ nạp firmware miễn phí cho mỗi máy tính đúng 2 lần. Sau khi nạp đủ 2 lần, máy tính sẽ không thể nạp thêm.</p>
+          <h2>Hệ Sinh Thái Sản Phẩm NDZ HUB</h2>
+          <p>Khám phá trọn bộ <b>Firmware nạp trực tuyến</b>, <b>Thiết bị hoàn thiện</b> sẵn sàng chạy và <b>Vỏ nhựa in 3D</b> chất lượng cao.</p>
         </div>
 
-        <div class="products-grid">
-          
-          <!-- Product Card 1 -->
-          <div class="product-card featured">
-            <div class="product-card-top">
-              <span class="product-chip-badge">ESP32</span>
-              <h3>ROBOT BÁNH XÍCH N1</h3>
-              <div class="price-row">
-                <span class="price" style="font-size: 1.3rem; color: #10b981;">Miễn Phí</span>
-                <span class="price-note">/ tối đa 2 lần nạp cho mỗi máy tính</span>
-              </div>
-              <p class="product-desc" style="min-height: 40px; color: var(--text-muted);">
-                <!-- Để trống cho bạn cập nhật mô tả sau -->
-              </p>
+        <!-- Category Filter Pills (Phong cách Cute Đen Trắng Cam) -->
+        <div class="product-category-filters">
+          <button type="button" class="cat-filter-btn active" data-filter="all">
+            <span class="cat-icon">🌟</span> Tất cả (9)
+          </button>
+          <button type="button" class="cat-filter-btn" data-filter="fw">
+            <span class="cat-icon">⚡</span> Firmware & Nạp Chip (3)
+          </button>
+          <button type="button" class="cat-filter-btn" data-filter="complete">
+            <span class="cat-icon">🤖</span> Sản Phẩm Hoàn Thiện (3)
+          </button>
+          <button type="button" class="cat-filter-btn" data-filter="case">
+            <span class="cat-icon">🧱</span> Vỏ Nhựa In 3D (3)
+          </button>
+        </div>
+
+        <!-- =================== NHÓM 1: FIRMWARE (FW) =================== -->
+        <div class="catalog-section" data-category-section="fw">
+          <div class="catalog-section-header">
+            <div class="catalog-section-title">
+              <span>⚡</span> Firmware Nạp Trực Tuyến & Bản Quyền
             </div>
-            <div class="product-card-actions">
-              <button type="button" class="btn btn-primary btn-select-product" data-product-id="robot-n1">
-                ⚡ Chọn Nạp Sản Phẩm Này
-              </button>
-            </div>
+            <span class="catalog-section-badge badge-fw-sec">Nạp Qua Trình Duyệt</span>
           </div>
 
-          <!-- Product Card 2 -->
-          <div class="product-card">
-            <div class="product-card-top">
-              <span class="product-chip-badge">ESP32</span>
-              <h3>ROBOT BÁNH XÍCH T1</h3>
-              <div class="price-row">
-                <span class="price" style="font-size: 1.3rem; color: #10b981;">Miễn Phí</span>
-                <span class="price-note">/ tối đa 2 lần nạp cho mỗi máy tính</span>
+          <div class="products-grid">
+            <!-- FW Card 1 -->
+            <div class="product-card featured" data-category="fw">
+              <div class="product-card-top">
+                <div class="product-cat-tag tag-fw">⚡ Firmware Bản Quyền</div>
+                <span class="product-chip-badge">ESP32</span>
+                <h3>ROBOT BÁNH XÍCH N1</h3>
+                <div class="price-row">
+                  <span class="price" style="font-size: 1.3rem; color: #10b981;">Miễn Phí</span>
+                  <span class="price-note">/ tối đa 2 lần nạp cho mỗi máy tính</span>
+                </div>
+                <ul class="product-specs-list">
+                  <li>
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                    <span>Nạp trực tiếp qua cổng COM Web Serial không cần cài Arduino IDE.</span>
+                  </li>
+                  <li>
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                    <span>Hệ điều khiển kép: Web App điện thoại & BLE mượt mà không độ trễ.</span>
+                  </li>
+                  <li>
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                    <span>Tích hợp cơ chế ngắt motor tự động bảo vệ an toàn khi mất sóng.</span>
+                  </li>
+                </ul>
               </div>
-              <p class="product-desc" style="min-height: 40px; color: var(--text-muted);">
-                <!-- Để trống cho bạn cập nhật mô tả sau -->
-              </p>
+              <div class="product-card-actions">
+                <button type="button" class="btn btn-primary btn-select-product" data-product-id="robot-n1">
+                  ⚡ Chọn Nạp Firmware Này
+                </button>
+              </div>
             </div>
-            <div class="product-card-actions">
-              <button type="button" class="btn btn-primary btn-select-product" data-product-id="robot-t1">
-                ⚡ Chọn Nạp Sản Phẩm Này
-              </button>
+
+            <!-- FW Card 2 -->
+            <div class="product-card" data-category="fw">
+              <div class="product-card-top">
+                <div class="product-cat-tag tag-fw">⚡ Firmware Bản Quyền</div>
+                <span class="product-chip-badge">ESP32</span>
+                <h3>ROBOT BÁNH XÍCH T1</h3>
+                <div class="price-row">
+                  <span class="price" style="font-size: 1.3rem; color: #10b981;">Miễn Phí</span>
+                  <span class="price-note">/ tối đa 2 lần nạp cho mỗi máy tính</span>
+                </div>
+                <ul class="product-specs-list">
+                  <li>
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                    <span>Thuật toán tối ưu lực kéo địa hình dốc, chống trượt xích hiệu quả.</span>
+                  </li>
+                  <li>
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                    <span>Tích hợp đọc cảm biến siêu âm / radar quét chướng ngại vật từ xa.</span>
+                  </li>
+                  <li>
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                    <span>Hiệu chỉnh tốc độ động cơ độc lập qua Web Serial.</span>
+                  </li>
+                </ul>
+              </div>
+              <div class="product-card-actions">
+                <button type="button" class="btn btn-primary btn-select-product" data-product-id="robot-t1">
+                  ⚡ Chọn Nạp Firmware Này
+                </button>
+              </div>
+            </div>
+
+            <!-- FW Card 3 -->
+            <div class="product-card" data-category="fw">
+              <div class="product-card-top">
+                <div class="product-cat-tag tag-fw">⚡ Firmware Bản Quyền</div>
+                <span class="product-chip-badge">ESP32-S3</span>
+                <h3>HUB MÀN HÌNH CẢM ỨNG</h3>
+                <div class="price-row">
+                  <span class="price" style="font-size: 1.3rem; color: #10b981;">Miễn Phí</span>
+                  <span class="price-note">/ tối đa 2 lần nạp cho mỗi máy tính</span>
+                </div>
+                <ul class="product-specs-list">
+                  <li>
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                    <span>Giao diện màu cảm ứng chạm đa điểm mượt mà 60fps.</span>
+                  </li>
+                  <li>
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                    <span>Bảng điều khiển trung tâm IoT: hiển thị pin, tốc độ & thông số robot.</span>
+                  </li>
+                  <li>
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                    <span>Cập nhật qua WiFi (OTA) chỉ với một chạm trên màn hình.</span>
+                  </li>
+                </ul>
+              </div>
+              <div class="product-card-actions">
+                <button type="button" class="btn btn-primary btn-select-product" data-product-id="hub-touch">
+                  ⚡ Chọn Nạp Firmware Này
+                </button>
+              </div>
             </div>
           </div>
+        </div>
 
-          <!-- Product Card 3 -->
-          <div class="product-card">
-            <div class="product-card-top">
-              <span class="product-chip-badge">ESP32-S3</span>
-              <h3>HUB MÀN HÌNH CẢM ỨNG</h3>
-              <div class="price-row">
-                <span class="price" style="font-size: 1.3rem; color: #10b981;">Miễn Phí</span>
-                <span class="price-note">/ tối đa 2 lần nạp cho mỗi máy tính</span>
-              </div>
-              <p class="product-desc" style="min-height: 40px; color: var(--text-muted);">
-                <!-- Để trống cho bạn cập nhật mô tả sau -->
-              </p>
+        <!-- =================== NHÓM 2: SẢN PHẨM HOÀN THIỆN =================== -->
+        <div class="catalog-section" data-category-section="complete">
+          <div class="catalog-section-header">
+            <div class="catalog-section-title">
+              <span>🤖</span> Sản Phẩm Hoàn Thiện (Cắm Nguồn Là Chạy)
             </div>
-            <div class="product-card-actions">
-              <button type="button" class="btn btn-primary btn-select-product" data-product-id="hub-touch">
-                ⚡ Chọn Nạp Sản Phẩm Này
-              </button>
-            </div>
+            <span class="catalog-section-badge badge-device-sec">Full Kit Lắp Sẵn</span>
           </div>
 
+          <div class="products-grid">
+            <!-- Complete Card 1 -->
+            <div class="product-card" data-category="complete">
+              <div class="product-card-top">
+                <div class="product-cat-tag tag-device">🤖 Sản Phẩm Hoàn Thiện</div>
+                <span class="product-chip-badge">ESP32 · Sẵn Hàng</span>
+                <h3>ROBOT BÁNH XÍCH N1</h3>
+                <div class="price-row">
+                  <span class="price" style="font-size: 1.3rem; color: #2563eb;">Full Box 100%</span>
+                  <span class="price-note">/ Đầy đủ linh kiện & pin</span>
+                </div>
+                <ul class="product-specs-list">
+                  <li>
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                    <span>Lắp sẵn 100%: Khung gầm, cụm xích tải cao su, 2 động cơ giảm tốc.</span>
+                  </li>
+                  <li>
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                    <span>Mạch vi điều khiển nạp sẵn Firmware NDZ chính thức, kích hoạt sẵn.</span>
+                  </li>
+                  <li>
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                    <span>Kèm khối pin sạc dung lượng cao + cáp Type-C, mở hộp là chạy.</span>
+                  </li>
+                </ul>
+              </div>
+              <div class="product-card-actions">
+                <button type="button" class="btn btn-order-action btn-order-device" data-product-name="Robot Bánh Xích N1 (Bản Hoàn Thiện 100%)">
+                  💬 Tư Vấn & Mua Hàng (Zalo)
+                </button>
+              </div>
+            </div>
+
+            <!-- Complete Card 2 -->
+            <div class="product-card" data-category="complete">
+              <div class="product-card-top">
+                <div class="product-cat-tag tag-device">🤖 Sản Phẩm Hoàn Thiện</div>
+                <span class="product-chip-badge">ESP32 · Bản Pro</span>
+                <h3>ROBOT BÁNH XÍCH T1</h3>
+                <div class="price-row">
+                  <span class="price" style="font-size: 1.3rem; color: #2563eb;">Bản Pro Tải Nặng</span>
+                  <span class="price-note">/ Cảm biến & Camera</span>
+                </div>
+                <ul class="product-specs-list">
+                  <li>
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                    <span>Khung xe bánh xích hạng nặng hợp kim gia cố chịu tải lớn.</span>
+                  </li>
+                  <li>
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                    <span>Trang bị cụm quét chướng ngại vật & ngàm gắn camera FPV.</span>
+                  </li>
+                  <li>
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                    <span>Mạch công suất tản nhiệt nhôm, nạp sẵn FW cân bằng lực kéo.</span>
+                  </li>
+                </ul>
+              </div>
+              <div class="product-card-actions">
+                <button type="button" class="btn btn-order-action btn-order-device" data-product-name="Robot Bánh Xích T1 (Bản Pro Vượt Địa Hình)">
+                  💬 Tư Vấn & Mua Hàng (Zalo)
+                </button>
+              </div>
+            </div>
+
+            <!-- Complete Card 3 -->
+            <div class="product-card" data-category="complete">
+              <div class="product-card-top">
+                <div class="product-cat-tag tag-device">🤖 Sản Phẩm Hoàn Thiện</div>
+                <span class="product-chip-badge">ESP32-S3 · Để Bàn</span>
+                <h3>HUB MÀN HÌNH CẢM ỨNG</h3>
+                <div class="price-row">
+                  <span class="price" style="font-size: 1.3rem; color: #2563eb;">Full Box Để Bàn</span>
+                  <span class="price-note">/ Cắm nguồn dùng ngay</span>
+                </div>
+                <ul class="product-specs-list">
+                  <li>
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                    <span>Màn hình màu cảm ứng đa điểm sắc nét, độ phản hồi cực nhanh.</span>
+                  </li>
+                  <li>
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                    <span>Vỏ hộp để bàn góc nghiêng thẩm mỹ, chân đế cao su chống trượt.</span>
+                  </li>
+                  <li>
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                    <span>Nạp sẵn hệ điều hành NDZ Touch OS, kết nối WiFi / BLE tức thì.</span>
+                  </li>
+                </ul>
+              </div>
+              <div class="product-card-actions">
+                <button type="button" class="btn btn-order-action btn-order-device" data-product-name="Hub Màn Hình Cảm Ứng (Bản Full Box)">
+                  💬 Tư Vấn & Mua Hàng (Zalo)
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- =================== NHÓM 3: VỎ NHỰA IN 3D =================== -->
+        <div class="catalog-section" data-category-section="case">
+          <div class="catalog-section-header">
+            <div class="catalog-section-title">
+              <span>🧱</span> Vỏ Nhựa In 3D (Dành Cho Anh Em DIY & Sửa Chữa)
+            </div>
+            <span class="catalog-section-badge badge-case-sec">In 3D / File STL</span>
+          </div>
+
+          <div class="products-grid">
+            <!-- Case Card 1 -->
+            <div class="product-card" data-category="case">
+              <div class="product-card-top">
+                <div class="product-cat-tag tag-case">🧱 Vỏ Nhựa In 3D</div>
+                <span class="product-chip-badge">PLA+ / PETG</span>
+                <h3>VỎ NHỰA ROBOT N1</h3>
+                <div class="price-row">
+                  <span class="price" style="font-size: 1.3rem; color: #9333ea;">Đặt In / File STL</span>
+                  <span class="price-note">/ Nhiều tùy chọn màu</span>
+                </div>
+                <ul class="product-specs-list">
+                  <li>
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#9333ea" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                    <span>Trọn bộ chi tiết: Khung thân, ngàm motor, bánh gai xích & nắp chụp.</span>
+                  </li>
+                  <li>
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#9333ea" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                    <span>In công nghệ FDM độ phân giải cao 0.16mm, infill dày dặn chống gãy.</span>
+                  </li>
+                  <li>
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#9333ea" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                    <span>Chuẩn xác từng lỗ ốc M3, khớp khít hoàn hảo bo mạch ESP32.</span>
+                  </li>
+                </ul>
+              </div>
+              <div class="product-card-actions">
+                <button type="button" class="btn btn-order-action btn-order-case" data-product-name="Bộ Vỏ Nhựa In 3D - Robot N1">
+                  📦 Đặt In Nhựa / Tải File STL
+                </button>
+              </div>
+            </div>
+
+            <!-- Case Card 2 -->
+            <div class="product-card" data-category="case">
+              <div class="product-card-top">
+                <div class="product-cat-tag tag-case">🧱 Vỏ Nhựa In 3D</div>
+                <span class="product-chip-badge">PETG / ABS Chịu Lực</span>
+                <h3>VỎ NHỰA ROBOT T1</h3>
+                <div class="price-row">
+                  <span class="price" style="font-size: 1.3rem; color: #9333ea;">Đặt In / File STL</span>
+                  <span class="price-note">/ Chống va đập</span>
+                </div>
+                <ul class="product-specs-list">
+                  <li>
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#9333ea" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                    <span>Khung xe chịu lực cấu trúc tổ ong, chống biến dạng khi leo trèo.</span>
+                  </li>
+                  <li>
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#9333ea" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                    <span>Có sẵn khe luồn dây cáp nguồn và ngàm kẹp cảm biến khoảng cách.</span>
+                  </li>
+                  <li>
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#9333ea" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                    <span>Cung cấp file 3D STL gốc hoặc nhận in thành phẩm giao tận nhà.</span>
+                  </li>
+                </ul>
+              </div>
+              <div class="product-card-actions">
+                <button type="button" class="btn btn-order-action btn-order-case" data-product-name="Bộ Vỏ Nhựa In 3D - Robot T1">
+                  📦 Đặt In Nhựa / Tải File STL
+                </button>
+              </div>
+            </div>
+
+            <!-- Case Card 3 -->
+            <div class="product-card" data-category="case">
+              <div class="product-card-top">
+                <div class="product-cat-tag tag-case">🧱 Vỏ Nhựa In 3D</div>
+                <span class="product-chip-badge">PLA+ Đẹp Mịn</span>
+                <h3>VỎ HUB CẢM ỨNG</h3>
+                <div class="price-row">
+                  <span class="price" style="font-size: 1.3rem; color: #9333ea;">Đặt In / File STL</span>
+                  <span class="price-note">/ Để bàn công thái học</span>
+                </div>
+                <ul class="product-specs-list">
+                  <li>
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#9333ea" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                    <span>Góc nghiêng 60 độ công thái học cho góc nhìn màn hình rõ nét nhất.</span>
+                  </li>
+                  <li>
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#9333ea" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                    <span>Khoét chuẩn cổng sạc Type-C, khe thẻ nhớ và nút bấm cạnh hông.</span>
+                  </li>
+                  <li>
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#9333ea" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                    <span>Khớp ngàm bấm không cần keo dán, tháo lắp cực kỳ dễ dàng.</span>
+                  </li>
+                </ul>
+              </div>
+              <div class="product-card-actions">
+                <button type="button" class="btn btn-order-action btn-order-case" data-product-name="Vỏ Nhựa In 3D - Hub Cảm Ứng">
+                  📦 Đặt In Nhựa / Tải File STL
+                </button>
+              </div>
+            </div>
+          </div>
         </div>
 
         <!-- Trust & Support Info Banner -->
@@ -609,6 +885,42 @@
           <li>Thả nút <b>BOOT</b> ra.</li>
           <li>Bấm lại nút <b>Chọn Cổng COM & Kết Nối</b> trên trang web.</li>
         </ol>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: TƯ VẤN & ĐẶT HÀNG SẢN PHẨM / VỎ NHỰA IN 3D -->
+  <div class="modal-overlay" id="modal-order">
+    <div class="modal-box" style="max-width: 520px;">
+      <div class="modal-header">
+        <div>
+          <h3 id="order-product-title">Tư Vấn & Đặt Hàng NDZ HUB</h3>
+          <p style="font-size: 0.82rem; color: var(--text-muted); margin-top: 4px;">Sản Phẩm Hoàn Thiện · Vỏ Nhựa In 3D · Hỗ Trợ Kỹ Thuật</p>
+        </div>
+        <button type="button" class="modal-close" id="btn-close-order">&times;</button>
+      </div>
+      <div class="modal-body" style="font-size: 0.92rem; color: var(--text-secondary); line-height: 1.6;">
+        <div style="background: var(--bg-subtle); border: 2px solid var(--border); border-radius: var(--radius-md); padding: 16px; margin-bottom: 18px; box-shadow: 2px 2px 0 var(--border);">
+          <div style="font-weight: 800; color: var(--text-main); margin-bottom: 6px;">📞 Liên Hệ Đặt Hàng Trực Tiếp:</div>
+          <p style="margin-bottom: 8px;">Để đặt mua sản phẩm hoàn thiện, nhận file STL hoặc đặt in 3D theo màu yêu cầu, vui lòng liên hệ ngay đội ngũ NDZ:</p>
+          <ul style="padding-left: 18px; display: flex; flex-direction: column; gap: 6px; font-weight: 600;">
+            <li>💬 <b>Nhóm Zalo hỗ trợ:</b> Giải đáp kỹ thuật & báo giá nhanh nhất.</li>
+            <li>🚀 <b>Giao hàng toàn quốc:</b> Nhận hàng kiểm tra chạy thử mới thanh toán.</li>
+            <li>🛡️ <b>Bảo hành phần cứng:</b> Hỗ trợ kỹ thuật 1 - 1 qua Zalo/Ultraview.</li>
+          </ul>
+        </div>
+
+        <div style="display: flex; flex-direction: column; gap: 10px;">
+          <a href="#" class="btn btn-primary" id="btn-order-zalo-link" style="text-align: center; justify-content: center; background: #0068ff; text-decoration: none;" onclick="window.open('https://zalo.me', '_blank'); return false;">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 2C6.48 2 2 6.03 2 11c0 2.87 1.5 5.43 3.84 7.04L5 22l4.24-1.41C10.13 20.84 11.05 21 12 21c5.52 0 10-4.03 10-9s-4.48-9-10-9z"/>
+            </svg>
+            Nhắn Tin Tư Vấn Qua Zalo
+          </a>
+          <button type="button" class="btn btn-outline" id="btn-order-close-confirm" style="justify-content: center;">
+            Đóng cửa sổ
+          </button>
+        </div>
       </div>
     </div>
   </div>
