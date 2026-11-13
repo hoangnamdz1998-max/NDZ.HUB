@@ -452,20 +452,24 @@ function onProductChange() {
   refreshFlashButtonState();
 }
 
-// 3. Quản lý Main Top Navigation Tabs (Nạp Firmware, Sản Phẩm, Serial Monitor, Hướng Dẫn)
-const navTabBtns = document.querySelectorAll(".nav-tab-btn");
+// 3. Quản lý Navigation Tabs (Top Navigation & Floating Bottom Dock)
+const allNavBtns = document.querySelectorAll(".nav-tab-btn, .dock-btn");
 const mainViewPanels = document.querySelectorAll(".main-view-panel");
 
-navTabBtns.forEach(btn => {
+allNavBtns.forEach(btn => {
   btn.addEventListener("click", () => {
-    navTabBtns.forEach(b => b.classList.remove("active"));
-    mainViewPanels.forEach(p => p.classList.remove("active"));
+    const targetNav = btn.dataset.nav;
+    if (!targetNav) return;
 
-    btn.classList.add("active");
-    const target = document.getElementById(btn.dataset.nav);
-    if (target) {
-      target.classList.add("active");
-    }
+    allNavBtns.forEach(b => {
+      b.classList.toggle("active", b.dataset.nav === targetNav);
+    });
+
+    mainViewPanels.forEach(p => {
+      p.classList.toggle("active", p.id === targetNav);
+    });
+
+    window.scrollTo({ top: 0, behavior: "smooth" });
   });
 });
 
