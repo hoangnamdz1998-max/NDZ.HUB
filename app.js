@@ -37,10 +37,11 @@ const modeCardUpdate = document.getElementById("mode-card-update");
 const modeCardClean = document.getElementById("mode-card-clean");
 
 // ============================================================================
-// HỆ THỐNG QUẢN LÝ LƯỢT NẠP (MỖI MÁY TÍNH CHỈ ĐƯỢC NẠP 1 LẦN DUY NHẤT)
+// HỆ THỐNG QUẢN LÝ LƯỢT NẠP (MỖI MÁY TÍNH ĐƯỢC NẠP 2 LẦN MIỄN PHÍ)
 // ============================================================================
-const MACHINE_FLASH_KEY = "ndz_machine_flashed_v2";
-const CHIP_FLASH_KEY = "ndz_chip_flashed_v2";
+const MAX_FLASH_COUNT = 2;
+const MACHINE_FLASH_KEY = "ndz_machine_flashed_v3";
+const CHIP_FLASH_KEY = "ndz_chip_flashed_v3";
 
 // 1. Lấy thông tin lượt nạp từ lưu trữ đa tầng (localStorage + Cookie)
 function getMachineFlashRecord() {
@@ -57,9 +58,16 @@ function getMachineFlashRecord() {
   return null;
 }
 
-function isMachineFlashed() {
+function getMachineFlashCount() {
   const rec = getMachineFlashRecord();
-  return !!(rec && rec.flashed);
+  if (!rec) return 0;
+  if (Array.isArray(rec.flashes)) return rec.flashes.length;
+  if (typeof rec.count === "number") return rec.count;
+  return 0;
+}
+
+function isMachineFlashLimitReached() {
+  return getMachineFlashCount() >= MAX_FLASH_COUNT;
 }
 
 // 2. IndexedDB Backup
@@ -67,7 +75,7 @@ function openSecurityDB() {
   return new Promise((resolve) => {
     if (!window.indexedDB) return resolve(null);
     try {
-      const req = indexedDB.open("NDZ_Security_DB", 1);
+      const req = indexedDB.open("NDZ_Security_DB_v3", 1);
       req.onupgradeneeded = (e) => {
         const db = e.target.result;
         if (!db.objectStoreNames.contains("security")) {
@@ -87,19 +95,22 @@ async function syncIndexedDB() {
     const db = await openSecurityDB();
     if (!db) return;
 
-    if (!isMachineFlashed()) {
-      const tx = db.transaction("security", "readonly");
-      const store = tx.objectStore("security");
-      const req = store.get(MACHINE_FLASH_KEY);
-      req.onsuccess = () => {
-        if (req.result && req.result.val && req.result.val.flashed) {
-          const valStr = JSON.stringify(req.result.val);
+    const tx = db.transaction("security", "readonly");
+    const store = tx.objectStore("security");
+    const req = store.get(MACHINE_FLASH_KEY);
+    req.onsuccess = () => {
+      if (req.result && req.result.val) {
+        const idbRec = req.result.val;
+        const localCount = getMachineFlashCount();
+        const idbCount = Array.isArray(idbRec.flashes) ? idbRec.flashes.length : (idbRec.count || 0);
+        if (idbCount > localCount) {
+          const valStr = JSON.stringify(idbRec);
           try { localStorage.setItem(MACHINE_FLASH_KEY, valStr); } catch (e) {}
           setMachineCookie(valStr);
           updateFlashAllowanceUI();
         }
-      };
-    }
+      }
+    };
   } catch (e) {}
 }
 
@@ -113,12 +124,24 @@ function setMachineCookie(valStr) {
 
 async function markMachineAsFlashed(mac, productName) {
   const now = new Date();
-  const record = {
-    flashed: true,
+  const currentRec = getMachineFlashRecord() || { count: 0, flashes: [] };
+  const flashes = Array.isArray(currentRec.flashes) ? currentRec.flashes : [];
+
+  const newFlashEntry = {
     flashedAt: now.toLocaleString("vi-VN"),
     timestamp: now.getTime(),
     mac: mac || "UNKNOWN_MAC",
     product: productName || "ESP32 Firmware"
+  };
+
+  flashes.push(newFlashEntry);
+  const newCount = flashes.length;
+
+  const record = {
+    count: newCount,
+    flashes: flashes,
+    lastFlashedAt: newFlashEntry.flashedAt,
+    lastMac: newFlashEntry.mac
   };
 
   const str = JSON.stringify(record);
@@ -143,46 +166,62 @@ async function markMachineAsFlashed(mac, productName) {
     const cleanMac = mac.replace(/[^a-zA-Z0-9]/g, "").toUpperCase();
     try {
       const chips = JSON.parse(localStorage.getItem(CHIP_FLASH_KEY) || "{}");
-      chips[cleanMac] = record;
+      chips[cleanMac] = newFlashEntry;
       localStorage.setItem(CHIP_FLASH_KEY, JSON.stringify(chips));
     } catch (e) {}
   }
 }
 
 function updateFlashAllowanceUI() {
-  const flashed = isMachineFlashed();
-  const info = getMachineFlashRecord();
+  const count = getMachineFlashCount();
+  const remaining = Math.max(0, MAX_FLASH_COUNT - count);
+  const rec = getMachineFlashRecord();
 
-  if (flashed) {
+  if (count >= MAX_FLASH_COUNT) {
     if (machineLicenseTag) {
-      machineLicenseTag.textContent = "❌ Đã hết lượt (Đã nạp 1 lần)";
+      machineLicenseTag.textContent = `❌ Đã hết lượt (Đã nạp ${count}/${MAX_FLASH_COUNT} lần)`;
       machineLicenseTag.style.color = "#dc2626";
     }
     if (limitRuleBox) {
       limitRuleBox.classList.add("locked");
     }
     if (limitRuleTitle) {
-      limitRuleTitle.textContent = "Máy Tính Này Đã Sử Dụng Hết Lượt Nạp!";
+      limitRuleTitle.textContent = "Máy Tính Này Đã Sử Dụng Hết 2 Lượt Nạp!";
     }
     if (limitRuleDesc) {
-      limitRuleDesc.innerHTML = `Máy tính này đã từng nạp firmware vào lúc: <b>${info?.flashedAt || ''}</b> (Mã chip: <code>${info?.mac || 'Đã nạp'}</code>).<br><span style="color:#b91c1c; font-weight:700;">Theo chính sách, mỗi máy tính chỉ được nạp 1 lần. Bạn KHÔNG thể nạp thêm chip thứ 2 trên máy tính này!</span>`;
+      const detailFlashes = (rec?.flashes || []).map((f, i) => `Lần ${i+1}: <b>${f.flashedAt}</b> (${f.mac})`).join(" | ");
+      limitRuleDesc.innerHTML = `Máy tính này đã hoàn tất đủ <b>2/2 lượt nạp miễn phí</b> (${detailFlashes}).<br><span style="color:#b91c1c; font-weight:700;">Theo chính sách, bạn KHÔNG thể nạp thêm lần thứ 3 trên máy tính này!</span>`;
     }
     if (btnFlash) {
       btnFlash.disabled = true;
     }
+  } else if (count === 1) {
+    if (machineLicenseTag) {
+      machineLicenseTag.textContent = `⚠️ Đã dùng 1/2 lượt (Còn 1 lượt)`;
+      machineLicenseTag.style.color = "#d97706";
+    }
+    if (limitRuleBox) {
+      limitRuleBox.classList.remove("locked");
+    }
+    if (limitRuleTitle) {
+      limitRuleTitle.textContent = "Máy Tính Đã Dùng 1 Lượt Nạp (Còn 1 Lượt Cuối):";
+    }
+    if (limitRuleDesc) {
+      limitRuleDesc.innerHTML = `Bạn đã nạp thành công 1 thiết bị lúc: <b>${rec?.lastFlashedAt || ''}</b>. Máy tính của bạn còn <b>1 lượt nạp miễn phí cuối cùng</b>.`;
+    }
   } else {
     if (machineLicenseTag) {
-      machineLicenseTag.textContent = "✅ Còn 1 lượt nạp";
+      machineLicenseTag.textContent = `✅ Còn 2/2 lượt nạp`;
       machineLicenseTag.style.color = "#059669";
     }
     if (limitRuleBox) {
       limitRuleBox.classList.remove("locked");
     }
     if (limitRuleTitle) {
-      limitRuleTitle.textContent = "Chính Sách Nạp Miễn Phí (1 Lần / Mỗi Máy Tính):";
+      limitRuleTitle.textContent = "Chính Sách Nạp Miễn Phí (2 Lần / Mỗi Máy Tính):";
     }
     if (limitRuleDesc) {
-      limitRuleDesc.innerHTML = `Hệ thống miễn phí 100%. Mỗi máy tính chỉ được cấp <b>1 lượt nạp duy nhất</b>. Khi đã nạp thành công 1 chip, máy tính này sẽ <b>không thể nạp thêm chip thứ 2</b>.`;
+      limitRuleDesc.innerHTML = `Hệ thống miễn phí 100%. Mỗi máy tính được cấp <b>2 lượt nạp miễn phí</b> (ví dụ nạp cho 2 thiết bị khác nhau). Sau khi đã nạp đủ 2 lần, máy tính này sẽ <b>bị khóa không thể nạp thêm</b>.`;
     }
   }
 }
@@ -190,23 +229,23 @@ function updateFlashAllowanceUI() {
 function updateDeviceFlashStatus(mac) {
   updateFlashAllowanceUI();
 
-  const flashed = isMachineFlashed();
-  const info = getMachineFlashRecord();
+  const count = getMachineFlashCount();
+  const rec = getMachineFlashRecord();
 
-  // NẾU MÁY TÍNH NÀY ĐÃ TỪNG NẠP 1 LẦN -> KHÓA NGAY LẬP TỨC (DÙ LÀ CHIP NÀO ĐI NỮA)
-  if (flashed) {
+  // NẾU MÁY TÍNH NÀY ĐÃ ĐẠT ĐỦ 2 LẦN -> KHÓA NGAY LẬP TỨC
+  if (count >= MAX_FLASH_COUNT) {
     if (chipLicenseTag) {
-      chipLicenseTag.textContent = "⛔ TỪ CHỐI (Máy đã nạp 1 lần)";
+      chipLicenseTag.textContent = "⛔ TỪ CHỐI (Máy đã nạp đủ 2 lần)";
       chipLicenseTag.style.color = "#dc2626";
     }
     if (btnFlash) btnFlash.disabled = true;
-    progressStatusText.textContent = `Máy tính này đã hết lượt nạp. Không thể nạp thêm chip thứ 2!`;
-    logSystem(`[CẢNH BÁO TỪ CHỐI] Máy tính này đã từng nạp firmware vào lúc ${info?.flashedAt} (Mã chip cũ: ${info?.mac}).`, "error");
-    logSystem(`[CHÍNH SÁCH 1 LẦN / MÁY] Bạn đang cắm chip [MAC: ${mac || 'Đang kết nối'}], nhưng máy tính này đã sử dụng hết lượt nạp miễn phí. Vui lòng không nạp thêm chip thứ 2!`, "error");
+    progressStatusText.textContent = `Máy tính này đã hoàn thành tối đa 2 lượt nạp. Hết lượt!`;
+    logSystem(`[CẢNH BÁO TỪ CHỐI] Máy tính này đã hoàn thành đủ 2 lượt nạp firmware miễn phí.`, "error");
+    logSystem(`[CHÍNH SÁCH 2 LẦN / MÁY] Bạn đang cắm chip [MAC: ${mac || 'Đang kết nối'}], nhưng máy tính này đã hết lượt. Không thể nạp lần thứ 3!`, "error");
     return;
   }
 
-  // Nếu máy tính chưa nạp:
+  // Nếu máy tính chưa hết lượt:
   if (!mac || mac === "Unknown") {
     if (chipLicenseTag) {
       chipLicenseTag.textContent = "Chờ cắm thiết bị";
@@ -215,30 +254,13 @@ function updateDeviceFlashStatus(mac) {
     return;
   }
 
-  // Kiểm tra thêm: nếu chip này đã từng bị nạp ở máy khác
-  const cleanMac = mac.replace(/[^a-zA-Z0-9]/g, "").toUpperCase();
-  let chipAlreadyFlashed = false;
-  try {
-    const chips = JSON.parse(localStorage.getItem(CHIP_FLASH_KEY) || "{}");
-    if (chips[cleanMac]) chipAlreadyFlashed = true;
-  } catch (e) {}
-
-  if (chipAlreadyFlashed) {
-    if (chipLicenseTag) {
-      chipLicenseTag.textContent = "❌ Chip này đã từng được nạp";
-      chipLicenseTag.style.color = "#dc2626";
-    }
-    if (btnFlash) btnFlash.disabled = true;
-    progressStatusText.textContent = `Bo mạch này đã từng được nạp trước đó.`;
-    logSystem(`[Cảnh báo] Bo mạch MAC [${mac}] đã có lịch sử nạp firmware.`, "warn");
-  } else {
-    if (chipLicenseTag) {
-      chipLicenseTag.textContent = "✅ Sẵn sàng nạp";
-      chipLicenseTag.style.color = "#059669";
-    }
-    if (btnFlash) btnFlash.disabled = false;
-    logSystem(`[Thông báo] Nhận diện chip MAC [${mac}] thành công. Máy tính này còn 1 lượt nạp miễn phí.`, "info");
+  const remaining = MAX_FLASH_COUNT - count;
+  if (chipLicenseTag) {
+    chipLicenseTag.textContent = `✅ Sẵn sàng nạp (Lượt ${count + 1}/${MAX_FLASH_COUNT})`;
+    chipLicenseTag.style.color = "#059669";
   }
+  if (btnFlash) btnFlash.disabled = false;
+  logSystem(`[Thông báo] Nhận diện chip MAC [${mac}] thành công. Máy tính này còn ${remaining}/${MAX_FLASH_COUNT} lượt nạp.`, "info");
 }
 
 // Custom files elements
@@ -545,10 +567,10 @@ btnFlash.addEventListener("click", async () => {
     return;
   }
 
-  // KIỂM TRA CHÍNH SÁCH 1 LẦN / MỖI MÁY TÍNH
-  if (isMachineFlashed()) {
-    const info = getMachineFlashRecord();
-    alert(`MÁY TÍNH NÀY ĐÃ HẾT LƯỢT NẠP!\n\nThời gian nạp trước đó: ${info?.flashedAt || 'Gần đây'}\nThiết bị đã nạp: ${info?.product || 'Firmware'} (MAC: ${info?.mac || 'Đã nạp'})\n\nTheo quy định của NDZ HUB, mỗi máy tính chỉ được cấp đúng 1 lượt nạp miễn phí. Bạn không thể nạp thêm chip thứ 2 trên cùng một máy tính!`);
+  // KIỂM TRA CHÍNH SÁCH 2 LẦN / MỖI MÁY TÍNH
+  if (isMachineFlashLimitReached()) {
+    const count = getMachineFlashCount();
+    alert(`MÁY TÍNH NÀY ĐÃ HẾT LƯỢT NẠP!\n\nBạn đã sử dụng hết ${count}/${MAX_FLASH_COUNT} lượt nạp miễn phí trên máy tính này.\n\nTheo quy định của NDZ HUB, mỗi máy tính chỉ được cấp tối đa 2 lượt nạp. Bạn không thể nạp thêm lần thứ 3 trên cùng một máy tính!`);
     btnFlash.disabled = true;
     return;
   }
@@ -649,10 +671,17 @@ btnFlash.addEventListener("click", async () => {
     progressStatusText.textContent = "Nạp thành công! Đang khởi động lại chip...";
     logSystem("Nạp hoàn tất! Đang Reset vi điều khiển...", "success");
 
-    // Ghi nhận máy tính đã hoàn thành lượt nạp (Khóa vĩnh viễn không cho nạp chip thứ 2)
+    // Ghi nhận lượt nạp thành công cho máy tính (Tối đa 2 lần)
     const currentProd = manifestData?.products?.find(p => p.id === selectProduct?.value);
     await markMachineAsFlashed(currentChipMac, currentProd?.name || "ESP32 Firmware");
     updateDeviceFlashStatus(currentChipMac);
+
+    const afterCount = getMachineFlashCount();
+    if (afterCount < MAX_FLASH_COUNT) {
+      logSystem(`[Thông báo] Bạn vừa hoàn thành lượt nạp ${afterCount}/${MAX_FLASH_COUNT}. Máy tính này còn ${MAX_FLASH_COUNT - afterCount} lượt nạp nữa!`, "info");
+    } else {
+      logSystem(`[Thông báo] Bạn đã sử dụng đủ ${MAX_FLASH_COUNT}/${MAX_FLASH_COUNT} lượt nạp miễn phí của máy tính này!`, "warn");
+    }
 
     // Khởi động lại ESP32
     try {
@@ -668,7 +697,7 @@ btnFlash.addEventListener("click", async () => {
     alert(`Lỗi nạp firmware: ${err.message}`);
   } finally {
     isFlashing = false;
-    btnFlash.disabled = isMachineFlashed();
+    btnFlash.disabled = isMachineFlashLimitReached();
     btnErase.disabled = false;
     btnConnect.disabled = false;
   }
