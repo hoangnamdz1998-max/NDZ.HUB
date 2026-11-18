@@ -119,7 +119,7 @@ export const translations = {
     catalog_badge: "HỆ SINH THÁI IOT CHÍNH HÃNG NDZ",
     catalog_title: "Hệ Sinh Thái Sản Phẩm NDZ HUB",
     catalog_subtitle: "Khám phá trọn bộ <b>Thiết bị hoàn thiện</b> sẵn sàng chạy và <b>Vỏ nhựa in 3D</b> chất lượng cao.",
-    filter_complete: "🤖 Sản Phẩm Hoàn Thiện (3)",
+    filter_complete: "🤖 Sản Phẩm Hoàn Thiện (5)",
     filter_case: "🧱 Vỏ Nhựa In 3D (3)",
 
     // Group 1: Completed Devices
@@ -147,7 +147,37 @@ export const translations = {
     t1_spec2: "Trang bị cụm quét chướng ngại vật & ngàm gắn camera FPV.",
     t1_spec3: "Mạch công suất tản nhiệt nhôm, nạp sẵn FW cân bằng lực kéo.",
 
-    // Hub Touch Complete
+    // Hub Touch Complete - COMBO CẢ BỘ
+    hub_combo_chip: "ESP32-S3 · Combo Cả Bộ",
+    hub_combo_thumb_badge: "Ảnh trọn bộ để bàn 🔍",
+    hub_combo_title: "COMBO HUB MÀN HÌNH + ĐẾ PHÍM CƠ",
+    hub_combo_price: "1.400.000 đ",
+    hub_combo_price_note: "/ Trọn bộ cả 2 món (Tiết kiệm 100K)",
+    hub_combo_spec1: "Trọn gói Màn hình 2.8\" cảm ứng + Đế dock phím cơ macro 3 switch + Núm xoay.",
+    hub_combo_spec2: "Núm xoay vô cực kim loại chỉnh âm lượng mượt mà, LED RGB gầm phát sáng đổi màu.",
+    hub_combo_spec3: "Nạp sẵn hệ điều hành NDZ Touch OS, cắm cáp Type-C là dùng ngay.",
+
+    // Hub Touch Complete - MÀN HÌNH LẺ
+    hub_screen_only_chip: "ESP32-S3 · Màn Hình Lẻ",
+    hub_screen_only_thumb_badge: "Ảnh màn hình lẻ để bàn 🔍",
+    hub_screen_only_title: "HUB MÀN HÌNH CẢM ỨNG (MÀN HÌNH LẺ)",
+    hub_screen_only_price: "1.000.000 đ",
+    hub_screen_only_price_note: "/ Chỉ Màn hình + Vỏ hoàn thiện",
+    hub_screen_only_spec1: "Màn hình màu cảm ứng 2.8\" đa điểm sắc nét, kèm loa ngoài và mic thu âm.",
+    hub_screen_only_spec2: "Vỏ bảo vệ in 3D công thái học viền cam đen, chân cao su chống trượt trên bàn.",
+    hub_screen_only_spec3: "Cổng Type-C cấp nguồn độc lập, chạy đầy đủ 12 ứng dụng và trợ lý Xiaozhi AI.",
+
+    // Hub Touch Complete - ĐẾ LẺ
+    hub_dock_only_chip: "Phím Cơ · Núm Xoay RGB",
+    hub_dock_only_thumb_badge: "Cận cảnh dock phím cơ 🔍",
+    hub_dock_only_title: "ĐẾ DOCK PHÍM CƠ MACRO (ĐẾ LẺ)",
+    hub_dock_only_price: "500.000 đ",
+    hub_dock_only_price_note: "/ Đế dock phím cơ + LED RGB",
+    hub_dock_only_spec1: "Đế dock 3 phím cơ switch cao cấp gõ nảy, kèm núm xoay kim loại đa năng.",
+    hub_dock_only_spec2: "Dải đèn LED RGB phát sáng gầm bàn đổi màu theo hiệu ứng hiện đại.",
+    hub_dock_only_spec3: "Rãnh ngàm thiết kế vừa khít để cắm nâng giữ màn hình Hub 2.8\" góc nghiêng chuẩn.",
+
+    // Hub Touch Complete (Legacy / General)
     hub_chip_badge: "ESP32-S3 · Để Bàn",
     hub_thumb_badge: "Ảnh góc Setup bàn làm việc 🔍",
     hub_title: "HUB MÀN HÌNH CẢM ỨNG",
@@ -265,11 +295,29 @@ export const translations = {
     hub_modal_btn_flash: "⚡ Chuyển Sang Nạp Firmware Trực Tiếp",
     hub_modal_btn_zalo: "💬 Nhắn Tin Tư Vấn & Mua Hàng (Zalo)",
     hub_thumb_1: "Ảnh Setup Bàn",
+    hub_thumb_standalone: "Màn Hình Lẻ",
     hub_thumb_2: "Cận Cảnh Thiết Bị",
     hub_thumb_3: "Bo Mạch & Phụ Kiện",
     hub_caption_1: "Góc Setup Bàn Làm Việc (Vỏ Cam Đen)",
+    hub_caption_standalone: "Cận Cảnh Màn Hình Lẻ Đặt Trên Bàn Làm Việc (Vỏ Cam Đen)",
     hub_caption_2: "Cận Cảnh Màn Hình & Phím Cơ Bàn Phím",
     hub_caption_3: "Mạch ESP32-S3 2.8 Inch Cảm Ứng, Loa, Mic & Cáp",
+
+    // Packages & Pricing
+    hub_modal_pricing_title: "Bảng Báo Giá & Tùy Chọn Mua Hàng",
+    hub_pkg_screen_title: "Màn Hình Lẻ (Không Kèm Đế)",
+    hub_pkg_screen_price: "1.000.000 đ",
+    hub_pkg_screen_desc: "Màn hình 2.8\" cảm ứng + Vỏ hoàn thiện + Loa & Mic (cắm nguồn Type-C là chạy ngay, không kèm đế).",
+    hub_pkg_screen_btn: "💬 Đặt Mua Màn Hình Lẻ (1.000.000 đ)",
+    hub_pkg_dock_title: "Đế Phím Cơ Macro (Đế Lẻ)",
+    hub_pkg_dock_price: "500.000 đ",
+    hub_pkg_dock_desc: "Đế dock 3 phím switch cơ + Núm xoay kim loại đa năng + Dải đèn LED RGB gầm hiện đại.",
+    hub_pkg_dock_btn: "💬 Đặt Mua Đế Phím Cơ Lẻ (500.000 đ)",
+    hub_pkg_combo_title: "⭐ Combo Cả Bộ (Màn Hình + Đế)",
+    hub_pkg_combo_badge: "BÁN CHẠY NHẤT · TIẾT KIỆM 100K",
+    hub_pkg_combo_price: "1.400.000 đ",
+    hub_pkg_combo_desc: "Trọn bộ Cả Màn Hình 2.8\" Cảm Ứng + Đế Dock Phím Cơ Macro (Tiết kiệm 100.000 đ so với mua lẻ).",
+    hub_pkg_combo_btn: "💬 Đặt Mua Combo Cả Bộ (1.400.000 đ)",
 
     hub_spec_mcu_name: "Vi điều khiển (MCU)",
     hub_spec_mcu_val: "<strong>ESP32-S3 Dual-Core Xtensa LX7</strong> xung nhịp cao đến 240MHz",
@@ -485,7 +533,7 @@ export const translations = {
     catalog_badge: "OFFICIAL NDZ IOT ECOSYSTEM",
     catalog_title: "NDZ HUB Product Ecosystem",
     catalog_subtitle: "Discover full-featured <b>Completed Devices</b> ready to run and premium <b>3D Printed Enclosures</b>.",
-    filter_complete: "🤖 Completed Devices (3)",
+    filter_complete: "🤖 Completed Devices (5)",
     filter_case: "🧱 3D Printed Enclosures (3)",
 
     // Group 1: Completed Devices
@@ -513,7 +561,37 @@ export const translations = {
     t1_spec2: "Obstacle avoidance sensor mount & FPV camera mount included.",
     t1_spec3: "Aluminum heatsink power board, pre-flashed traction balancing FW.",
 
-    // Hub Touch Complete
+    // Hub Touch Complete - COMBO
+    hub_combo_chip: "ESP32-S3 · Full Combo",
+    hub_combo_thumb_badge: "Full setup desk photo 🔍",
+    hub_combo_title: "COMBO TOUCH SCREEN + MACRO DOCK",
+    hub_combo_price: "1,400,000 VND",
+    hub_combo_price_note: "/ Full bundle both items (Save 100K)",
+    hub_combo_spec1: "Complete bundle: 2.8\" touch screen + 3-switch macro keypad dock + rotary knob.",
+    hub_combo_spec2: "Metal infinite volume knob, underglow RGB changing light strip.",
+    hub_combo_spec3: "Pre-flashed NDZ Touch OS, plug in Type-C and enjoy immediately.",
+
+    // Hub Touch Complete - SCREEN ONLY
+    hub_screen_only_chip: "ESP32-S3 · Screen Only",
+    hub_screen_only_thumb_badge: "Standalone screen desk photo 🔍",
+    hub_screen_only_title: "2.8\" SMART TOUCH HUB (SCREEN ONLY)",
+    hub_screen_only_price: "1,000,000 VND",
+    hub_screen_only_price_note: "/ Screen + Enclosure only",
+    hub_screen_only_spec1: "2.8\" TFT LCD vibrant touch screen, built-in speaker and voice AI mic.",
+    hub_screen_only_spec2: "Stylish orange & black enclosure with anti-slip rubber pads on desk.",
+    hub_screen_only_spec3: "Independent Type-C power input, runs all 12 smart applications.",
+
+    // Hub Touch Complete - DOCK ONLY
+    hub_dock_only_chip: "Keypad · RGB Knob",
+    hub_dock_only_thumb_badge: "Macro dock close-up 🔍",
+    hub_dock_only_title: "MECHANICAL MACRO DOCK (BASE ONLY)",
+    hub_dock_only_price: "500,000 VND",
+    hub_dock_only_price_note: "/ Keypad dock base only",
+    hub_dock_only_spec1: "3-key mechanical macro dock with smooth switches and metallic rotary knob.",
+    hub_dock_only_spec2: "Ambient underglow RGB LED effects glowing under your setup.",
+    hub_dock_only_spec3: "Precision slot specifically designed to dock and hold the 2.8\" Hub Screen.",
+
+    // Hub Touch Complete (Legacy / General)
     hub_chip_badge: "ESP32-S3 · Desktop",
     hub_thumb_badge: "Desktop Setup Photo 🔍",
     hub_title: "TOUCH SCREEN SMART HUB",
@@ -631,11 +709,29 @@ export const translations = {
     hub_modal_btn_flash: "⚡ Go to Online Firmware Flasher",
     hub_modal_btn_zalo: "💬 Order & Inquiries via Zalo",
     hub_thumb_1: "Desk Setup Photo",
+    hub_thumb_standalone: "Screen Only",
     hub_thumb_2: "Close-up Device",
     hub_thumb_3: "Board & Accessories",
     hub_caption_1: "Desktop Workspace Setup (Orange & Black Case)",
+    hub_caption_standalone: "Close-up Standalone Screen on Desk (Orange & Black Case)",
     hub_caption_2: "Close-up Screen & Mechanical Macro Keypad",
     hub_caption_3: "ESP32-S3 2.8\" Touch Screen Board, Speaker, Mic & Cable",
+
+    // Packages & Pricing
+    hub_modal_pricing_title: "Pricing Packages & Purchase Options",
+    hub_pkg_screen_title: "Screen Only (No Dock)",
+    hub_pkg_screen_price: "1,000,000 VND",
+    hub_pkg_screen_desc: "2.8\" touch screen + finished enclosure + built-in speaker & mic (plug & play via Type-C, base dock not included).",
+    hub_pkg_screen_btn: "💬 Order Screen Only (1,000,000 VND)",
+    hub_pkg_dock_title: "Mechanical Macro Dock (Base Only)",
+    hub_pkg_dock_price: "500,000 VND",
+    hub_pkg_dock_desc: "3-switch mechanical macro dock + metal rotary knob + modern underglow RGB LED effects.",
+    hub_pkg_dock_btn: "💬 Order Macro Dock (500,000 VND)",
+    hub_pkg_combo_title: "⭐ Full Combo (Screen + Dock)",
+    hub_pkg_combo_badge: "BEST SELLER · SAVE 100K",
+    hub_pkg_combo_price: "1,400,000 VND",
+    hub_pkg_combo_desc: "Complete bundle: 2.8\" Touch Screen Hub + Mechanical Macro Keypad Dock (Save 100,000 VND).",
+    hub_pkg_combo_btn: "💬 Order Full Combo (1,400,000 VND)",
 
     hub_spec_mcu_name: "Microcontroller (MCU)",
     hub_spec_mcu_val: "<strong>ESP32-S3 Dual-Core Xtensa LX7</strong> clocked up to 240MHz",
