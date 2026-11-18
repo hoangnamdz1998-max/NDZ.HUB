@@ -37,11 +37,12 @@ const modeCardUpdate = document.getElementById("mode-card-update");
 const modeCardClean = document.getElementById("mode-card-clean");
 
 // ============================================================================
-// HỆ THỐNG QUẢN LÝ LƯỢT NẠP (MỖI MÁY TÍNH ĐƯỢC NẠP 2 LẦN MIỄN PHÍ)
+// HỆ THỐNG QUẢN LÝ LƯỢT NẠP (MỖI MÁY TÍNH ĐƯỢC NẠP 1 LẦN MIỄN PHÍ)
 // ============================================================================
-const MAX_FLASH_COUNT = 2;
-const MACHINE_FLASH_KEY = "ndz_machine_flashed_v3";
-const CHIP_FLASH_KEY = "ndz_chip_flashed_v3";
+const MAX_FLASH_COUNT = 1;
+const MACHINE_FLASH_KEY = "ndz_machine_flashed_v4";
+const CHIP_FLASH_KEY = "ndz_chip_flashed_v4";
+const ZALO_ACTIVATION_URL = "https://zalo.me/g/6vrtqpuympv29wyque4x";
 
 // 1. Lấy thông tin lượt nạp từ lưu trữ đa tầng (localStorage + Cookie)
 function getMachineFlashRecord() {
@@ -174,54 +175,43 @@ async function markMachineAsFlashed(mac, productName) {
 
 function updateFlashAllowanceUI() {
   const count = getMachineFlashCount();
-  const remaining = Math.max(0, MAX_FLASH_COUNT - count);
   const rec = getMachineFlashRecord();
 
   if (count >= MAX_FLASH_COUNT) {
     if (machineLicenseTag) {
-      machineLicenseTag.textContent = `❌ Đã hết lượt (Đã nạp ${count}/${MAX_FLASH_COUNT} lần)`;
+      machineLicenseTag.textContent = `❌ Đã hết lượt miễn phí (1/1)`;
       machineLicenseTag.style.color = "#ef4444";
     }
     if (limitRuleBox) {
       limitRuleBox.classList.add("locked");
     }
     if (limitRuleTitle) {
-      limitRuleTitle.textContent = "Máy Tính Này Đã Sử Dụng Hết 2 Lượt Nạp!";
+      limitRuleTitle.textContent = "Máy Tính Này Đã Sử Dụng Hết 1 Lượt Nạp Miễn Phí!";
     }
     if (limitRuleDesc) {
       const detailFlashes = (rec?.flashes || []).map((f, i) => `Lần ${i+1}: <b>${f.flashedAt}</b> (${f.mac})`).join(" | ");
-      limitRuleDesc.innerHTML = `Máy tính này đã hoàn tất đủ <b>2/2 lượt nạp miễn phí</b> (${detailFlashes}).<br><span style="color:#f87171; font-weight:700;">Theo chính sách, bạn KHÔNG thể nạp thêm lần thứ 3 trên máy tính này!</span>`;
+      limitRuleDesc.innerHTML = `Máy tính này đã hoàn tất lượt nạp miễn phí (${detailFlashes || '1 lần'}).<br>
+        <span style="color:#f87171; font-weight:700;">Nếu bạn muốn nạp thêm thiết bị, vui lòng tham gia nhóm Zalo để được kích hoạt thêm lượt:</span><br>
+        <a href="${ZALO_ACTIVATION_URL}" target="_blank" style="display:inline-flex; align-items:center; gap:8px; margin-top:10px; background:#0068ff; color:#fff; padding:8px 16px; border-radius:8px; font-weight:700; text-decoration:none; box-shadow:0 2px 8px rgba(0,104,255,0.4);">
+          💬 Tham Gia Nhóm Zalo Kích Hoạt Nạp Thêm
+        </a>`;
     }
     if (btnFlash) {
       btnFlash.disabled = true;
     }
-  } else if (count === 1) {
-    if (machineLicenseTag) {
-      machineLicenseTag.textContent = `⚠️ Đã dùng 1/2 lượt (Còn 1 lượt)`;
-      machineLicenseTag.style.color = "#f59e0b";
-    }
-    if (limitRuleBox) {
-      limitRuleBox.classList.remove("locked");
-    }
-    if (limitRuleTitle) {
-      limitRuleTitle.textContent = "Máy Tính Đã Dùng 1 Lượt Nạp (Còn 1 Lượt Cuối):";
-    }
-    if (limitRuleDesc) {
-      limitRuleDesc.innerHTML = `Bạn đã nạp thành công 1 thiết bị lúc: <b>${rec?.lastFlashedAt || ''}</b>. Máy tính của bạn còn <b>1 lượt nạp miễn phí cuối cùng</b>.`;
-    }
   } else {
     if (machineLicenseTag) {
-      machineLicenseTag.textContent = `✅ Còn 2/2 lượt nạp`;
+      machineLicenseTag.textContent = `✅ Còn 1 lượt nạp miễn phí`;
       machineLicenseTag.style.color = "#10b981";
     }
     if (limitRuleBox) {
       limitRuleBox.classList.remove("locked");
     }
     if (limitRuleTitle) {
-      limitRuleTitle.textContent = "Chính Sách Nạp Miễn Phí (2 Lần / Mỗi Máy Tính):";
+      limitRuleTitle.textContent = "Chính Sách Nạp Miễn Phí (1 Lần / Mỗi Máy Tính):";
     }
     if (limitRuleDesc) {
-      limitRuleDesc.innerHTML = `Hệ thống miễn phí 100%. Mỗi máy tính được cấp <b>2 lượt nạp miễn phí</b> (ví dụ nạp cho 2 thiết bị khác nhau). Sau khi đã nạp đủ 2 lần, máy tính này sẽ <b>bị khóa không thể nạp thêm</b>.`;
+      limitRuleDesc.innerHTML = `Mỗi máy tính được cấp <b>1 lượt nạp firmware miễn phí</b>. Nếu bạn muốn nạp thêm thiết bị tiếp theo, vui lòng liên hệ nhóm Zalo để kích hoạt: <a href="${ZALO_ACTIVATION_URL}" target="_blank" style="color:#38bdf8; font-weight:700; text-decoration:underline;">💬 Nhóm Zalo Kích Hoạt</a>.`;
     }
   }
 }
@@ -230,18 +220,17 @@ function updateDeviceFlashStatus(mac) {
   updateFlashAllowanceUI();
 
   const count = getMachineFlashCount();
-  const rec = getMachineFlashRecord();
 
-  // NẾU MÁY TÍNH NÀY ĐÃ ĐẠT ĐỦ 2 LẦN -> KHÓA NGAY LẬP TỨC
+  // NẾU MÁY TÍNH NÀY ĐÃ ĐẠT 1 LẦN -> KHÓA VÀ HƯỚNG DẪN QUA ZALO
   if (count >= MAX_FLASH_COUNT) {
     if (chipLicenseTag) {
-      chipLicenseTag.textContent = "⛔ TỪ CHỐI (Máy đã nạp đủ 2 lần)";
+      chipLicenseTag.textContent = "⛔ HẾT LƯỢT MIỄN PHÍ (Nhắn Zalo để kích hoạt)";
       chipLicenseTag.style.color = "#ef4444";
     }
     if (btnFlash) btnFlash.disabled = true;
-    progressStatusText.textContent = `Máy tính này đã hoàn thành tối đa 2 lượt nạp. Hết lượt!`;
-    logSystem(`[CẢNH BÁO TỪ CHỐI] Máy tính này đã hoàn thành đủ 2 lượt nạp firmware miễn phí.`, "error");
-    logSystem(`[CHÍNH SÁCH 2 LẦN / MÁY] Bạn đang cắm chip [MAC: ${mac || 'Đang kết nối'}], nhưng máy tính này đã hết lượt. Không thể nạp lần thứ 3!`, "error");
+    progressStatusText.textContent = `Máy tính này đã hoàn thành 1 lượt nạp miễn phí. Vui lòng tham gia nhóm Zalo để kích hoạt nạp thêm!`;
+    logSystem(`[CẢNH BÁO TỪ CHỐI] Máy tính này đã hoàn thành 1 lượt nạp firmware miễn phí.`, "error");
+    logSystem(`[KÍCH HOẠT THÊM LƯỢT] Bạn muốn nạp thêm chip [MAC: ${mac || 'Đang kết nối'}]? Vui lòng tham gia Zalo: ${ZALO_ACTIVATION_URL}`, "warn");
     return;
   }
 
@@ -254,13 +243,12 @@ function updateDeviceFlashStatus(mac) {
     return;
   }
 
-  const remaining = MAX_FLASH_COUNT - count;
   if (chipLicenseTag) {
-    chipLicenseTag.textContent = `✅ Sẵn sàng nạp (Lượt ${count + 1}/${MAX_FLASH_COUNT})`;
+    chipLicenseTag.textContent = `✅ Sẵn sàng nạp (Miễn phí 1 lần)`;
     chipLicenseTag.style.color = "#10b981";
   }
   if (btnFlash) btnFlash.disabled = false;
-  logSystem(`[Thông báo] Nhận diện chip MAC [${mac}] thành công. Máy tính này còn ${remaining}/${MAX_FLASH_COUNT} lượt nạp.`, "info");
+  logSystem(`[Thông báo] Nhận diện chip MAC [${mac}] thành công. Sẵn sàng nạp lượt miễn phí.`, "info");
 }
 
 // Custom files elements
@@ -870,17 +858,12 @@ btnFlash.addEventListener("click", async () => {
     progressStatusText.textContent = "Nạp thành công! Đang khởi động lại chip...";
     logSystem("Nạp hoàn tất! Đang Reset vi điều khiển...", "success");
 
-    // Ghi nhận lượt nạp thành công cho máy tính (Tối đa 2 lần)
+    // Ghi nhận lượt nạp thành công cho máy tính (1 lần miễn phí)
     const currentProd = manifestData?.products?.find(p => p.id === selectProduct?.value);
     await markMachineAsFlashed(currentChipMac, currentProd?.name || "ESP32 Firmware");
     updateDeviceFlashStatus(currentChipMac);
 
-    const afterCount = getMachineFlashCount();
-    if (afterCount < MAX_FLASH_COUNT) {
-      logSystem(`[Thông báo] Bạn vừa hoàn thành lượt nạp ${afterCount}/${MAX_FLASH_COUNT}. Máy tính này còn ${MAX_FLASH_COUNT - afterCount} lượt nạp nữa!`, "info");
-    } else {
-      logSystem(`[Thông báo] Bạn đã sử dụng đủ ${MAX_FLASH_COUNT}/${MAX_FLASH_COUNT} lượt nạp miễn phí của máy tính này!`, "warn");
-    }
+    logSystem(`[Thông báo] Bạn đã hoàn thành 1 lượt nạp miễn phí. Nếu muốn nạp thêm thiết bị khác, vui lòng liên hệ Zalo: ${ZALO_ACTIVATION_URL}`, "warn");
 
     // Khởi động lại ESP32
     try {
