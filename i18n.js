@@ -120,7 +120,7 @@ export const translations = {
     catalog_title: "Hệ Sinh Thái Sản Phẩm NDZ HUB",
     catalog_subtitle: "Khám phá trọn bộ <b>Thiết bị hoàn thiện</b> sẵn sàng chạy và <b>Vỏ nhựa in 3D</b> chất lượng cao.",
     filter_complete: "🤖 Sản Phẩm Hoàn Thiện (5)",
-    filter_case: "🧱 Vỏ Nhựa In 3D (3)",
+    filter_case: "🧱 Vỏ Nhựa In 3D (5)",
 
     // Group 1: Completed Devices
     sec_complete_title: "🤖 Sản Phẩm Hoàn Thiện (Cắm Nguồn Là Chạy)",
@@ -210,14 +210,42 @@ export const translations = {
     t1_case_spec2: "Có sẵn khe luồn dây cáp nguồn và ngàm kẹp cảm biến khoảng cách.",
     t1_case_spec3: "Cung cấp file 3D STL gốc hoặc nhận in thành phẩm giao tận nhà.",
 
-    // Hub Case
+    // Hub Case (Legacy)
     hub_case_title: "VỎ HUB CẢM ỨNG",
     hub_case_thumb_badge: "Case viền cam + Dock phím cơ 🔍",
-    hub_case_price: "Đặt In / File STL",
-    hub_case_price_note: "/ Để bàn công thái học",
+    hub_case_price: "150.000 đ",
+    hub_case_price_note: "/ Cả bộ màn hình + đế",
     hub_case_spec1: "Góc nghiêng 60 độ công thái học cho góc nhìn màn hình rõ nét nhất.",
     hub_case_spec2: "Khoét chuẩn cổng sạc Type-C, khe thẻ nhớ và nút bấm cạnh hông.",
     hub_case_spec3: "Khớp ngàm bấm không cần keo dán, tháo lắp cực kỳ dễ dàng.",
+
+    // Hub Case - 3 Tùy Chọn Chi Tiết (Combo 150k, Vỏ Màn Hình 100k, Vỏ Đế 50k)
+    hub_case_combo_title: "COMBO VỎ HUB + ĐẾ PHÍM CƠ",
+    hub_case_combo_thumb_badge: "Trọn bộ vỏ màn hình & đế 🔍",
+    hub_case_combo_chip: "PLA+ / PETG · Trọn Bộ Vỏ",
+    hub_case_combo_price: "150.000 đ",
+    hub_case_combo_price_note: "/ Trọn bộ cả 2 món (Vỏ Màn Hình + Vỏ Đế)",
+    hub_case_combo_spec1: "Trọn bộ vỏ màn hình 2.8\" góc nghiêng công thái học + Vỏ đế dock 3 phím macro & núm xoay.",
+    hub_case_combo_spec2: "Khoét chuẩn cổng sạc Type-C, khe cắm cáp kết nối gầm và vị trí tản nhiệt bo mạch tối ưu.",
+    hub_case_combo_spec3: "In công nghệ 3D FDM sắc nét, màu sắc tùy chọn (Cam Đen / Full Đen / Trắng Cam).",
+
+    hub_case_screen_title: "VỎ MÀN HÌNH CẢM ỨNG (VỎ LẺ)",
+    hub_case_screen_thumb_badge: "Vỏ màn hình độc lập 🔍",
+    hub_case_screen_chip: "PLA+ · Vỏ Màn Hình Lẻ",
+    hub_case_screen_price: "100.000 đ",
+    hub_case_screen_price_note: "/ Chỉ vỏ màn hình (Không kèm vỏ đế)",
+    hub_case_screen_spec1: "Vỏ bảo vệ màn hình 2.8 inch cảm ứng viền cam đen thể thao, ôm khít bo mạch ESP32-S3.",
+    hub_case_screen_spec2: "Có sẵn ngàm gắn loa mini bên trong và khe cắm cáp sạc Type-C bên hông.",
+    hub_case_screen_spec3: "Thiết kế ngàm bấm chuẩn xác, tháo lắp thay thế linh kiện cực kỳ tiện lợi.",
+
+    hub_case_dock_title: "VỎ ĐẾ DOCK PHÍM CƠ (VỎ ĐẾ LẺ)",
+    hub_case_dock_thumb_badge: "Vỏ dock bàn phím macro 🔍",
+    hub_case_dock_chip: "PLA+ · Vỏ Đế Lẻ",
+    hub_case_dock_price: "50.000 đ",
+    hub_case_dock_price_note: "/ Chỉ vỏ đế (Không kèm vỏ màn hình)",
+    hub_case_dock_spec1: "Vỏ đế dock thiết kế chứa 3 switch phím cơ chuẩn Cherry/Gateron và 1 núm xoay vô cực.",
+    hub_case_dock_spec2: "Khoang dẫn sáng bên dưới giúp hiệu ứng dải LED RGB gầm lan tỏa rực rỡ.",
+    hub_case_dock_spec3: "Chân đế bám đầm chắc trên bàn làm việc, có ngàm kết nối khớp với vỏ màn hình.",
 
     // Trust Banner
     trust1_title: "Bản Quyền Theo MAC",
@@ -318,6 +346,22 @@ export const translations = {
     hub_pkg_combo_price: "1.400.000 đ",
     hub_pkg_combo_desc: "Trọn bộ Cả Màn Hình 2.8\" Cảm Ứng + Đế Dock Phím Cơ Macro (Tiết kiệm 100.000 đ so với mua lẻ).",
     hub_pkg_combo_btn: "💬 Đặt Mua Combo Cả Bộ (1.400.000 đ)",
+
+    // Case Packages in Modal
+    hub_modal_case_pricing_title: "Bảng Báo Giá Vỏ Nhựa In 3D (Tự Ráp Linh Kiện DIY)",
+    hub_case_pkg_screen_title: "Vỏ Màn Hình In 3D (Vỏ Lẻ)",
+    hub_case_pkg_screen_price: "100.000 đ",
+    hub_case_pkg_screen_desc: "Vỏ in 3D bảo vệ màn hình 2.8\", khoét chuẩn cổng sạc Type-C, khe loa và nút bấm (không kèm vỏ đế).",
+    hub_case_pkg_screen_btn: "💬 Đặt In Vỏ Màn Hình Lẻ (100.000 đ)",
+    hub_case_pkg_dock_title: "Vỏ Đế Phím Cơ In 3D (Vỏ Lẻ)",
+    hub_case_pkg_dock_price: "50.000 đ",
+    hub_case_pkg_dock_desc: "Vỏ đế dock chứa 3 switch phím cơ macro và núm xoay kim loại, khuếch tán LED RGB gầm hiện đại.",
+    hub_case_pkg_dock_btn: "💬 Đặt In Vỏ Đế Lẻ (50.000 đ)",
+    hub_case_pkg_combo_title: "⭐ Combo Cả Bộ Vỏ (Màn Hình + Đế)",
+    hub_case_pkg_combo_badge: "TRỌN BỘ TIẾT KIỆM · 150K",
+    hub_case_pkg_combo_price: "150.000 đ",
+    hub_case_pkg_combo_desc: "Trọn bộ gồm cả Vỏ Màn Hình 2.8\" và Vỏ Đế Dock Phím Cơ Macro, lắp ghép chuẩn khớp hoàn hảo.",
+    hub_case_pkg_combo_btn: "💬 Đặt In Cả Bộ Vỏ (150.000 đ)",
 
     hub_spec_mcu_name: "Vi điều khiển (MCU)",
     hub_spec_mcu_val: "<strong>ESP32-S3 Dual-Core Xtensa LX7</strong> xung nhịp cao đến 240MHz",
@@ -534,7 +578,7 @@ export const translations = {
     catalog_title: "NDZ HUB Product Ecosystem",
     catalog_subtitle: "Discover full-featured <b>Completed Devices</b> ready to run and premium <b>3D Printed Enclosures</b>.",
     filter_complete: "🤖 Completed Devices (5)",
-    filter_case: "🧱 3D Printed Enclosures (3)",
+    filter_case: "🧱 3D Printed Enclosures (5)",
 
     // Group 1: Completed Devices
     sec_complete_title: "🤖 Completed Devices (Plug & Play)",
@@ -624,14 +668,42 @@ export const translations = {
     t1_case_spec2: "Pre-routed cable channels and distance sensor clip mount.",
     t1_case_spec3: "Original 3D STL download or custom print shipped to your door.",
 
-    // Hub Case
+    // Hub Case (Legacy)
     hub_case_title: "TOUCH HUB ENCLOSURE",
     hub_case_thumb_badge: "Orange Bezel Case + Macropad Dock 🔍",
-    hub_case_price: "Print On Demand / STL",
-    hub_case_price_note: "/ Ergonomic desktop",
+    hub_case_price: "150,000 VND",
+    hub_case_price_note: "/ Complete screen + dock set",
     hub_case_spec1: "Ergonomic 60-degree viewing angle for optimal screen readability.",
     hub_case_spec2: "Precise cutouts for Type-C port, TF card slot, and side buttons.",
     hub_case_spec3: "Snap-fit joints without glue, effortless assembly and maintenance.",
+
+    // Hub Case - 3 Options (Combo 150k, Screen Case 100k, Dock Case 50k)
+    hub_case_combo_title: "HUB CASE + DOCK COMBO",
+    hub_case_combo_thumb_badge: "Full screen & dock case set 🔍",
+    hub_case_combo_chip: "PLA+ / PETG · Complete Case",
+    hub_case_combo_price: "150,000 VND",
+    hub_case_combo_price_note: "/ Complete 2-piece set (Screen + Dock)",
+    hub_case_combo_spec1: "Includes 2.8\" ergonomic screen case + 3-switch macro keypad & rotary knob dock case.",
+    hub_case_combo_spec2: "Precise cutouts for Type-C charging, underglow cable routing, and optimal heat vents.",
+    hub_case_combo_spec3: "Sharp FDM 3D printing with custom color options (Orange-Black / Full Black / White-Orange).",
+
+    hub_case_screen_title: "TOUCH SCREEN CASE (CASE ONLY)",
+    hub_case_screen_thumb_badge: "Standalone screen case 🔍",
+    hub_case_screen_chip: "PLA+ · Screen Case Only",
+    hub_case_screen_price: "100,000 VND",
+    hub_case_screen_price_note: "/ Screen case only (Dock case not included)",
+    hub_case_screen_spec1: "Sporty orange-black bezel enclosure tailored for 2.8-inch display & ESP32-S3.",
+    hub_case_screen_spec2: "Integrated internal bracket for mini speaker and side USB-C cutout.",
+    hub_case_screen_spec3: "Snap-fit latch design for effortless toolless disassembly and maintenance.",
+
+    hub_case_dock_title: "MACRO KEYPAD DOCK CASE (CASE ONLY)",
+    hub_case_dock_thumb_badge: "Macro keypad dock case 🔍",
+    hub_case_dock_chip: "PLA+ · Dock Case Only",
+    hub_case_dock_price: "50,000 VND",
+    hub_case_dock_price_note: "/ Dock case only (Screen case not included)",
+    hub_case_dock_spec1: "Dock housing designed for 3 mechanical switches (Cherry/Gateron) and 1 rotary encoder.",
+    hub_case_dock_spec2: "Under-diffuser chamber for smooth, immersive RGB lighting dispersion.",
+    hub_case_dock_spec3: "Stable desk footprint with seamless interlocking socket for the screen case.",
 
     // Trust Banner
     trust1_title: "MAC-Locked License",
@@ -732,6 +804,22 @@ export const translations = {
     hub_pkg_combo_price: "1,400,000 VND",
     hub_pkg_combo_desc: "Complete bundle: 2.8\" Touch Screen Hub + Mechanical Macro Keypad Dock (Save 100,000 VND).",
     hub_pkg_combo_btn: "💬 Order Full Combo (1,400,000 VND)",
+
+    // Case Packages in Modal
+    hub_modal_case_pricing_title: "3D Printed Case Options (DIY Hardware)",
+    hub_case_pkg_screen_title: "3D Screen Case (Standalone)",
+    hub_case_pkg_screen_price: "100,000 VND",
+    hub_case_pkg_screen_desc: "Precision 3D printed housing for 2.8\" screen with Type-C and button cutouts (dock excluded).",
+    hub_case_pkg_screen_btn: "💬 Order Screen Case Only (100,000 VND)",
+    hub_case_pkg_dock_title: "3D Dock Case (Standalone)",
+    hub_case_pkg_dock_price: "50,000 VND",
+    hub_case_pkg_dock_desc: "Base dock housing for 3 mechanical switches and 1 metal knob with RGB underglow diffusion.",
+    hub_case_pkg_dock_btn: "💬 Order Dock Case Only (50,000 VND)",
+    hub_case_pkg_combo_title: "⭐ Full Case Combo (Screen + Dock)",
+    hub_case_pkg_combo_badge: "BEST VALUE COMBO · 150K",
+    hub_case_pkg_combo_price: "150,000 VND",
+    hub_case_pkg_combo_desc: "Complete 2-piece set: 2.8\" Touch Screen enclosure + Macro Keypad Dock case.",
+    hub_case_pkg_combo_btn: "💬 Order Full Case Set (150,000 VND)",
 
     hub_spec_mcu_name: "Microcontroller (MCU)",
     hub_spec_mcu_val: "<strong>ESP32-S3 Dual-Core Xtensa LX7</strong> clocked up to 240MHz",
