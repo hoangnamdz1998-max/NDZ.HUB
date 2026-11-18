@@ -1,20 +1,52 @@
 {
   "products": [
     {
+      "id": "hub-touch",
+      "name": "HUB MÀN HÌNH 2.8 INCH (XIAOZHI AI)",
+      "chipFamily": "ESP32-S3",
+      "description": "Firmware trợ lý AI Tiếng Việt Xiaozhi dành cho bo mạch màn hình Freenove ESP32-S3 2.8\" LCD cảm ứng (Zing MP3, FM Radio, Thời tiết, Tỷ giá vàng & ngoại tệ realtime, Cài đặt độ nhạy micro).",
+      "price": "Miễn Phí",
+      "versions": [
+        {
+          "version": "v2.5.2-vn",
+          "releaseDate": "18/11/2026",
+          "changelog": "Bản mới nhất: Tùy chỉnh độ nhạy micro trong Cài đặt nhanh, cập nhật tỷ giá & giá vàng thời gian thực",
+          "modes": {
+            "clean": {
+              "title": "Cài mới hoàn toàn (Khuyên dùng)",
+              "description": "Nạp toàn bộ hệ thống gồm Bootloader, Partition, App và Assets (Dành cho bo mạch nạp lần đầu hoặc muốn làm sạch chip).",
+              "erase": true,
+              "parts": [
+                { "path": "firmware/xiaozhi_freenove_2.8_merged.bin", "offset": "0x0" }
+              ]
+            },
+            "update": {
+              "title": "Cập nhật ứng dụng",
+              "description": "Chỉ cập nhật mã app, giữ nguyên cấu hình Wi-Fi, NVS và cài đặt cũ trong chip.",
+              "erase": false,
+              "parts": [
+                { "path": "firmware/xiaozhi_freenove_2.8_app.bin", "offset": "0x20000" }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
       "id": "robot-n1",
       "name": "ROBOT BÁNH XÍCH N1",
       "chipFamily": "ESP32",
-      "description": "",
-      "price": "",
+      "description": "Firmware điều khiển robot bánh xích cân bằng tự động.",
+      "price": "Miễn Phí",
       "versions": [
         {
           "version": "v1.0.0",
-          "releaseDate": "",
-          "changelog": "",
+          "releaseDate": "11/11/2026",
+          "changelog": "Bản phát hành đầu tiên",
           "modes": {
             "clean": {
               "title": "Cài mới Firmware",
-              "description": "",
+              "description": "Nạp ứng dụng cơ bản",
               "erase": true,
               "parts": [
                 { "path": "firmware/demo_app.bin", "offset": "0x10000" }
@@ -28,41 +60,17 @@
       "id": "robot-t1",
       "name": "ROBOT BÁNH XÍCH T1",
       "chipFamily": "ESP32",
-      "description": "",
-      "price": "",
+      "description": "Firmware điều khiển robot bánh xích bản Pro vượt địa hình.",
+      "price": "Miễn Phí",
       "versions": [
         {
           "version": "v1.0.0",
-          "releaseDate": "",
-          "changelog": "",
+          "releaseDate": "11/11/2026",
+          "changelog": "Bản phát hành đầu tiên",
           "modes": {
             "clean": {
               "title": "Cài mới Firmware",
-              "description": "",
-              "erase": true,
-              "parts": [
-                { "path": "firmware/demo_app.bin", "offset": "0x10000" }
-              ]
-            }
-          }
-        }
-      ]
-    },
-    {
-      "id": "hub-touch",
-      "name": "HUB MÀN HÌNH CẢM ỨNG",
-      "chipFamily": "ESP32-S3",
-      "description": "",
-      "price": "",
-      "versions": [
-        {
-          "version": "v1.0.0",
-          "releaseDate": "",
-          "changelog": "",
-          "modes": {
-            "clean": {
-              "title": "Cài mới Firmware",
-              "description": "",
+              "description": "Nạp ứng dụng cơ bản",
               "erase": true,
               "parts": [
                 { "path": "firmware/demo_app.bin", "offset": "0x10000" }
