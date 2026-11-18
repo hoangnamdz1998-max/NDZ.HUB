@@ -400,7 +400,7 @@ function checkBrowserSupport() {
 // 2. Tải Manifest Sản phẩm
 async function loadManifest() {
   try {
-    const res = await fetch("firmware/manifest.json");
+    const res = await fetch(`firmware/manifest.json?t=${Date.now()}`, { cache: "no-store" });
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
     manifestData = await res.json();
     populateProducts();
