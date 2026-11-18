@@ -11,7 +11,7 @@ module.exports = (req, res) => {
   return res.status(200).json({
     server_time: {
       timestamp: now,
-      timezone_offset: 420
+      timezone_offset: 0
     },
     firmware: {
       version: "2.5.6",
