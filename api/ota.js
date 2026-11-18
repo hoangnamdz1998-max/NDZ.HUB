@@ -7,11 +7,16 @@ module.exports = (req, res) => {
     return res.status(204).end();
   }
 
+  const now = Date.now();
   return res.status(200).json({
+    server_time: {
+      timestamp: now,
+      timezone_offset: 420
+    },
     firmware: {
       version: "2.5.6",
       url: "https://ndztech.vercel.app/firmware/xiaozhi.bin",
-      force: 1
+      force: 0
     }
   });
 };
