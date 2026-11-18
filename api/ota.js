@@ -11,7 +11,7 @@ module.exports = (req, res) => {
     firmware: {
       version: "2.5.4",
       url: "https://ndztech.vercel.app/firmware/xiaozhi.bin",
-      force: 0
+      force: 1
     }
   });
 };
