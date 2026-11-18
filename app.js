@@ -585,6 +585,39 @@ if (modalOrder) {
   });
 }
 
+// Lightbox xem ảnh full size khi click vào thumbnail
+const modalLightbox = document.getElementById("modal-lightbox");
+const lightboxImg = document.getElementById("lightbox-img");
+const lightboxCaption = document.getElementById("lightbox-caption");
+const btnCloseLightbox = document.getElementById("btn-close-lightbox");
+
+document.querySelectorAll(".product-card-thumb").forEach(thumb => {
+  thumb.addEventListener("click", () => {
+    const img = thumb.querySelector("img");
+    const badge = thumb.querySelector(".thumb-badge");
+    if (img && modalLightbox && lightboxImg) {
+      lightboxImg.src = img.src;
+      if (lightboxCaption) {
+        lightboxCaption.textContent = (badge?.textContent || img.alt || "Ảnh sản phẩm thực tế").replace(" 🔍", "");
+      }
+      modalLightbox.classList.add("active");
+    }
+  });
+});
+
+if (btnCloseLightbox && modalLightbox) {
+  btnCloseLightbox.addEventListener("click", () => {
+    modalLightbox.classList.remove("active");
+  });
+}
+if (modalLightbox) {
+  modalLightbox.addEventListener("click", (e) => {
+    if (e.target === modalLightbox) {
+      modalLightbox.classList.remove("active");
+    }
+  });
+}
+
 // Mode card radio toggle
 if (modeCardUpdate) {
   modeCardUpdate.addEventListener("click", () => {
