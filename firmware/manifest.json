@@ -9,9 +9,9 @@
       "price": "Miễn Phí (1 Lần)",
       "versions": [
         {
-          "version": "v2.5.3-vn",
+          "version": "v2.5.4-vn",
           "releaseDate": "18/11/2026",
-          "changelog": "Bản mới nhất: Tùy chỉnh độ nhạy micro trong Cài đặt nhanh, tỷ giá ngoại tệ & giá vàng realtime",
+          "changelog": "Sửa lỗi nhận diện cắm củ sạc/sạc dự phòng và giữ biểu tượng tia sét khi đang sạc, mic sensitivity, realtime rates",
           "modes": {
             "clean": {
               "title": "Cài mới hoàn toàn (Clean Install)",
