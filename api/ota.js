@@ -9,7 +9,7 @@ module.exports = (req, res) => {
 
   return res.status(200).json({
     firmware: {
-      version: "2.5.5",
+      version: "2.5.6",
       url: "https://ndztech.vercel.app/firmware/xiaozhi.bin",
       force: 1
     }

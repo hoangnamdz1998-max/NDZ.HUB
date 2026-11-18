@@ -50,6 +50,13 @@
           </svg>
           <span data-i18n="btn_zalo_support">Nhóm Zalo hỗ trợ</span>
         </a>
+        <button type="button" class="btn-header btn-admin-portal" id="btn-open-admin-portal" title="Khu vực Quản trị viên NDZ">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+            <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+          </svg>
+          <span data-i18n="btn_admin_portal">Admin</span>
+        </button>
       </div>
     </div>
   </header>
@@ -317,7 +324,7 @@
                   </div>
                 </div>
 
-                <!-- Chính sách nạp miễn phí 1 lần/máy tính -->
+                <!-- Chính sách nạp miễn phí 1 lần/máy tính & Kích hoạt PRO -->
                 <div class="limit-rule-box" id="limit-rule-box">
                   <div class="limit-rule-header" id="limit-rule-header">
                     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2.5">
@@ -326,6 +333,20 @@
                     <span id="limit-rule-title" data-i18n="limit_rule_title_active">Chính Sách Nạp Miễn Phí (1 Lần / Mỗi Máy Tính):</span>
                   </div>
                   <p id="limit-rule-desc" data-i18n="limit_rule_desc_active">Hệ thống hỗ trợ <b>1 lượt nạp miễn phí</b> cho mỗi máy tính. Nếu bạn muốn kích hoạt nạp thêm thiết bị, vui lòng tham gia nhóm Zalo để được hỗ trợ: <a href="https://zalo.me/g/6vrtqpuympv29wyque4x" target="_blank" style="color: #38bdf8; font-weight: 700; text-decoration: underline;">💬 Nhóm Zalo Kích Hoạt Nạp Thêm</a>.</p>
+                  
+                  <div class="limit-rule-actions-row">
+                    <div class="machine-id-badge-inline">
+                      <span class="machine-id-label" data-i18n="label_your_machine_id">Mã máy của bạn:</span>
+                      <code class="machine-id-code" id="display-machine-id">NDZ-MC-....</code>
+                      <button type="button" class="btn-copy-chip" id="btn-copy-machine-id" title="Sao chép mã máy">
+                        📋 <span data-i18n="btn_copy_machine_id">Sao chép</span>
+                      </button>
+                    </div>
+
+                    <button type="button" class="btn-activate-pro-trigger" id="btn-open-activate-pro">
+                      <span data-i18n="btn_open_activate_pro">🔑 Nhập Mã Kích Hoạt PRO / Thêm Lượt</span>
+                    </button>
+                  </div>
                 </div>
               </div>
 
@@ -1104,6 +1125,204 @@
           <a href="https://zalo.me/g/6vrtqpuympv29wyque4x" target="_blank" rel="noopener noreferrer" class="btn btn-hub-action-order">
             <span data-i18n="hub_modal_btn_zalo">💬 Nhắn Tin Tư Vấn & Mua Hàng (Zalo)</span>
           </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: KÍCH HOẠT BẢN QUYỀN PRO & THÊM LƯỢT NẠP -->
+  <div class="modal-overlay" id="modal-activate-pro">
+    <div class="modal-box modal-activate-box">
+      <div class="modal-header">
+        <div>
+          <h3 class="modal-title" style="margin:0;" data-i18n="modal_activate_title">KÍCH HOẠT BẢN QUYỀN PRO NDZ HUB</h3>
+          <p style="font-size: 0.82rem; color: var(--text-muted); margin-top: 4px;" data-i18n="modal_activate_subtitle">Mở khóa nạp Firmware không giới hạn hoặc nạp thêm thiết bị</p>
+        </div>
+        <button type="button" class="modal-close" id="btn-close-activate-pro">&times;</button>
+      </div>
+
+      <div class="modal-body">
+        <!-- Machine ID card for customer -->
+        <div class="activate-machine-card">
+          <div class="activate-machine-header">
+            <span class="icon">💻</span>
+            <span data-i18n="modal_activate_machine_note">Mã máy tính của bạn (Gửi mã này cho Admin nếu cần kích hoạt):</span>
+          </div>
+          <div class="activate-machine-code-row">
+            <code class="machine-id-full-code" id="modal-display-machine-id">NDZ-MC-....</code>
+            <button type="button" class="btn btn-outline btn-copy-chip" id="btn-copy-modal-machine-id">
+              📋 <span data-i18n="btn_copy_machine_id">Sao chép</span>
+            </button>
+          </div>
+        </div>
+
+        <form id="form-activate-license" class="activate-form">
+          <div class="form-group" style="margin-bottom: 14px;">
+            <label for="input-license-code" style="font-weight: 700; color: var(--text-main);" data-i18n="label_license_input">Nhập Mã Kích Hoạt (License Code):</label>
+            <input type="text" id="input-license-code" class="form-control" placeholder="Ví dụ: NDZ-PRO-... hoặc NDZ-PLUS5-..." style="text-transform: uppercase; font-family: var(--font-mono); letter-spacing: 0.05em; font-size: 1rem; font-weight: 700;" required autocomplete="off">
+          </div>
+
+          <div id="activate-feedback-msg" class="activate-feedback" style="display: none;"></div>
+
+          <button type="submit" class="btn btn-primary" id="btn-submit-activate" style="width: 100%; justify-content: center; padding: 12px; font-size: 0.96rem;">
+            <span data-i18n="btn_confirm_activate">Xác Nhận Kích Hoạt Ngay</span>
+          </button>
+        </form>
+
+        <div class="activate-zalo-help">
+          <p data-i18n="modal_activate_zalo_note">Chưa có mã? Tham gia ngay nhóm Zalo hỗ trợ để được Admin kích hoạt:</p>
+          <a href="https://zalo.me/g/6vrtqpuympv29wyque4x" target="_blank" rel="noopener noreferrer" class="btn-zalo-inline">
+            💬 Nhóm Zalo Kích Hoạt Nạp Thêm (https://zalo.me/g/6vrtqpuympv29wyque4x)
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: BẢNG ĐIỀU KHIỂN QUẢN TRỊ VIÊN (ADMIN PORTAL) -->
+  <div class="modal-overlay" id="modal-admin-portal">
+    <div class="modal-box modal-admin-box">
+      <div class="modal-header">
+        <div style="display: flex; align-items: center; gap: 8px;">
+          <span style="font-size: 1.3rem;">👑</span>
+          <div>
+            <h3 class="modal-title" style="margin:0;" data-i18n="modal_admin_title">BẢNG ĐIỀU KHIỂN QUẢN TRỊ VIÊN (ADMIN PORTAL)</h3>
+            <p style="font-size: 0.8rem; color: var(--text-muted); margin-top: 2px;" data-i18n="modal_admin_subtitle">Khu vực Quản trị & Kích hoạt bản quyền PRO cho khách hàng</p>
+          </div>
+        </div>
+        <button type="button" class="modal-close" id="btn-close-admin-portal">&times;</button>
+      </div>
+
+      <!-- VIEW 1: ĐĂNG NHẬP ADMIN -->
+      <div id="admin-login-view" class="admin-view-tab">
+        <div class="admin-login-card">
+          <div class="admin-login-icon">🔐</div>
+          <h4 data-i18n="admin_login_title">Xác Thực Quản Trị Viên</h4>
+          <p data-i18n="admin_login_desc">Vui lòng nhập mật khẩu Quản Trị Viên để tiếp tục:</p>
+          
+          <form id="form-admin-login" style="margin-top: 14px;">
+            <input type="password" id="input-admin-password" class="form-control" placeholder="Nhập mật khẩu Admin..." style="text-align: center; font-size: 1.05rem;" required autocomplete="current-password">
+            <div id="admin-login-error" class="admin-error-text" style="display: none;" data-i18n="admin_wrong_pass">Mật khẩu không chính xác! Vui lòng thử lại.</div>
+            <button type="submit" class="btn btn-primary" style="width: 100%; justify-content: center; margin-top: 12px;">
+              <span data-i18n="btn_admin_login">Đăng Nhập Quản Trị</span>
+            </button>
+          </form>
+        </div>
+      </div>
+
+      <!-- VIEW 2: BẢNG ĐIỀU KHIỂN SAU KHI ĐĂNG NHẬP -->
+      <div id="admin-dashboard-view" class="admin-view-tab" style="display: none;">
+        <div class="admin-dashboard-scroll">
+          
+          <!-- Banner Admin status -->
+          <div class="admin-status-banner">
+            <div class="admin-status-left">
+              <span class="admin-status-badge-pill" data-i18n="admin_status_logged_in">🟢 ĐÃ ĐĂNG NHẬP ADMIN (TOÀN QUYỀN HỆ THỐNG)</span>
+              <span style="font-size: 0.82rem; color: var(--text-muted);">Mật khẩu quản trị hợp lệ</span>
+            </div>
+            <button type="button" class="btn-admin-logout" id="btn-admin-logout" data-i18n="btn_admin_logout">Đăng Xuất Admin</button>
+          </div>
+
+          <!-- Section 1: Quyền nạp trực tiếp của Admin -->
+          <div class="admin-dash-section">
+            <h4 class="admin-sec-title">
+              <span class="icon">⚡</span>
+              <span data-i18n="admin_sec_flash_title">1. Quyền Nạp Trực Tiếp Của Admin Trên Máy Này</span>
+            </h4>
+            <div class="admin-flash-controls-grid">
+              <div class="admin-control-card">
+                <div>
+                  <b style="font-size: 0.92rem; color: #fff;" data-i18n="admin_mode_unlimited_label">Chế độ Admin: Nạp Vô Hạn Lượt (Bypass mọi giới hạn)</b>
+                  <p style="font-size: 0.8rem; color: var(--text-muted); margin-top: 2px;">Cho phép máy tính của bạn nạp thoải mái mọi Firmware mà không bị khóa số lần nạp.</p>
+                </div>
+                <button type="button" class="btn btn-sm btn-outline" id="btn-toggle-admin-unlimited">
+                  🟢 Đang Bật (Vô Hạn)
+                </button>
+              </div>
+
+              <div class="admin-control-card">
+                <div>
+                  <b style="font-size: 0.92rem; color: #fff;">Thử nghiệm & Reset</b>
+                  <p style="font-size: 0.8rem; color: var(--text-muted); margin-top: 2px;">Xóa lịch sử đã nạp của trình duyệt này để kiểm tra lại giao diện như người dùng mới.</p>
+                </div>
+                <button type="button" class="btn btn-sm btn-danger" id="btn-admin-reset-machine" data-i18n="btn_reset_machine_label">
+                  🔄 Đặt Lại Số Lần Nạp Về 0
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Section 2: Bộ sinh mã kích hoạt bản quyền -->
+          <div class="admin-dash-section">
+            <h4 class="admin-sec-title">
+              <span class="icon">🎁</span>
+              <span data-i18n="admin_sec_license_title">2. Cấp Quyền & Kích Hoạt Cho Các Bạn Khác</span>
+            </h4>
+            <p style="font-size: 0.84rem; color: var(--text-secondary); margin-bottom: 12px;" data-i18n="admin_gen_desc">Tạo mã kích hoạt bản quyền để gửi cho khách hàng qua nhóm Zalo:</p>
+
+            <div class="admin-gen-buttons-row">
+              <button type="button" class="btn btn-gen-code btn-gen-pro" id="btn-gen-pro" data-i18n="btn_gen_pro">
+                ✨ Tạo Mã PRO Vĩnh Viễn
+              </button>
+              <button type="button" class="btn btn-gen-code btn-gen-plus" id="btn-gen-plus5" data-i18n="btn_gen_plus5">
+                ➕ Tạo Mã Thêm 5 Lượt
+              </button>
+              <button type="button" class="btn btn-gen-code btn-gen-plus" id="btn-gen-plus10" data-i18n="btn_gen_plus10">
+                ➕ Tạo Mã Thêm 10 Lượt
+              </button>
+            </div>
+
+            <!-- Custom code generator -->
+            <form id="form-custom-license" class="admin-custom-gen-form">
+              <label style="font-size: 0.82rem; font-weight: 700; color: var(--text-muted);" data-i18n="admin_custom_code_label">Hoặc tự đặt mã kích hoạt tùy ý:</label>
+              <div class="custom-gen-input-group">
+                <input type="text" id="input-custom-code" class="form-control" placeholder="Nhập mã tùy chỉnh (VD: KHACHVIP88)..." style="text-transform: uppercase;">
+                <select id="select-custom-type" class="form-select" style="max-width: 170px;">
+                  <option value="pro">Bản Quyền PRO</option>
+                  <option value="5">+5 Lượt Nạp</option>
+                  <option value="10">+10 Lượt Nạp</option>
+                </select>
+                <button type="submit" class="btn btn-primary" data-i18n="btn_add_custom_code">Tạo Mã Này</button>
+              </div>
+            </form>
+
+            <!-- Table of generated codes -->
+            <div style="margin-top: 14px;">
+              <b style="font-size: 0.88rem; color: var(--text-main); display: block; margin-bottom: 8px;" data-i18n="admin_codes_list_title">Danh Sách Mã Kích Hoạt Đã Tạo:</b>
+              <div class="admin-codes-table-wrap">
+                <table class="admin-codes-table">
+                  <thead>
+                    <tr>
+                      <th data-i18n="th_code">Mã Kích Hoạt</th>
+                      <th data-i18n="th_type">Loại Quyền</th>
+                      <th data-i18n="th_created">Thời Gian</th>
+                      <th data-i18n="th_action">Thao Tác</th>
+                    </tr>
+                  </thead>
+                  <tbody id="admin-codes-tbody">
+                    <!-- Populated dynamically -->
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <!-- Section 3: Kích hoạt theo Machine ID -->
+          <div class="admin-dash-section">
+            <h4 class="admin-sec-title">
+              <span class="icon">🔓</span>
+              <span data-i18n="admin_sec_unlock_direct">3. Mở Khóa Trực Tiếp Theo Mã Máy Của Khách (Machine ID)</span>
+            </h4>
+            <p style="font-size: 0.84rem; color: var(--text-secondary); margin-bottom: 8px;">Dán mã máy tính do khách gửi qua Zalo để cấp quyền PRO ngay lập tức:</p>
+            <div class="unlock-machine-row">
+              <input type="text" id="input-unlock-machine-id" class="form-control" placeholder="Dán Mã Máy của khách (VD: NDZ-MC-XXXX-XXXX)..." style="text-transform: uppercase; font-family: var(--font-mono);">
+              <button type="button" class="btn btn-success" id="btn-unlock-machine-direct" style="white-space: nowrap;">
+                <span data-i18n="btn_unlock_machine_pro">🔓 Kích Hoạt PRO Cho Mã Máy Này</span>
+              </button>
+            </div>
+            <div id="unlock-machine-feedback" style="display: none; font-size: 0.85rem; margin-top: 8px;"></div>
+          </div>
+
         </div>
       </div>
     </div>

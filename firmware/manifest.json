@@ -9,9 +9,9 @@
       "price": "Miễn Phí (1 Lần)",
       "versions": [
         {
-          "version": "v2.5.5-vn",
+          "version": "v2.5.6-vn",
           "releaseDate": "18/11/2026",
-          "changelog": "Sửa lỗi nút Cấu hình WiFi trong Cài đặt nhanh bị reset máy, tối ưu giải phóng port web server và bộ nhớ khi vào chế độ Hotspot AP",
+          "changelog": "Khởi động vào thẳng màn hình chính cực nhanh, tự động kiểm tra và nâng cấp OTA ngầm trong nền không làm phiền",
           "modes": {
             "clean": {
               "title": "Cài mới hoàn toàn (Clean Install)",
