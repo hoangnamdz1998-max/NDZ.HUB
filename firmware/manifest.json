@@ -4,7 +4,7 @@
       "id": "hub-touch",
       "name": "HUB MÀN HÌNH 2.8 INCH (XIAOZHI AI)",
       "chipFamily": "ESP32-S3",
-      "image": "assets/hub-screen-2.jpg",
+      "image": "assets/hub-screen-1.jpg",
       "description": "Firmware trợ lý AI Tiếng Việt Xiaozhi dành cho bo mạch màn hình Freenove ESP32-S3 2.8\" LCD cảm ứng (Zing MP3, FM Radio, Thời tiết, Tỷ giá vàng & ngoại tệ realtime, Cài đặt độ nhạy micro).",
       "price": "Miễn Phí",
       "versions": [
