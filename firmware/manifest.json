@@ -9,9 +9,9 @@
       "price": "Miễn Phí (1 Lần)",
       "versions": [
         {
-          "version": "v2.5.6-vn",
+          "version": "v2.5.7-vn",
           "releaseDate": "18/11/2026",
-          "changelog": "Khởi động vào thẳng màn hình chính cực nhanh, tự động kiểm tra và nâng cấp OTA ngầm trong nền không làm phiền",
+          "changelog": "Tích hợp sẵn link OTA vào firmware (dùng được ngay không cần copy khi cài WiFi), hiển thị sẵn link trên trang cấu hình để tùy chỉnh hoặc xóa nếu muốn",
           "modes": {
             "clean": {
               "title": "Cài mới hoàn toàn (Clean Install)",
