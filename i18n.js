@@ -1,0 +1,603 @@
+// i18n.js - Hệ thống đa ngôn ngữ Tiếng Việt & English cho NDZ HUB
+
+export const translations = {
+  vi: {
+    // Document
+    doc_title: "NDZ HUB · Nạp Firmware ESP32 Trực Tuyến",
+    meta_desc: "Nạp firmware cho ESP32, ESP32-S3, ESP32-C3 trực tiếp trên trình duyệt Web qua cổng Serial. Quản lý bản quyền phần cứng NDZ HUB.",
+
+    // Header
+    brand_subtitle: "Nền tảng Nạp Firmware & Bản Quyền Phần Cứng IoT",
+    btn_driver_guide: "Driver & Trợ giúp",
+    btn_zalo_support: "Nhóm Zalo hỗ trợ",
+
+    // Main Top Navigation
+    nav_flasher: "Nạp Firmware",
+    nav_products: "Sản Phẩm & Bản Quyền",
+    nav_monitor: "Serial Monitor",
+    nav_guide: "Hướng Dẫn & Cài Driver",
+
+    // Bottom Dock
+    dock_home: "Trang chủ",
+    dock_products: "Sản phẩm",
+    dock_monitor: "Monitor",
+    dock_guide: "Hướng dẫn",
+
+    // Browser Support
+    browser_alert_text: "Trình duyệt hiện tại không hỗ trợ <b>Web Serial API</b>. Vui lòng mở trang web này bằng <b>Google Chrome</b>, <b>Microsoft Edge</b> hoặc <b>Opera / Cốc Cốc</b> trên máy tính để nạp firmware.",
+
+    // View 1: Flasher Intro
+    hero_title: "Nạp Firmware Trực Tiếp Qua Trình Duyệt",
+    hero_desc: "Kết nối cáp USB với máy tính, chọn cổng COM và nạp firmware cho dòng chip ESP32/ESP32-S3/ESP32-C3 chỉ trong vài giây mà không cần cài đặt Arduino IDE.",
+    hero_badge_webserial: "⚡ Web Serial API",
+    hero_badge_esptool: "🛡️ esptool-js 5.6",
+    hero_badge_speed: "🚀 Tốc độ 921600",
+
+    // Step 1: Hardware Connection
+    step1_title: "Kết nối Thiết bị",
+    label_baud: "Tốc độ nạp (Baudrate):",
+    baud_921600: "921600 (Siêu tốc - Khuyên dùng)",
+    baud_460800: "460800 (Nhanh & Ổn định)",
+    baud_115200: "115200 (Tiêu chuẩn - Chống nhiễu cáp)",
+    btn_connect_idle: "Chọn Cổng COM & Kết Nối",
+    btn_connect_connected: "Ngắt Kết Nối",
+    chip_status_unplugged: "Chưa cắm thiết bị",
+    chip_status_syncing: "Đang đồng bộ bootloader...",
+    chip_status_connected: "Đã kết nối thành công",
+    chip_status_failed: "Kết nối thất bại",
+    label_chip_type: "Dòng vi điều khiển:",
+    label_chip_mac: "Định danh MAC (Chip ID):",
+    label_chip_flash: "Dung lượng Flash:",
+    label_machine_limit: "Lượt nạp của máy này:",
+    label_chip_status: "Trạng thái chip cắm vào:",
+    machine_free_remaining: "Còn 1 lượt nạp miễn phí",
+    machine_limit_reached: "❌ Đã hết lượt miễn phí (1/1)",
+    chip_waiting: "Chờ cắm thiết bị",
+    chip_ready_free: "✅ Sẵn sàng nạp (Miễn phí 1 lần)",
+    chip_limit_reached: "⛔ HẾT LƯỢT MIỄN PHÍ (Nhắn Zalo để kích hoạt)",
+    boot_tip: "💡 <b>Mẹo khi mạch không nhận:</b> Nhấn giữ nút <b>BOOT</b> trên bo mạch, nhấn nhả nút <b>EN (RST)</b> rồi nhả nút <b>BOOT</b> ra để vào chế độ nạp (Download Mode).",
+
+    // Step 2: Configuration & Flash
+    step2_title: "Cấu hình Firmware & Nạp",
+    subtab_product: "Firmware Sản Phẩm NDZ",
+    subtab_custom: "File .BIN Tự Chọn (DIY)",
+    label_select_product: "Chọn phần cứng bo mạch cần nạp:",
+    board_tag: "⚡ Nhận diện phần cứng tương thích",
+    board_img_overlay: "🔍 Ảnh bo mạch & linh kiện",
+    board_spec_title: "Bo Mạch Màn Hình 2.8\" Cảm Ứng ESP32-S3",
+    board_spec_desc: "Trang bị chip <b>ESP32-S3 Dual-Core 240MHz</b> mạnh mẽ, tích hợp sẵn màn hình LCD cảm ứng 2.8 inch, micro thu âm đàm thoại và cổng cắm loa ngoài mini.",
+    feat_screen_label: "Màn hình:",
+    feat_screen_val: "LCD 2.8\" Cảm ứng màu",
+    feat_mcu_label: "Vi xử lý:",
+    feat_mcu_val: "ESP32-S3 (240MHz)",
+    feat_audio_label: "Âm thanh:",
+    feat_audio_val: "Mic trên bo + Jack Loa JST",
+    feat_port_label: "Cổng nạp:",
+    feat_port_val: "Type-C (Web Serial)",
+    board_guide_callout: "💡 <b>Lưu ý khi cắm:</b> Cắm cáp Type-C vào cổng USB của bo mạch. Nhớ cắm giắc loa mini 2 dây (Đỏ/Đen) vào cổng JST trên bo để phát âm thanh trợ lý Xiaozhi.",
+    label_select_version: "Phiên bản Firmware:",
+    label_mode: "Chế độ cài đặt:",
+    mode_clean_title: "⚡ Cài mới hoàn toàn (Clean Install)",
+    mode_clean_desc: "Tự động xóa trắng bộ nhớ Flash, nạp Bootloader + Phân vùng + Ứng dụng sạch từ đầu.",
+    limit_rule_title_active: "Chính Sách Nạp Miễn Phí (1 Lần / Mỗi Máy Tính):",
+    limit_rule_title_locked: "Máy Tính Này Đã Sử Dụng Hết 1 Lượt Nạp Miễn Phí!",
+    limit_rule_desc_active: "Hệ thống hỗ trợ <b>1 lượt nạp miễn phí</b> cho mỗi máy tính. Nếu bạn muốn kích hoạt nạp thêm thiết bị, vui lòng tham gia nhóm Zalo để được hỗ trợ: <a href=\"https://zalo.me/g/6vrtqpuympv29wyque4x\" target=\"_blank\" style=\"color: #38bdf8; font-weight: 700; text-decoration: underline;\">💬 Nhóm Zalo Kích Hoạt Nạp Thêm</a>.",
+    limit_rule_desc_locked_prefix: "Máy tính này đã hoàn tất lượt nạp miễn phí",
+    limit_rule_desc_locked_cta: "Nếu bạn muốn nạp thêm thiết bị, vui lòng tham gia nhóm Zalo để được kích hoạt thêm lượt:",
+    zalo_join_btn: "💬 Tham Gia Nhóm Zalo Kích Hoạt Nạp Thêm",
+
+    // Custom BIN Sub-tab
+    custom_tab_desc: "Dành cho lập trình viên nạp file tự biên dịch từ Arduino IDE hoặc ESP-IDF. Nhập địa chỉ phân vùng (Offset) dạng Hex (ví dụ: 0x0000, 0x8000, 0x10000).",
+    btn_add_partition: "+ Thêm file phân vùng",
+    check_custom_erase: "Xóa trắng Flash trước khi nạp",
+
+    // Checklist
+    checklist_header: "Các Bước Tích Xác Nhận Bắt Buộc Trước Khi Nạp:",
+    check1_title: "1. Xác nhận đã cắm mạch:",
+    check1_desc: "Tôi xác nhận đã cắm bo mạch ESP32 vào cổng USB máy tính qua cáp truyền dữ liệu và đã bấm kết nối thành công.",
+    check2_title: "2. Xác nhận đúng loại mạch:",
+    check2_desc_before: "Tôi xác nhận bo mạch đang cầm trên tay đúng là: ",
+    check2_desc_after: " (khớp với phần cứng cần nạp, tránh nạp nhầm gây hỏng mạch).",
+
+    // Progress & Flashing Buttons
+    progress_ready: "Sẵn sàng",
+    progress_flashing: "Đang nạp firmware...",
+    progress_success: "Nạp thành công! Đang khởi động lại chip...",
+    progress_error: "Lỗi khi nạp!",
+    progress_erasing: "Đang xóa toàn bộ bộ nhớ flash...",
+    progress_erased: "Đã xóa trắng bộ nhớ Flash",
+    btn_flash_text: "Bắt Đầu Nạp Firmware",
+    btn_erase_text: "Xóa Flash",
+
+    // Console Log
+    console_title: "Nhật ký nạp (Console Log):",
+    btn_copy_log: "Sao chép",
+    btn_clear_log: "Xóa",
+    log_ready_init: "[Hệ thống] Sẵn sàng. Vui lòng cắm cáp USB và bấm 'Chọn Cổng COM & Kết Nối'.",
+
+    // View 2: Products & Catalog
+    catalog_badge: "HỆ SINH THÁI IOT CHÍNH HÃNG NDZ",
+    catalog_title: "Hệ Sinh Thái Sản Phẩm NDZ HUB",
+    catalog_subtitle: "Khám phá trọn bộ <b>Thiết bị hoàn thiện</b> sẵn sàng chạy và <b>Vỏ nhựa in 3D</b> chất lượng cao.",
+    filter_complete: "🤖 Sản Phẩm Hoàn Thiện (3)",
+    filter_case: "🧱 Vỏ Nhựa In 3D (3)",
+
+    // Group 1: Completed Devices
+    sec_complete_title: "🤖 Sản Phẩm Hoàn Thiện (Cắm Nguồn Là Chạy)",
+    sec_complete_badge: "Full Kit Lắp Sẵn",
+    tag_complete: "🤖 Sản Phẩm Hoàn Thiện",
+
+    // Robot N1 Complete
+    n1_chip_badge: "ESP32 · Sẵn Hàng",
+    n1_title: "ROBOT BÁNH XÍCH N1",
+    n1_price: "Full Box 100%",
+    n1_price_note: "/ Đầy đủ linh kiện & pin",
+    n1_spec1: "Lắp sẵn 100%: Khung gầm, cụm xích tải cao su, 2 động cơ giảm tốc.",
+    n1_spec2: "Mạch vi điều khiển nạp sẵn Firmware NDZ chính thức, kích hoạt sẵn.",
+    n1_spec3: "Kèm khối pin sạc dung lượng cao + cáp Type-C, mở hộp là chạy.",
+    btn_order_device: "💬 Tư Vấn & Mua Hàng (Zalo)",
+
+    // Robot T1 Complete
+    t1_chip_badge: "ESP32 · Bản Pro",
+    t1_thumb_badge: "Ảnh thực tế Robot T1 🔍",
+    t1_title: "ROBOT BÁNH XÍCH T1",
+    t1_price: "Bản Pro Tải Nặng",
+    t1_price_note: "/ Cảm biến & Camera",
+    t1_spec1: "Khung xe bánh xích hạng nặng hợp kim gia cố chịu tải lớn.",
+    t1_spec2: "Trang bị cụm quét chướng ngại vật & ngàm gắn camera FPV.",
+    t1_spec3: "Mạch công suất tản nhiệt nhôm, nạp sẵn FW cân bằng lực kéo.",
+
+    // Hub Touch Complete
+    hub_chip_badge: "ESP32-S3 · Để Bàn",
+    hub_thumb_badge: "Ảnh góc Setup bàn làm việc 🔍",
+    hub_title: "HUB MÀN HÌNH CẢM ỨNG",
+    hub_price: "Full Box Để Bàn",
+    hub_price_note: "/ Cắm nguồn dùng ngay",
+    hub_spec1: "Màn hình màu cảm ứng đa điểm sắc nét, độ phản hồi cực nhanh.",
+    hub_spec2: "Vỏ hộp để bàn góc nghiêng thẩm mỹ, chân đế cao su chống trượt.",
+    hub_spec3: "Nạp sẵn hệ điều hành NDZ Touch OS, kết nối WiFi / BLE tức thì.",
+
+    // Group 2: 3D Printed Enclosures
+    sec_case_title: "🧱 Vỏ Nhựa In 3D (Dành Cho Anh Em DIY & Sửa Chữa)",
+    sec_case_badge: "In 3D / File STL",
+    tag_case: "🧱 Vỏ Nhựa In 3D",
+    btn_order_case: "📦 Đặt In Nhựa / Tải File STL",
+
+    // Robot N1 Case
+    n1_case_title: "VỎ NHỰA ROBOT N1",
+    n1_case_price: "Đặt In / File STL",
+    n1_case_price_note: "/ Nhiều tùy chọn màu",
+    n1_case_spec1: "Trọn bộ chi tiết: Khung thân, ngàm motor, bánh gai xích & nắp chụp.",
+    n1_case_spec2: "In công nghệ FDM độ phân giải cao 0.16mm, infill dày dặn chống gãy.",
+    n1_case_spec3: "Chuẩn xác từng lỗ ốc M3, khớp khít hoàn hảo bo mạch ESP32.",
+
+    // Robot T1 Case
+    t1_case_title: "VỎ NHỰA ROBOT T1",
+    t1_case_thumb_badge: "Ảnh khung vỏ Robot T1 🔍",
+    t1_case_price: "Đặt In / File STL",
+    t1_case_price_note: "/ Chống va đập",
+    t1_case_spec1: "Khung xe chịu lực cấu trúc tổ ong, chống biến dạng khi leo trèo.",
+    t1_case_spec2: "Có sẵn khe luồn dây cáp nguồn và ngàm kẹp cảm biến khoảng cách.",
+    t1_case_spec3: "Cung cấp file 3D STL gốc hoặc nhận in thành phẩm giao tận nhà.",
+
+    // Hub Case
+    hub_case_title: "VỎ HUB CẢM ỨNG",
+    hub_case_thumb_badge: "Case viền cam + Dock phím cơ 🔍",
+    hub_case_price: "Đặt In / File STL",
+    hub_case_price_note: "/ Để bàn công thái học",
+    hub_case_spec1: "Góc nghiêng 60 độ công thái học cho góc nhìn màn hình rõ nét nhất.",
+    hub_case_spec2: "Khoét chuẩn cổng sạc Type-C, khe thẻ nhớ và nút bấm cạnh hông.",
+    hub_case_spec3: "Khớp ngàm bấm không cần keo dán, tháo lắp cực kỳ dễ dàng.",
+
+    // Trust Banner
+    trust1_title: "Bản Quyền Theo MAC",
+    trust1_desc: "Mỗi key gắn chặt với chip phần cứng của bạn, an toàn tuyệt đối và vĩnh viễn.",
+    trust2_title: "Cập Nhật Trực Tuyến",
+    trust2_desc: "Dễ dàng nạp các bản cập nhật mới nhất từ NDZ HUB chỉ với 1 cú click chuột.",
+    trust3_title: "Hỗ Trợ Kỹ Thuật Zalo",
+    trust3_desc: "Hỗ trợ cấu hình từ xa qua Ultraview/AnyDesk khi gặp khó khăn phần cứng.",
+
+    // View 3: Serial Monitor
+    btn_monitor_start: "Bắt đầu đọc Serial",
+    btn_monitor_stop: "Dừng đọc Serial",
+    btn_monitor_clear: "Xóa màn hình",
+    monitor_sub_desc: "Đọc dữ liệu debug thời gian thực từ chip ESP32",
+    monitor_screen_init: "[Serial Monitor] Sẵn sàng. Vui lòng kết nối cổng COM ở tab 'Nạp Firmware' trước khi bắt đầu đọc log.",
+    input_monitor_placeholder: "Nhập chuỗi lệnh AT hoặc ký tự gửi xuống ESP32...",
+    btn_monitor_send: "Gửi (Send)",
+
+    // View 4: Guide & Drivers
+    guide1_title: "1. Cài đặt Driver USB Serial",
+    guide1_desc: "Hầu hết bo mạch ESP32 giao tiếp với máy tính qua chip nạp UART **CH340** hoặc **CP2102**. Nếu bấm \"Chọn Cổng COM\" mà danh sách trống:",
+    guide1_ch340_title: "Driver CH340 / CH341 (Phổ biến nhất)",
+    guide1_ch340_sub: "Dành cho hầu hết các kit ESP32 giá rẻ, NodeMCU",
+    guide1_cp210_title: "Driver Silicon Labs CP210x",
+    guide1_cp210_sub: "Dành cho ESP32 DevKit chính hãng, Doit",
+    btn_download_driver: "Tải Driver",
+
+    guide2_title: "2. Mẹo Nhấn Nút BOOT & EN",
+    guide2_desc: "Một số bo mạch không có mạch tự động kích hoạt Download Mode (DTR/RTS). Khi gặp thông báo lỗi kết nối hoặc Timeout:",
+    guide2_step1: "Dùng ngón tay <b>nhấn và giữ nút BOOT</b> (hoặc IO0) trên bo mạch.",
+    guide2_step2: "Nhấn nhanh rồi nhả nút <b>EN (hoặc RST)</b>.",
+    guide2_step3: "Thả ngón tay khỏi nút <b>BOOT</b>.",
+    guide2_step4: "Bấm lại nút <b>\"Chọn Cổng COM & Kết Nối\"</b> trên trang web.",
+
+    guide3_title: "3. Lưu ý về Cáp USB",
+    guide3_p1: "Rất nhiều loại cáp điện thoại giá rẻ chỉ có 2 dây truyền điện (chỉ dùng sạc pin), <b>hoàn toàn không có 2 dây truyền dữ liệu (D+ và D-)</b>.",
+    guide3_p2: "Vui lòng đảm bảo bạn sử dụng cáp dữ liệu (Data Cable) chất lượng tốt, cắm trực tiếp vào cổng USB sau máy tính (tránh cắm qua Hub nối dài giá rẻ).",
+
+    guide4_title: "4. Quy Trình Nạp & Các Bước Tích Xác Nhận",
+    guide4_desc: "Quy trình các bước nạp an toàn của NDZ HUB:",
+    guide4_step1: "<b>Cắm & Kết nối:</b> Cắm bo mạch ESP32 vào máy tính qua cáp dữ liệu và bấm <b>\"Chọn Cổng COM & Kết Nối\"</b>.",
+    guide4_step2: "<b>Tích xác nhận 1:</b> Tích vào ô xác nhận đã cắm bo mạch chắc chắn vào máy tính.",
+    guide4_step3: "<b>Tích xác nhận 2:</b> Chọn đúng sản phẩm (Robot N1, T1 hoặc Hub Cảm Ứng) và tích xác nhận đúng loại mạch bạn đang cầm trên tay.",
+    guide4_step4: "<b>Bắt đầu nạp:</b> Khi hoàn tất đủ 2 tích xác nhận an toàn, nút <b>\"Bắt Đầu Nạp Firmware\"</b> sẽ sáng lên để bạn nạp miễn phí (1 lần cho mỗi máy tính, muốn nạp thêm liên hệ nhóm Zalo kích hoạt).",
+
+    // Modals
+    modal_driver_title: "Hướng Dẫn Cài Driver & Kết Nối",
+    modal_driver_h1: "1. Máy tính không nhận cổng COM?",
+    modal_driver_p1: "Hầu hết các mạch ESP32 sử dụng chip nạp UART USB CH340 hoặc CP2102. Nếu bấm kết nối mà không thấy cổng nào xuất hiện:",
+    modal_driver_link_ch340: "Tải Driver CH340 / CH341 (Windows)",
+    modal_driver_link_cp210: "Tải Driver CP210x (Windows / macOS)",
+    modal_driver_h2: "2. Cáp USB sạc hay cáp dữ liệu?",
+    modal_driver_p2: "Rất nhiều loại cáp điện thoại giá rẻ chỉ có 2 dây nguồn để sạc, không có 2 dây truyền dữ liệu (D+/D-). Vui lòng đổi sang cáp truyền dữ liệu tốt.",
+    modal_driver_h3: "3. Lỗi Timeout / Không vào được Bootloader",
+    modal_driver_p3: "Nếu gặp lỗi <i>\"Failed to connect to ESP32: Timed out waiting for packet header\"</i>:",
+
+    modal_order_title: "Tư Vấn & Đặt Hàng NDZ HUB",
+    modal_order_sub: "Sản Phẩm Hoàn Thiện · Vỏ Nhựa In 3D · Hỗ Trợ Kỹ Thuật",
+    modal_order_contact_title: "📞 Liên Hệ Đặt Hàng Trực Tiếp:",
+    modal_order_contact_desc: "Để đặt mua sản phẩm hoàn thiện, nhận file STL hoặc đặt in 3D theo màu yêu cầu, vui lòng liên hệ ngay đội ngũ NDZ:",
+    modal_order_li1: "💬 <b>Nhóm Zalo hỗ trợ:</b> Giải đáp kỹ thuật & báo giá nhanh nhất.",
+    modal_order_li2: "🚀 <b>Giao hàng toàn quốc:</b> Nhận hàng kiểm tra chạy thử mới thanh toán.",
+    modal_order_li3: "🛡️ <b>Bảo hành phần cứng:</b> Hỗ trợ kỹ thuật 1 - 1 qua Zalo/Ultraview.",
+    btn_order_zalo: "Nhắn Tin Tư Vấn Qua Nhóm Zalo",
+    btn_order_close: "Đóng cửa sổ",
+
+    modal_lightbox_caption: "Ảnh Sản Phẩm Thực Tế",
+
+    // Footer
+    footer_text: "© 2026 NDZ HUB · Nền Tảng Nạp Firmware ESP32 Trực Tuyến & Hệ Sinh Thái Phần Cứng Thông Minh."
+  },
+
+  en: {
+    // Document
+    doc_title: "NDZ HUB · Online ESP32 Firmware Flasher",
+    meta_desc: "Flash firmware for ESP32, ESP32-S3, ESP32-C3 directly in your web browser via Web Serial. Official NDZ HUB hardware ecosystem.",
+
+    // Header
+    brand_subtitle: "Online ESP32 Firmware Flashing & Smart IoT Platform",
+    btn_driver_guide: "Driver & Help",
+    btn_zalo_support: "Zalo Support Group",
+
+    // Main Top Navigation
+    nav_flasher: "Flash Firmware",
+    nav_products: "Products & Hardware",
+    nav_monitor: "Serial Monitor",
+    nav_guide: "Guide & Drivers",
+
+    // Bottom Dock
+    dock_home: "Home",
+    dock_products: "Products",
+    dock_monitor: "Monitor",
+    dock_guide: "Guide",
+
+    // Browser Support
+    browser_alert_text: "Your current browser does not support the <b>Web Serial API</b>. Please open this page in <b>Google Chrome</b>, <b>Microsoft Edge</b>, or <b>Opera</b> on a desktop computer to flash firmware.",
+
+    // View 1: Flasher Intro
+    hero_title: "Flash Firmware Directly in Your Browser",
+    hero_desc: "Connect your ESP32/ESP32-S3/ESP32-C3 via USB cable, select COM port, and flash firmware in seconds with zero software installation.",
+    hero_badge_webserial: "⚡ Web Serial API",
+    hero_badge_esptool: "🛡️ esptool-js 5.6",
+    hero_badge_speed: "🚀 Baud 921600",
+
+    // Step 1: Hardware Connection
+    step1_title: "Connect Device",
+    label_baud: "Flashing Baud Rate:",
+    baud_921600: "921600 (Ultra High-Speed - Recommended)",
+    baud_460800: "460800 (Fast & Reliable)",
+    baud_115200: "115200 (Standard - Noise Resistant)",
+    btn_connect_idle: "Select COM Port & Connect",
+    btn_connect_connected: "Disconnect",
+    chip_status_unplugged: "No device connected",
+    chip_status_syncing: "Syncing bootloader...",
+    chip_status_connected: "Connected successfully",
+    chip_status_failed: "Connection failed",
+    label_chip_type: "Microcontroller Chip:",
+    label_chip_mac: "MAC Address (Chip ID):",
+    label_chip_flash: "Flash Memory Size:",
+    label_machine_limit: "Allowance for this PC:",
+    label_chip_status: "Target chip status:",
+    machine_free_remaining: "1 free flash remaining",
+    machine_limit_reached: "❌ Free flash limit reached (1/1)",
+    chip_waiting: "Waiting for device connection",
+    chip_ready_free: "✅ Ready to flash (1-time free)",
+    chip_limit_reached: "⛔ FREE LIMIT REACHED (Contact Zalo to unlock)",
+    boot_tip: "💡 <b>Tip if device not detected:</b> Press & hold the <b>BOOT</b> button, press & release <b>EN (RST)</b>, then release <b>BOOT</b> to enter Download Mode.",
+
+    // Step 2: Configuration & Flash
+    step2_title: "Firmware Configuration & Flashing",
+    subtab_product: "NDZ Official Firmware",
+    subtab_custom: "Custom .BIN File (DIY)",
+    label_select_product: "Select target hardware board:",
+    board_tag: "⚡ Target Hardware Identification",
+    board_img_overlay: "🔍 Board & Components Photo",
+    board_spec_title: "ESP32-S3 2.8\" Touch Screen Board",
+    board_spec_desc: "Equipped with powerful <b>ESP32-S3 Dual-Core 240MHz</b>, onboard 2.8-inch color touch LCD, conversation mic, and external mini speaker port.",
+    feat_screen_label: "Display:",
+    feat_screen_val: "2.8\" Color Touch LCD",
+    feat_mcu_label: "Processor:",
+    feat_mcu_val: "ESP32-S3 (240MHz)",
+    feat_audio_label: "Audio:",
+    feat_audio_val: "Onboard Mic + JST Speaker Jack",
+    feat_port_label: "Flash Port:",
+    feat_port_val: "Type-C (Web Serial)",
+    board_guide_callout: "💡 <b>Connection note:</b> Connect Type-C cable to board USB port. Plug the 2-wire mini speaker (Red/Black) into onboard JST port for Xiaozhi AI audio output.",
+    label_select_version: "Firmware Version:",
+    label_mode: "Installation Mode:",
+    mode_clean_title: "⚡ Clean Install (Erase & Write)",
+    mode_clean_desc: "Automatically erases Flash memory, writes clean Bootloader + Partition table + Application.",
+    limit_rule_title_active: "Free Flashing Policy (1 Time / Per Computer):",
+    limit_rule_title_locked: "This Computer Has Used Its 1 Free Flash!",
+    limit_rule_desc_active: "The system provides <b>1 free flash</b> per computer. If you want to activate additional devices, please join our Zalo support group: <a href=\"https://zalo.me/g/6vrtqpuympv29wyque4x\" target=\"_blank\" style=\"color: #38bdf8; font-weight: 700; text-decoration: underline;\">💬 Zalo Group for Extra Activations</a>.",
+    limit_rule_desc_locked_prefix: "This computer has completed its free flash",
+    limit_rule_desc_locked_cta: "If you want to flash more devices, please join our Zalo group for activation:",
+    zalo_join_btn: "💬 Join Zalo Group for Extra Activations",
+
+    // Custom BIN Sub-tab
+    custom_tab_desc: "For developers flashing custom binaries compiled from Arduino IDE or ESP-IDF. Enter partition offset in Hex (e.g. 0x0000, 0x8000, 0x10000).",
+    btn_add_partition: "+ Add partition file",
+    check_custom_erase: "Erase entire flash before flashing",
+
+    // Checklist
+    checklist_header: "Mandatory Safety Checklist Before Flashing:",
+    check1_title: "1. Confirm board is connected:",
+    check1_desc: "I confirm the ESP32 board is plugged into the PC via a data cable and connected successfully.",
+    check2_title: "2. Confirm correct board type:",
+    check2_desc_before: "I confirm the board in my hand is indeed: ",
+    check2_desc_after: " (matching target firmware to avoid bricking).",
+
+    // Progress & Flashing Buttons
+    progress_ready: "Ready",
+    progress_flashing: "Flashing firmware...",
+    progress_success: "Flashed successfully! Rebooting chip...",
+    progress_error: "Error while flashing!",
+    progress_erasing: "Erasing entire flash memory...",
+    progress_erased: "Flash memory erased successfully",
+    btn_flash_text: "Start Flashing Firmware",
+    btn_erase_text: "Erase Flash",
+
+    // Console Log
+    console_title: "Console Log:",
+    btn_copy_log: "Copy",
+    btn_clear_log: "Clear",
+    log_ready_init: "[System] Ready. Please plug in USB cable and click 'Select COM Port & Connect'.",
+
+    // View 2: Products & Catalog
+    catalog_badge: "OFFICIAL NDZ IOT ECOSYSTEM",
+    catalog_title: "NDZ HUB Product Ecosystem",
+    catalog_subtitle: "Discover full-featured <b>Completed Devices</b> ready to run and premium <b>3D Printed Enclosures</b>.",
+    filter_complete: "🤖 Completed Devices (3)",
+    filter_case: "🧱 3D Printed Enclosures (3)",
+
+    // Group 1: Completed Devices
+    sec_complete_title: "🤖 Completed Devices (Plug & Play)",
+    sec_complete_badge: "Fully Assembled Kit",
+    tag_complete: "🤖 Completed Device",
+
+    // Robot N1 Complete
+    n1_chip_badge: "ESP32 · In Stock",
+    n1_title: "TRACKED ROBOT N1",
+    n1_price: "100% Full Box",
+    n1_price_note: "/ Full parts & battery",
+    n1_spec1: "100% pre-assembled: Chassis, rubber track system, 2 geared motors.",
+    n1_spec2: "Pre-flashed official NDZ Firmware, pre-activated.",
+    n1_spec3: "Includes high-capacity rechargeable battery + Type-C cable, ready out of the box.",
+    btn_order_device: "💬 Order & Inquiries (Zalo)",
+
+    // Robot T1 Complete
+    t1_chip_badge: "ESP32 · Pro Version",
+    t1_thumb_badge: "Real Photo Robot T1 🔍",
+    t1_title: "TRACKED ROBOT T1",
+    t1_price: "Pro Heavy-Duty",
+    t1_price_note: "/ Sensors & Camera",
+    t1_spec1: "Reinforced heavy-duty tracked chassis for high payload capacity.",
+    t1_spec2: "Obstacle avoidance sensor mount & FPV camera mount included.",
+    t1_spec3: "Aluminum heatsink power board, pre-flashed traction balancing FW.",
+
+    // Hub Touch Complete
+    hub_chip_badge: "ESP32-S3 · Desktop",
+    hub_thumb_badge: "Desktop Setup Photo 🔍",
+    hub_title: "TOUCH SCREEN SMART HUB",
+    hub_price: "Desktop Full Box",
+    hub_price_note: "/ Plug & Play",
+    hub_spec1: "Vibrant multi-touch color display, ultra-fast responsiveness.",
+    hub_spec2: "Aesthetic desktop angled enclosure, anti-slip rubber pads.",
+    hub_spec3: "Pre-installed NDZ Touch OS, instant WiFi / BLE connectivity.",
+
+    // Group 2: 3D Printed Enclosures
+    sec_case_title: "🧱 3D Printed Enclosures (For DIY & Makers)",
+    sec_case_badge: "3D Print / STL Files",
+    tag_case: "🧱 3D Printed Enclosure",
+    btn_order_case: "📦 Order 3D Print / Download STL",
+
+    // Robot N1 Case
+    n1_case_title: "ROBOT N1 ENCLOSURE",
+    n1_case_price: "Print On Demand / STL",
+    n1_case_price_note: "/ Multiple color options",
+    n1_case_spec1: "Complete parts: Main body frame, motor brackets, sprockets & top cover.",
+    n1_case_spec2: "High-resolution 0.16mm FDM printing, dense infill against breakage.",
+    n1_case_spec3: "Precise M3 screw holes, perfectly fits ESP32 boards.",
+
+    // Robot T1 Case
+    t1_case_title: "ROBOT T1 ENCLOSURE",
+    t1_case_thumb_badge: "Robot T1 Frame Photo 🔍",
+    t1_case_price: "Print On Demand / STL",
+    t1_case_price_note: "/ Impact resistant",
+    t1_case_spec1: "Honeycomb reinforced structure, prevents deformation under heavy load.",
+    t1_case_spec2: "Pre-routed cable channels and distance sensor clip mount.",
+    t1_case_spec3: "Original 3D STL download or custom print shipped to your door.",
+
+    // Hub Case
+    hub_case_title: "TOUCH HUB ENCLOSURE",
+    hub_case_thumb_badge: "Orange Bezel Case + Macropad Dock 🔍",
+    hub_case_price: "Print On Demand / STL",
+    hub_case_price_note: "/ Ergonomic desktop",
+    hub_case_spec1: "Ergonomic 60-degree viewing angle for optimal screen readability.",
+    hub_case_spec2: "Precise cutouts for Type-C port, TF card slot, and side buttons.",
+    hub_case_spec3: "Snap-fit joints without glue, effortless assembly and maintenance.",
+
+    // Trust Banner
+    trust1_title: "MAC-Locked License",
+    trust1_desc: "Each key is permanently tied to your hardware chip, secure and lasting.",
+    trust2_title: "Web Firmware Updates",
+    trust2_desc: "Easily flash the newest releases from NDZ HUB with a single click.",
+    trust3_title: "Direct Technical Support",
+    trust3_desc: "Remote setup assistance via Ultraview/AnyDesk for hardware issues.",
+
+    // View 3: Serial Monitor
+    btn_monitor_start: "Start Reading Serial",
+    btn_monitor_stop: "Stop Reading Serial",
+    btn_monitor_clear: "Clear Screen",
+    monitor_sub_desc: "Real-time debug output from ESP32 chip",
+    monitor_screen_init: "[Serial Monitor] Ready. Please connect COM port in 'Flash Firmware' tab before reading logs.",
+    input_monitor_placeholder: "Enter AT command or characters to send to ESP32...",
+    btn_monitor_send: "Send",
+
+    // View 4: Guide & Drivers
+    guide1_title: "1. Install USB Serial Driver",
+    guide1_desc: "Most ESP32 boards communicate with PC via UART chip **CH340** or **CP2102**. If clicking \"Select COM Port\" shows an empty list:",
+    guide1_ch340_title: "Driver CH340 / CH341 (Most Common)",
+    guide1_ch340_sub: "For most affordable ESP32 kits and NodeMCU",
+    guide1_cp210_title: "Driver Silicon Labs CP210x",
+    guide1_cp210_sub: "For official ESP32 DevKit, Doit boards",
+    btn_download_driver: "Download Driver",
+
+    guide2_title: "2. BOOT & EN Button Tip",
+    guide2_desc: "Some boards lack auto-reset circuitry (DTR/RTS). If you experience connection timeout or errors:",
+    guide2_step1: "Press and <b>hold the BOOT button</b> (or IO0) on the board.",
+    guide2_step2: "Quickly press and release the <b>EN (or RST)</b> button.",
+    guide2_step3: "Release the <b>BOOT</b> button.",
+    guide2_step4: "Click <b>\"Select COM Port & Connect\"</b> again.",
+
+    guide3_title: "3. USB Cable Notes",
+    guide3_p1: "Many cheap phone cables only have 2 power wires (charging only), with <b>no data transfer wires (D+ and D-)</b>.",
+    guide3_p2: "Please ensure you use a quality Data Cable plugged directly into your computer USB port (avoid cheap unpowered USB hubs).",
+
+    guide4_title: "4. Flashing Steps & Safety Checklist",
+    guide4_desc: "NDZ HUB safe flashing workflow:",
+    guide4_step1: "<b>Plug & Connect:</b> Plug ESP32 into computer via data cable and click <b>\"Select COM Port & Connect\"</b>.",
+    guide4_step2: "<b>Checklist Step 1:</b> Check the box confirming board is plugged in.",
+    guide4_step3: "<b>Checklist Step 2:</b> Select correct product and check the box confirming your physical hardware matches.",
+    guide4_step4: "<b>Start Flashing:</b> Once both safety checks are confirmed, click <b>\"Start Flashing Firmware\"</b> for free (1 free flash per PC; contact Zalo group for extra activations).",
+
+    // Modals
+    modal_driver_title: "Driver Installation & Troubleshooting",
+    modal_driver_h1: "1. Computer does not detect COM port?",
+    modal_driver_p1: "Most ESP32 boards use CH340 or CP2102 USB-to-UART bridge. If no port appears when connecting:",
+    modal_driver_link_ch340: "Download Driver CH340 / CH341 (Windows)",
+    modal_driver_link_cp210: "Download Driver CP210x (Windows / macOS)",
+    modal_driver_h2: "2. Charge-only vs Data Cable?",
+    modal_driver_p2: "Many cheap charging cables lack data lines (D+/D-). Please switch to a proper data cable.",
+    modal_driver_h3: "3. Timeout / Bootloader Error",
+    modal_driver_p3: "If you see <i>\"Failed to connect to ESP32: Timed out waiting for packet header\"</i>:",
+
+    modal_order_title: "Inquiries & Orders NDZ HUB",
+    modal_order_sub: "Completed Devices · 3D Printed Parts · Technical Support",
+    modal_order_contact_title: "📞 Direct Contact & Orders:",
+    modal_order_contact_desc: "To order complete devices, obtain STL files, or request custom 3D printing, please contact our NDZ team:",
+    modal_order_li1: "💬 <b>Zalo Support Group:</b> Technical guidance & instant pricing.",
+    modal_order_li2: "🚀 <b>Nationwide Delivery:</b> Inspect and test before payment.",
+    modal_order_li3: "🛡️ <b>Hardware Warranty:</b> 1-on-1 support via Zalo/Ultraview.",
+    btn_order_zalo: "Message Our Zalo Support Group",
+    btn_order_close: "Close Window",
+
+    modal_lightbox_caption: "Actual Product Photo",
+
+    // Footer
+    footer_text: "© 2026 NDZ HUB · Online ESP32 Firmware Flasher & Smart IoT Hardware Platform."
+  }
+};
+
+const LANG_KEY = "ndz_lang_pref";
+let currentLang = "vi";
+
+export function getCurrentLang() {
+  return currentLang;
+}
+
+export function t(key, fallback = "") {
+  const dict = translations[currentLang] || translations.vi;
+  return dict[key] !== undefined ? dict[key] : (fallback || key);
+}
+
+const listeners = [];
+export function onLanguageChange(fn) {
+  if (typeof fn === "function") {
+    listeners.push(fn);
+  }
+}
+
+export function setLanguage(lang) {
+  if (lang !== "vi" && lang !== "en") lang = "vi";
+  currentLang = lang;
+  try {
+    localStorage.setItem(LANG_KEY, lang);
+  } catch (e) {}
+
+  document.documentElement.lang = lang;
+  document.title = t("doc_title");
+
+  // Update all elements with data-i18n
+  document.querySelectorAll("[data-i18n]").forEach(el => {
+    const key = el.dataset.i18n;
+    if (key && translations[lang][key] !== undefined) {
+      el.innerHTML = translations[lang][key];
+    }
+  });
+
+  // Update attributes: placeholder, title
+  document.querySelectorAll("[data-i18n-placeholder]").forEach(el => {
+    const key = el.dataset.i18nPlaceholder;
+    if (key && translations[lang][key] !== undefined) {
+      el.placeholder = translations[lang][key];
+    }
+  });
+
+  document.querySelectorAll("[data-i18n-title]").forEach(el => {
+    const key = el.dataset.i18nTitle;
+    if (key && translations[lang][key] !== undefined) {
+      el.title = translations[lang][key];
+    }
+  });
+
+  // Update language switch buttons active state
+  document.querySelectorAll(".lang-btn").forEach(btn => {
+    btn.classList.toggle("active", btn.dataset.lang === lang);
+  });
+
+  // Notify listeners
+  listeners.forEach(fn => {
+    try { fn(lang); } catch (e) { console.error("i18n listener error", e); }
+  });
+}
+
+export function initI18n() {
+  let savedLang = "vi";
+  try {
+    savedLang = localStorage.getItem(LANG_KEY) || (navigator.language?.startsWith("vi") ? "vi" : "vi");
+  } catch (e) {}
+
+  // Bind clicks on language toggle buttons
+  document.querySelectorAll(".lang-btn").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const targetLang = btn.dataset.lang;
+      if (targetLang && targetLang !== currentLang) {
+        setLanguage(targetLang);
+      }
+    });
+  });
+
+  setLanguage(savedLang);
+}
