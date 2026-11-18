@@ -432,6 +432,17 @@ function onProductChange() {
   productPriceBadge.textContent = prod.price ? `Giá: ${prod.price}` : "";
   productPriceBadge.style.display = prod.price ? "inline-block" : "none";
 
+  const thumbEl = document.getElementById("product-meta-thumb");
+  const imgEl = document.getElementById("product-meta-img");
+  if (thumbEl && imgEl) {
+    if (prod.image) {
+      imgEl.src = prod.image;
+      thumbEl.style.display = "block";
+    } else {
+      thumbEl.style.display = "none";
+    }
+  }
+
   // Populate versions
   selectVersion.innerHTML = "";
   prod.versions.forEach((v, idx) => {
