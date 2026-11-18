@@ -596,17 +596,23 @@ if (modalOrder) {
 }
 
 // Mode card radio toggle
-modeCardUpdate.addEventListener("click", () => {
-  modeCardUpdate.classList.add("selected");
-  modeCardClean.classList.remove("selected");
-  modeCardUpdate.querySelector("input").checked = true;
-});
+if (modeCardUpdate) {
+  modeCardUpdate.addEventListener("click", () => {
+    modeCardUpdate.classList.add("selected");
+    if (modeCardClean) modeCardClean.classList.remove("selected");
+    const inp = modeCardUpdate.querySelector("input");
+    if (inp) inp.checked = true;
+  });
+}
 
-modeCardClean.addEventListener("click", () => {
-  modeCardClean.classList.add("selected");
-  modeCardUpdate.classList.remove("selected");
-  modeCardClean.querySelector("input").checked = true;
-});
+if (modeCardClean) {
+  modeCardClean.addEventListener("click", () => {
+    modeCardClean.classList.add("selected");
+    if (modeCardUpdate) modeCardUpdate.classList.remove("selected");
+    const inp = modeCardClean.querySelector("input");
+    if (inp) inp.checked = true;
+  });
+}
 
 // 4. Kết nối / Ngắt kết nối ESP32
 btnConnect.addEventListener("click", async () => {
@@ -775,11 +781,11 @@ btnFlash.addEventListener("click", async () => {
       // Nạp từ manifest sản phẩm
       const prodId = selectProduct.value;
       const verId = selectVersion.value;
-      const mode = document.querySelector('input[name="flash-mode"]:checked').value;
+      const mode = document.querySelector('input[name="flash-mode"]:checked')?.value || "clean";
 
       const prod = manifestData.products.find(p => p.id === prodId);
       const versionObj = prod.versions.find(v => v.version === verId);
-      const modeObj = versionObj.modes[mode] || versionObj.modes.update || versionObj.modes.clean;
+      const modeObj = versionObj.modes[mode] || versionObj.modes.clean || Object.values(versionObj.modes)[0];
 
       shouldErase = modeObj.erase;
       logSystem(`Chuẩn bị nạp sản phẩm: ${prod.name} (${verId}) - Chế độ: ${modeObj.title}`);

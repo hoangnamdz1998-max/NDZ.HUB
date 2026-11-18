@@ -229,19 +229,14 @@
                   <select id="select-version" class="form-select"></select>
                 </div>
 
-                <!-- Chế độ nạp (Cập nhật vs Cài mới) -->
+                <!-- Chế độ nạp (Cài mới hoàn toàn) -->
                 <div class="form-group">
                   <label>Chế độ cài đặt:</label>
                   <div class="mode-options">
-                    <label class="mode-card selected" id="mode-card-update">
-                      <input type="radio" name="flash-mode" value="update" checked>
-                      <div class="title">Cập nhật ứng dụng</div>
-                      <div class="sub">Giữ nguyên cấu hình Wi-Fi, NVS và License cũ trong chip.</div>
-                    </label>
-                    <label class="mode-card" id="mode-card-clean">
-                      <input type="radio" name="flash-mode" value="clean">
-                      <div class="title">Cài mới hoàn toàn</div>
-                      <div class="sub">Xóa trắng bộ nhớ, nạp lại Bootloader + App sạch từ đầu.</div>
+                    <label class="mode-card selected" id="mode-card-clean" style="cursor: default; width: 100%;">
+                      <input type="radio" name="flash-mode" value="clean" checked style="display: none;">
+                      <div class="title">⚡ Cài mới hoàn toàn (Clean Install)</div>
+                      <div class="sub">Tự động xóa trắng bộ nhớ Flash, nạp Bootloader + Phân vùng + Ứng dụng sạch từ đầu.</div>
                     </label>
                   </div>
                 </div>

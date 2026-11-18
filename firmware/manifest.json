@@ -13,19 +13,11 @@
           "changelog": "Bản mới nhất: Tùy chỉnh độ nhạy micro trong Cài đặt nhanh, cập nhật tỷ giá & giá vàng thời gian thực",
           "modes": {
             "clean": {
-              "title": "Cài mới hoàn toàn (Khuyên dùng)",
-              "description": "Nạp toàn bộ hệ thống gồm Bootloader, Partition, App và Assets (Dành cho bo mạch nạp lần đầu hoặc muốn làm sạch chip).",
+              "title": "Cài mới hoàn toàn (Clean Install)",
+              "description": "Nạp toàn bộ hệ thống gồm Bootloader, Partition, App và Assets sạch từ đầu.",
               "erase": true,
               "parts": [
                 { "path": "firmware/xiaozhi_freenove_2.8_merged.bin", "offset": "0x0" }
-              ]
-            },
-            "update": {
-              "title": "Cập nhật ứng dụng",
-              "description": "Chỉ cập nhật mã app, giữ nguyên cấu hình Wi-Fi, NVS và cài đặt cũ trong chip.",
-              "erase": false,
-              "parts": [
-                { "path": "firmware/xiaozhi_freenove_2.8_app.bin", "offset": "0x20000" }
               ]
             }
           }
