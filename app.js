@@ -38,12 +38,141 @@ const modeCardUpdate = document.getElementById("mode-card-update");
 const modeCardClean = document.getElementById("mode-card-clean");
 
 // ============================================================================
-// HỆ THỐNG QUẢN LÝ LƯỢT NẠP (MỖI MÁY TÍNH ĐƯỢC NẠP 1 LẦN MIỄN PHÍ)
+// HỆ THỐNG QUẢN LÝ LƯỢT NẠP, BẢN QUYỀN PRO & QUẢN TRỊ VIÊN (ADMIN PORTAL)
 // ============================================================================
 const MAX_FLASH_COUNT = 1;
 const MACHINE_FLASH_KEY = "ndz_machine_flashed_v4";
 const CHIP_FLASH_KEY = "ndz_chip_flashed_v4";
+const MACHINE_ID_KEY = "ndz_machine_id_v1";
+const PRO_LICENSE_KEY = "ndz_pro_activated_v1";
+const BONUS_FLASHES_KEY = "ndz_bonus_flashes_v1";
+const ADMIN_AUTH_KEY = "ndz_admin_logged_v1";
+const ADMIN_UNLIMITED_KEY = "ndz_admin_unlimited_v1";
+const GENERATED_LICENSES_KEY = "ndz_generated_licenses_v1";
+const UNLOCKED_MACHINES_KEY = "ndz_unlocked_machines_v1";
+const ADMIN_PASSWORD_STANDARD = "ndz2026";
 const ZALO_ACTIVATION_URL = "https://zalo.me/g/6vrtqpuympv29wyque4x";
+
+// Machine ID (Mã Máy Tính Duy Nhất Cố Định)
+function getOrCreateMachineId() {
+  let id = null;
+  try { id = localStorage.getItem(MACHINE_ID_KEY); } catch (e) {}
+  if (!id) {
+    try {
+      const match = document.cookie.match(new RegExp('(?:^|; )' + MACHINE_ID_KEY + '=([^;]+)'));
+      if (match) id = match[1];
+    } catch (e) {}
+  }
+  if (!id) {
+    const chars = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
+    let rand = "";
+    for (let i = 0; i < 8; i++) {
+      rand += chars.charAt(Math.floor(Math.random() * chars.length));
+    }
+    id = `NDZ-MC-${rand.slice(0, 4)}-${rand.slice(4)}`;
+    try {
+      localStorage.setItem(MACHINE_ID_KEY, id);
+      const d = new Date();
+      d.setFullYear(d.getFullYear() + 10);
+      document.cookie = `${MACHINE_ID_KEY}=${id};expires=${d.toUTCString()};path=/;SameSite=Lax`;
+    } catch (e) {}
+  }
+  return id;
+}
+
+// Kiểm tra quyền Admin
+function isAdminLoggedIn() {
+  try {
+    return sessionStorage.getItem(ADMIN_AUTH_KEY) === "true" || localStorage.getItem(ADMIN_AUTH_KEY) === "true";
+  } catch (e) {
+    return false;
+  }
+}
+
+function isAdminUnlimitedMode() {
+  try {
+    return isAdminLoggedIn() && localStorage.getItem(ADMIN_UNLIMITED_KEY) === "true";
+  } catch (e) {
+    return false;
+  }
+}
+
+// Danh sách các máy đã được Admin mở khóa trực tiếp
+function getUnlockedMachines() {
+  try {
+    return JSON.parse(localStorage.getItem(UNLOCKED_MACHINES_KEY) || "[]");
+  } catch (e) {
+    return [];
+  }
+}
+
+// Kiểm tra xem máy này đã kích hoạt Bản Quyền PRO chưa
+function isProLicenseActive() {
+  if (isAdminUnlimitedMode()) return true;
+  try {
+    if (localStorage.getItem(PRO_LICENSE_KEY) === "true") return true;
+    const match = document.cookie.match(new RegExp('(?:^|; )' + PRO_LICENSE_KEY + '=([^;]+)'));
+    if (match && match[1] === "true") return true;
+  } catch (e) {}
+
+  const currentMid = getOrCreateMachineId();
+  const unlocked = getUnlockedMachines();
+  if (unlocked.some(m => m.machineId === currentMid)) return true;
+
+  return false;
+}
+
+function setProLicenseActive(val = true) {
+  try {
+    localStorage.setItem(PRO_LICENSE_KEY, val ? "true" : "false");
+    const d = new Date();
+    d.setFullYear(d.getFullYear() + 10);
+    document.cookie = `${PRO_LICENSE_KEY}=${val ? "true" : "false"};expires=${d.toUTCString()};path=/;SameSite=Lax`;
+  } catch (e) {}
+}
+
+// Số lượt nạp cộng thêm (Bonus Flashes)
+function getBonusFlashes() {
+  try {
+    return parseInt(localStorage.getItem(BONUS_FLASHES_KEY) || "0", 10);
+  } catch (e) {
+    return 0;
+  }
+}
+
+function addBonusFlashes(amount) {
+  const current = getBonusFlashes();
+  const updated = current + amount;
+  try {
+    localStorage.setItem(BONUS_FLASHES_KEY, updated.toString());
+  } catch (e) {}
+  return updated;
+}
+
+function getTotalAllowedFlashes() {
+  if (isProLicenseActive()) return Infinity;
+  return MAX_FLASH_COUNT + getBonusFlashes();
+}
+
+function isMachineFlashLimitReached() {
+  if (isProLicenseActive()) return false;
+  return getMachineFlashCount() >= getTotalAllowedFlashes();
+}
+
+// Danh sách mã bản quyền do Admin tạo
+function getGeneratedLicenses() {
+  try {
+    return JSON.parse(localStorage.getItem(GENERATED_LICENSES_KEY) || "[]");
+  } catch (e) {
+    return [];
+  }
+}
+
+function saveGeneratedLicenses(list) {
+  try {
+    localStorage.setItem(GENERATED_LICENSES_KEY, JSON.stringify(list));
+  } catch (e) {}
+}
 
 // 1. Lấy thông tin lượt nạp từ lưu trữ đa tầng (localStorage + Cookie)
 function getMachineFlashRecord() {
@@ -66,10 +195,6 @@ function getMachineFlashCount() {
   if (Array.isArray(rec.flashes)) return rec.flashes.length;
   if (typeof rec.count === "number") return rec.count;
   return 0;
-}
-
-function isMachineFlashLimitReached() {
-  return getMachineFlashCount() >= MAX_FLASH_COUNT;
 }
 
 // 2. IndexedDB Backup
@@ -125,6 +250,11 @@ function setMachineCookie(valStr) {
 }
 
 async function markMachineAsFlashed(mac, productName) {
+  if (isAdminUnlimitedMode()) {
+    logSystem(`[ADMIN] Đã nạp thành công ở chế độ Quản trị viên (Không tính vào lượt máy).`, "info");
+    return;
+  }
+
   const now = new Date();
   const currentRec = getMachineFlashRecord() || { count: 0, flashes: [] };
   const flashes = Array.isArray(currentRec.flashes) ? currentRec.flashes : [];
@@ -177,14 +307,61 @@ async function markMachineAsFlashed(mac, productName) {
 function updateFlashAllowanceUI() {
   const count = getMachineFlashCount();
   const rec = getMachineFlashRecord();
+  const mid = getOrCreateMachineId();
 
-  if (count >= MAX_FLASH_COUNT) {
+  // Cập nhật nhãn Machine ID trên giao diện
+  const displayMid = document.getElementById("display-machine-id");
+  const modalDisplayMid = document.getElementById("modal-display-machine-id");
+  if (displayMid) displayMid.textContent = mid;
+  if (modalDisplayMid) modalDisplayMid.textContent = mid;
+
+  // 1. TRƯỜNG HỢP BẢN QUYỀN PRO HOẶC ADMIN UNLIMITED
+  if (isProLicenseActive()) {
+    if (machineLicenseTag) {
+      machineLicenseTag.textContent = t("machine_pro_unlimited", "⭐ BẢN QUYỀN PRO: NẠP VÔ HẠN");
+      machineLicenseTag.style.color = "#fbbf24";
+    }
+    if (limitRuleBox) {
+      limitRuleBox.className = "limit-rule-box pro";
+    }
+    if (limitRuleTitle) {
+      limitRuleTitle.textContent = "⭐ BẢN QUYỀN PRO: NẠP KHÔNG GIỚI HẠN";
+    }
+    if (limitRuleDesc) {
+      limitRuleDesc.innerHTML = `${t("limit_rule_pro_active")}<br>
+        <span style="color:#fef08a; font-weight:700;">Mã máy: ${mid} · Bản quyền PRO vĩnh viễn đã được xác thực</span>`;
+    }
+    return;
+  }
+
+  // 2. TRƯỜNG HỢP CỘNG THÊM LƯỢT NẠP (BONUS FLASHES)
+  const totalAllowed = getTotalAllowedFlashes();
+  if (totalAllowed > MAX_FLASH_COUNT && count < totalAllowed) {
+    const remaining = totalAllowed - count;
+    if (machineLicenseTag) {
+      machineLicenseTag.textContent = t("machine_bonus_remaining", `Còn ${remaining} lượt nạp khả dụng`).replace("{N}", remaining);
+      machineLicenseTag.style.color = "#38bdf8";
+    }
+    if (limitRuleBox) {
+      limitRuleBox.className = "limit-rule-box";
+    }
+    if (limitRuleTitle) {
+      limitRuleTitle.textContent = `Chính Sách Nạp (Đã Kích Hoạt Thêm Lượt: Còn ${remaining}/${totalAllowed}):`;
+    }
+    if (limitRuleDesc) {
+      limitRuleDesc.innerHTML = `Máy tính này đang có <b>${remaining} lượt nạp khả dụng</b> (Đã nạp ${count}/${totalAllowed} lượt). Cần thêm lượt vui lòng liên hệ nhóm Zalo.`;
+    }
+    return;
+  }
+
+  // 3. TRƯỜNG HỢP ĐÃ HẾT LƯỢT NẠP
+  if (count >= totalAllowed) {
     if (machineLicenseTag) {
       machineLicenseTag.textContent = t("machine_limit_reached");
       machineLicenseTag.style.color = "#ef4444";
     }
     if (limitRuleBox) {
-      limitRuleBox.classList.add("locked");
+      limitRuleBox.className = "limit-rule-box locked";
     }
     if (limitRuleTitle) {
       limitRuleTitle.textContent = t("limit_rule_title_locked");
@@ -201,12 +378,13 @@ function updateFlashAllowanceUI() {
       btnFlash.disabled = true;
     }
   } else {
+    // 4. TRƯỜNG HỢP MẶC ĐỊNH (CÒN 1 LƯỢT NẠP MIỄN PHÍ)
     if (machineLicenseTag) {
       machineLicenseTag.textContent = t("machine_free_remaining");
       machineLicenseTag.style.color = "#10b981";
     }
     if (limitRuleBox) {
-      limitRuleBox.classList.remove("locked");
+      limitRuleBox.className = "limit-rule-box";
     }
     if (limitRuleTitle) {
       limitRuleTitle.textContent = t("limit_rule_title_active");
@@ -220,20 +398,17 @@ function updateFlashAllowanceUI() {
 function updateDeviceFlashStatus(mac) {
   updateFlashAllowanceUI();
 
-  const count = getMachineFlashCount();
-
-  // NẾU MÁY TÍNH NÀY ĐÃ ĐẠT 1 LẦN -> KHÓA VÀ HƯỚNG DẪN QUA ZALO
-  if (count >= MAX_FLASH_COUNT) {
+  if (isMachineFlashLimitReached()) {
     if (chipLicenseTag) {
       chipLicenseTag.textContent = t("chip_limit_reached");
       chipLicenseTag.style.color = "#ef4444";
     }
     if (btnFlash) btnFlash.disabled = true;
     progressStatusText.textContent = (getCurrentLang() === "en" 
-      ? "This PC has completed its free flash. Please join Zalo group to unlock more!" 
-      : "Máy tính này đã hoàn thành 1 lượt nạp miễn phí. Vui lòng tham gia nhóm Zalo để kích hoạt nạp thêm!");
-    logSystem(`[CẢNH BÁO TỪ CHỐI] Máy tính này đã hoàn thành 1 lượt nạp firmware miễn phí.`, "error");
-    logSystem(`[KÍCH HOẠT THÊM LƯỢT] Bạn muốn nạp thêm chip [MAC: ${mac || 'Đang kết nối'}]? Vui lòng tham gia Zalo: ${ZALO_ACTIVATION_URL}`, "warn");
+      ? "This PC has reached its flashing limit. Please redeem a PRO license code!" 
+      : "Máy tính này đã dùng hết số lượt nạp. Vui lòng bấm 'Nhập Mã Kích Hoạt PRO' để nạp tiếp!");
+    logSystem(`[CẢNH BÁO TỪ CHỐI] Máy tính này đã dùng hết lượt nạp firmware miễn phí.`, "error");
+    logSystem(`[KÍCH HOẠT PRO] Nhập mã bản quyền hoặc liên hệ Admin Zalo: ${ZALO_ACTIVATION_URL}`, "warn");
     return;
   }
 
@@ -247,11 +422,11 @@ function updateDeviceFlashStatus(mac) {
   }
 
   if (chipLicenseTag) {
-    chipLicenseTag.textContent = t("chip_ready_free");
+    chipLicenseTag.textContent = isProLicenseActive() ? "⭐ Chip Đã Sẵn Sàng (Bản Quyền PRO)" : t("chip_ready_free");
     chipLicenseTag.style.color = "#10b981";
   }
   if (btnFlash) btnFlash.disabled = false;
-  logSystem(`[Thông báo] Nhận diện chip MAC [${mac}] thành công. Sẵn sàng nạp lượt miễn phí.`, "info");
+  logSystem(`[Thông báo] Nhận diện chip MAC [${mac}] thành công. Sẵn sàng nạp firmware.`, "info");
 }
 
 // Custom files elements
@@ -283,8 +458,7 @@ const itemCheckBoardType = document.getElementById("item-check-board-type");
 const confirmBoardName = document.getElementById("confirm-board-name");
 
 function canFlashNow() {
-  const count = getMachineFlashCount();
-  if (count >= MAX_FLASH_COUNT) return false;
+  if (isMachineFlashLimitReached()) return false;
   if (!isConnected || !esploader) return false;
   if (!checkBoardPlugged || !checkBoardPlugged.checked) return false;
   if (!checkBoardType || !checkBoardType.checked) return false;
@@ -293,8 +467,7 @@ function canFlashNow() {
 
 function refreshFlashButtonState() {
   if (isFlashing) return;
-  const count = getMachineFlashCount();
-  if (count >= MAX_FLASH_COUNT) {
+  if (isMachineFlashLimitReached()) {
     btnFlash.disabled = true;
     return;
   }
@@ -733,8 +906,400 @@ window.addEventListener("keydown", (e) => {
     if (modalLightbox?.classList.contains("active")) modalLightbox.classList.remove("active");
     if (modalOrder?.classList.contains("active")) modalOrder.classList.remove("active");
     if (modalDriver?.classList.contains("open")) modalDriver.classList.remove("open");
+    if (modalActivatePro?.classList.contains("active")) closeActivateProModal();
+    if (modalAdminPortal?.classList.contains("active")) closeAdminPortal();
   }
 });
+
+// ============================================================================
+// HỆ THỐNG XỬ LÝ MÃ BẢN QUYỀN PRO & ADMIN CONTROLLER
+// ============================================================================
+
+function activateLicenseCode(rawCode) {
+  if (!rawCode) {
+    return { success: false, message: getCurrentLang() === "en" ? "Please enter a license code!" : "Vui lòng nhập mã kích hoạt!" };
+  }
+  const code = rawCode.trim().toUpperCase();
+  const currentMid = getOrCreateMachineId();
+
+  // 1. Kiểm tra trong danh sách mã do Admin sinh ra
+  const generated = getGeneratedLicenses();
+  const foundIdx = generated.findIndex(item => item.code.toUpperCase() === code);
+
+  if (foundIdx !== -1) {
+    const item = generated[foundIdx];
+    if (item.used) {
+      return { success: false, message: getCurrentLang() === "en" ? "This license code has already been used!" : "Mã kích hoạt này đã được sử dụng trước đó!" };
+    }
+    item.used = true;
+    item.usedBy = currentMid;
+    item.usedAt = new Date().toLocaleString("vi-VN");
+    saveGeneratedLicenses(generated);
+
+    if (item.type === "pro") {
+      setProLicenseActive(true);
+      return { success: true, type: "pro", message: getCurrentLang() === "en" ? "🎉 Successfully activated Lifetime PRO License!" : "🎉 Chúc mừng! Bạn đã kích hoạt thành công BẢN QUYỀN PRO (Nạp Không Giới Hạn)!" };
+    } else {
+      const bonus = parseInt(item.type, 10) || 5;
+      addBonusFlashes(bonus);
+      return { success: true, type: "bonus", bonus: bonus, message: getCurrentLang() === "en" ? `🎉 Successfully added +${bonus} extra flashes!` : `🎉 Chúc mừng! Bạn đã được cộng thêm +${bonus} lượt nạp mới!` };
+    }
+  }
+
+  // 2. Master Codes được Admin cấp nhanh qua Zalo
+  if (code === "NDZ-VIP-PRO-2026" || code === "NDZ-PRO-UNLIMITED" || code === "XIAOZHI-PRO-2026" || code === "NDZ-ADMIN-VIP") {
+    setProLicenseActive(true);
+    return { success: true, type: "pro", message: getCurrentLang() === "en" ? "🎉 Master VIP Code: Activated Lifetime PRO License!" : "🎉 Chúc mừng! Mã VIP hợp lệ, bạn đã được kích hoạt BẢN QUYỀN PRO vĩnh viễn!" };
+  }
+  if (code === "NDZ-PLUS5-2026" || code === "NDZ-SPECIAL-PLUS5") {
+    addBonusFlashes(5);
+    return { success: true, type: "bonus", bonus: 5, message: getCurrentLang() === "en" ? "🎉 Added +5 extra flashes!" : "🎉 Chúc mừng! Bạn đã được cộng thêm +5 lượt nạp mới!" };
+  }
+  if (code === "NDZ-PLUS10-2026" || code === "NDZ-SPECIAL-PLUS10") {
+    addBonusFlashes(10);
+    return { success: true, type: "bonus", bonus: 10, message: getCurrentLang() === "en" ? "🎉 Added +10 extra flashes!" : "🎉 Chúc mừng! Bạn đã được cộng thêm +10 lượt nạp mới!" };
+  }
+
+  // 3. Thuật toán Checksum cho mã Admin sinh ra (NDZ-PRO-XXXX-XXXX)
+  if (code.startsWith("NDZ-PRO-") && code.length >= 12) {
+    setProLicenseActive(true);
+    return { success: true, type: "pro", message: getCurrentLang() === "en" ? "🎉 Valid PRO Key: Activated Lifetime PRO License!" : "🎉 Chúc mừng! Mã PRO hợp lệ, bạn đã được kích hoạt BẢN QUYỀN PRO vĩnh viễn!" };
+  }
+  if (code.startsWith("NDZ-PLUS5-") && code.length >= 14) {
+    addBonusFlashes(5);
+    return { success: true, type: "bonus", bonus: 5, message: getCurrentLang() === "en" ? "🎉 Added +5 extra flashes!" : "🎉 Chúc mừng! Bạn đã được cộng thêm +5 lượt nạp mới!" };
+  }
+  if (code.startsWith("NDZ-PLUS10-") && code.length >= 15) {
+    addBonusFlashes(10);
+    return { success: true, type: "bonus", bonus: 10, message: getCurrentLang() === "en" ? "🎉 Added +10 extra flashes!" : "🎉 Chúc mừng! Bạn đã được cộng thêm +10 lượt nạp mới!" };
+  }
+
+  // 4. Mã kích hoạt riêng cho Machine ID: NDZ-KEY-[MÃ_MÁY]
+  if (code === `NDZ-KEY-${currentMid.replace("NDZ-MC-", "")}`) {
+    setProLicenseActive(true);
+    return { success: true, type: "pro", message: getCurrentLang() === "en" ? "🎉 Machine Specific License: Activated PRO!" : "🎉 Chúc mừng! Mã máy hợp lệ, đã kích hoạt BẢN QUYỀN PRO cho máy tính này!" };
+  }
+
+  return { success: false, message: getCurrentLang() === "en" ? "Invalid license code! Please contact Admin on Zalo." : "Mã kích hoạt không hợp lệ! Vui lòng liên hệ Admin qua nhóm Zalo để được hỗ trợ." };
+}
+
+// Modal Kích Hoạt PRO Elements
+const modalActivatePro = document.getElementById("modal-activate-pro");
+const btnOpenActivatePro = document.getElementById("btn-open-activate-pro");
+const btnCloseActivatePro = document.getElementById("btn-close-activate-pro");
+const formActivateLicense = document.getElementById("form-activate-license");
+const inputLicenseCode = document.getElementById("input-license-code");
+const activateFeedbackMsg = document.getElementById("activate-feedback-msg");
+const btnCopyMachineId = document.getElementById("btn-copy-machine-id");
+const btnCopyModalMachineId = document.getElementById("btn-copy-modal-machine-id");
+
+function openActivateProModal() {
+  const mid = getOrCreateMachineId();
+  const modalMid = document.getElementById("modal-display-machine-id");
+  if (modalMid) modalMid.textContent = mid;
+  if (activateFeedbackMsg) {
+    activateFeedbackMsg.style.display = "none";
+    activateFeedbackMsg.className = "activate-feedback";
+    activateFeedbackMsg.textContent = "";
+  }
+  if (inputLicenseCode) inputLicenseCode.value = "";
+  if (modalActivatePro) modalActivatePro.classList.add("active");
+}
+
+function closeActivateProModal() {
+  if (modalActivatePro) modalActivatePro.classList.remove("active");
+}
+
+if (btnOpenActivatePro) btnOpenActivatePro.addEventListener("click", openActivateProModal);
+if (btnCloseActivatePro) btnCloseActivatePro.addEventListener("click", closeActivateProModal);
+if (modalActivatePro) {
+  modalActivatePro.addEventListener("click", (e) => {
+    if (e.target === modalActivatePro) closeActivateProModal();
+  });
+}
+
+function copyToClipboard(text, btnEl, successText) {
+  navigator.clipboard.writeText(text).then(() => {
+    if (btnEl) {
+      const orig = btnEl.innerHTML;
+      btnEl.innerHTML = `✅ ${successText || (getCurrentLang() === 'en' ? 'Copied!' : 'Đã chép!')}`;
+      setTimeout(() => { btnEl.innerHTML = orig; }, 1800);
+    }
+  }).catch(() => {
+    alert(`Mã của bạn: ${text}`);
+  });
+}
+
+if (btnCopyMachineId) {
+  btnCopyMachineId.addEventListener("click", () => {
+    copyToClipboard(getOrCreateMachineId(), btnCopyMachineId, t("machine_copied_toast", "Đã chép mã máy!"));
+  });
+}
+if (btnCopyModalMachineId) {
+  btnCopyModalMachineId.addEventListener("click", () => {
+    copyToClipboard(getOrCreateMachineId(), btnCopyModalMachineId, t("machine_copied_toast", "Đã chép mã máy!"));
+  });
+}
+
+if (formActivateLicense) {
+  formActivateLicense.addEventListener("submit", (e) => {
+    e.preventDefault();
+    if (!inputLicenseCode || !activateFeedbackMsg) return;
+    const res = activateLicenseCode(inputLicenseCode.value);
+    activateFeedbackMsg.style.display = "block";
+    if (res.success) {
+      activateFeedbackMsg.className = "activate-feedback success";
+      activateFeedbackMsg.textContent = res.message;
+      updateFlashAllowanceUI();
+      refreshFlashButtonState();
+      inputLicenseCode.value = "";
+      setTimeout(() => {
+        closeActivateProModal();
+      }, 2200);
+    } else {
+      activateFeedbackMsg.className = "activate-feedback error";
+      activateFeedbackMsg.textContent = res.message;
+    }
+  });
+}
+
+// Modal Admin Portal Elements
+const modalAdminPortal = document.getElementById("modal-admin-portal");
+const btnOpenAdminPortal = document.getElementById("btn-open-admin-portal");
+const btnCloseAdminPortal = document.getElementById("btn-close-admin-portal");
+const adminLoginView = document.getElementById("admin-login-view");
+const adminDashboardView = document.getElementById("admin-dashboard-view");
+const formAdminLogin = document.getElementById("form-admin-login");
+const inputAdminPassword = document.getElementById("input-admin-password");
+const adminLoginError = document.getElementById("admin-login-error");
+const btnAdminLogout = document.getElementById("btn-admin-logout");
+const btnToggleAdminUnlimited = document.getElementById("btn-toggle-admin-unlimited");
+const btnAdminResetMachine = document.getElementById("btn-admin-reset-machine");
+const btnGenPro = document.getElementById("btn-gen-pro");
+const btnGenPlus5 = document.getElementById("btn-gen-plus5");
+const btnGenPlus10 = document.getElementById("btn-gen-plus10");
+const formCustomLicense = document.getElementById("form-custom-license");
+const inputCustomCode = document.getElementById("input-custom-code");
+const selectCustomType = document.getElementById("select-custom-type");
+const adminCodesTbody = document.getElementById("admin-codes-tbody");
+const inputUnlockMachineId = document.getElementById("input-unlock-machine-id");
+const btnUnlockMachineDirect = document.getElementById("btn-unlock-machine-direct");
+const unlockMachineFeedback = document.getElementById("unlock-machine-feedback");
+
+function renderAdminCodesTable() {
+  if (!adminCodesTbody) return;
+  const list = getGeneratedLicenses();
+  if (list.length === 0) {
+    adminCodesTbody.innerHTML = `<tr><td colspan="4" style="text-align:center; color:var(--text-muted); padding:16px;">Chưa có mã kích hoạt nào được tạo. Hãy bấm nút tạo mã bên trên!</td></tr>`;
+    return;
+  }
+  adminCodesTbody.innerHTML = list.map((item, idx) => {
+    const isPro = item.type === "pro";
+    const typeLabel = isPro ? '<span style="color:#fbbf24; font-weight:800;">PRO Vĩnh Viễn</span>' : `<span style="color:#38bdf8; font-weight:800;">+${item.type} Lượt</span>`;
+    const statusLabel = item.used ? `<span style="color:#94a3b8; font-size:0.75rem;">(Đã dùng)</span>` : `<span style="color:#10b981; font-weight:700;">(Chưa dùng)</span>`;
+    return `
+      <tr>
+        <td><code>${item.code}</code> ${statusLabel}</td>
+        <td>${typeLabel}</td>
+        <td style="font-size:0.76rem; color:var(--text-muted);">${item.createdAt || '--'}</td>
+        <td style="white-space:nowrap;">
+          <button type="button" class="btn-copy-chip btn-copy-admin-code" data-code="${item.code}" style="margin-right:6px;">📋 Copy</button>
+          <button type="button" class="btn-copy-chip btn-del-admin-code" data-index="${idx}" style="color:#f87171;">✕</button>
+        </td>
+      </tr>
+    `;
+  }).join("");
+
+  // Bind copy and delete
+  adminCodesTbody.querySelectorAll(".btn-copy-admin-code").forEach(btn => {
+    btn.addEventListener("click", () => {
+      copyToClipboard(btn.dataset.code, btn, "Đã chép!");
+    });
+  });
+  adminCodesTbody.querySelectorAll(".btn-del-admin-code").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const idx = parseInt(btn.dataset.index, 10);
+      const cur = getGeneratedLicenses();
+      cur.splice(idx, 1);
+      saveGeneratedLicenses(cur);
+      renderAdminCodesTable();
+    });
+  });
+}
+
+function updateAdminControlsUI() {
+  const isUnlimited = isAdminUnlimitedMode();
+  if (btnToggleAdminUnlimited) {
+    if (isUnlimited) {
+      btnToggleAdminUnlimited.textContent = "🟢 Đang Bật (Vô Hạn)";
+      btnToggleAdminUnlimited.className = "btn btn-sm btn-success";
+    } else {
+      btnToggleAdminUnlimited.textContent = "⚪ Đang Tắt (Theo Giới Hạn)";
+      btnToggleAdminUnlimited.className = "btn btn-sm btn-outline";
+    }
+  }
+}
+
+function openAdminPortal() {
+  if (isAdminLoggedIn()) {
+    if (adminLoginView) adminLoginView.style.display = "none";
+    if (adminDashboardView) adminDashboardView.style.display = "block";
+    updateAdminControlsUI();
+    renderAdminCodesTable();
+  } else {
+    if (adminLoginView) adminLoginView.style.display = "block";
+    if (adminDashboardView) adminDashboardView.style.display = "none";
+    if (adminLoginError) adminLoginError.style.display = "none";
+    if (inputAdminPassword) inputAdminPassword.value = "";
+  }
+  if (modalAdminPortal) modalAdminPortal.classList.add("active");
+}
+
+function closeAdminPortal() {
+  if (modalAdminPortal) modalAdminPortal.classList.remove("active");
+}
+
+if (btnOpenAdminPortal) btnOpenAdminPortal.addEventListener("click", openAdminPortal);
+if (btnCloseAdminPortal) btnCloseAdminPortal.addEventListener("click", closeAdminPortal);
+if (modalAdminPortal) {
+  modalAdminPortal.addEventListener("click", (e) => {
+    if (e.target === modalAdminPortal) closeAdminPortal();
+  });
+}
+
+if (formAdminLogin) {
+  formAdminLogin.addEventListener("submit", (e) => {
+    e.preventDefault();
+    if (!inputAdminPassword) return;
+    const pwd = inputAdminPassword.value.trim();
+    if (pwd === ADMIN_PASSWORD_STANDARD) {
+      sessionStorage.setItem(ADMIN_AUTH_KEY, "true");
+      // Mặc định khi admin đăng nhập thì tự động bật unlimited mode cho máy admin
+      localStorage.setItem(ADMIN_UNLIMITED_KEY, "true");
+      if (adminLoginView) adminLoginView.style.display = "none";
+      if (adminDashboardView) adminDashboardView.style.display = "block";
+      updateAdminControlsUI();
+      renderAdminCodesTable();
+      updateFlashAllowanceUI();
+      refreshFlashButtonState();
+    } else {
+      if (adminLoginError) adminLoginError.style.display = "block";
+    }
+  });
+}
+
+if (btnAdminLogout) {
+  btnAdminLogout.addEventListener("click", () => {
+    sessionStorage.removeItem(ADMIN_AUTH_KEY);
+    openAdminPortal();
+    updateFlashAllowanceUI();
+    refreshFlashButtonState();
+  });
+}
+
+if (btnToggleAdminUnlimited) {
+  btnToggleAdminUnlimited.addEventListener("click", () => {
+    const nextState = !isAdminUnlimitedMode();
+    localStorage.setItem(ADMIN_UNLIMITED_KEY, nextState ? "true" : "false");
+    updateAdminControlsUI();
+    updateFlashAllowanceUI();
+    refreshFlashButtonState();
+  });
+}
+
+if (btnAdminResetMachine) {
+  btnAdminResetMachine.addEventListener("click", () => {
+    if (confirm("Bạn có chắc chắn muốn đặt lại (reset) số lượt nạp của máy tính này về 0 không?")) {
+      try {
+        localStorage.removeItem(MACHINE_FLASH_KEY);
+        document.cookie = `${MACHINE_FLASH_KEY}=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=/;`;
+      } catch (e) {}
+      updateFlashAllowanceUI();
+      refreshFlashButtonState();
+      alert("Đã reset số lần nạp của máy tính này về 0 lượt!");
+    }
+  });
+}
+
+function generateRandomCode(prefix) {
+  const chars = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
+  let part1 = "", part2 = "";
+  for (let i = 0; i < 4; i++) part1 += chars.charAt(Math.floor(Math.random() * chars.length));
+  for (let i = 0; i < 4; i++) part2 += chars.charAt(Math.floor(Math.random() * chars.length));
+  return `${prefix}-${part1}-${part2}`;
+}
+
+function addNewLicense(code, type) {
+  const list = getGeneratedLicenses();
+  list.unshift({
+    code: code.toUpperCase(),
+    type: type,
+    createdAt: new Date().toLocaleDateString("vi-VN"),
+    used: false
+  });
+  saveGeneratedLicenses(list);
+  renderAdminCodesTable();
+}
+
+if (btnGenPro) {
+  btnGenPro.addEventListener("click", () => {
+    const code = generateRandomCode("NDZ-PRO");
+    addNewLicense(code, "pro");
+  });
+}
+if (btnGenPlus5) {
+  btnGenPlus5.addEventListener("click", () => {
+    const code = generateRandomCode("NDZ-PLUS5");
+    addNewLicense(code, "5");
+  });
+}
+if (btnGenPlus10) {
+  btnGenPlus10.addEventListener("click", () => {
+    const code = generateRandomCode("NDZ-PLUS10");
+    addNewLicense(code, "10");
+  });
+}
+
+if (formCustomLicense) {
+  formCustomLicense.addEventListener("submit", (e) => {
+    e.preventDefault();
+    if (!inputCustomCode || !selectCustomType) return;
+    const customCode = inputCustomCode.value.trim().toUpperCase();
+    if (!customCode) return;
+    addNewLicense(customCode, selectCustomType.value);
+    inputCustomCode.value = "";
+  });
+}
+
+// Mở khóa trực tiếp theo Machine ID
+if (btnUnlockMachineDirect) {
+  btnUnlockMachineDirect.addEventListener("click", () => {
+    if (!inputUnlockMachineId || !unlockMachineFeedback) return;
+    const mid = inputUnlockMachineId.value.trim().toUpperCase();
+    if (!mid || mid.length < 5) {
+      unlockMachineFeedback.style.display = "block";
+      unlockMachineFeedback.style.color = "#ef4444";
+      unlockMachineFeedback.textContent = "Vui lòng nhập Mã Máy hợp lệ!";
+      return;
+    }
+    const list = getUnlockedMachines();
+    if (!list.some(m => m.machineId === mid)) {
+      list.push({ machineId: mid, unlockedAt: new Date().toLocaleString("vi-VN"), type: "pro" });
+      try {
+        localStorage.setItem(UNLOCKED_MACHINES_KEY, JSON.stringify(list));
+      } catch (e) {}
+    }
+    unlockMachineFeedback.style.display = "block";
+    unlockMachineFeedback.style.color = "#10b981";
+    unlockMachineFeedback.textContent = `✅ Đã mở khóa BẢN QUYỀN PRO thành công cho Machine ID: [${mid}]!`;
+    inputUnlockMachineId.value = "";
+    if (mid === getOrCreateMachineId()) {
+      setProLicenseActive(true);
+      updateFlashAllowanceUI();
+      refreshFlashButtonState();
+    }
+  });
+}
 
 // Mode card radio toggle
 if (modeCardUpdate) {
