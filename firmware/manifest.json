@@ -9,9 +9,9 @@
       "price": "Miễn Phí (1 Lần)",
       "versions": [
         {
-          "version": "v2.5.4-vn",
+          "version": "v2.5.5-vn",
           "releaseDate": "18/11/2026",
-          "changelog": "Sửa lỗi nhận diện cắm củ sạc/sạc dự phòng và giữ biểu tượng tia sét khi đang sạc, mic sensitivity, realtime rates",
+          "changelog": "Sửa lỗi nút Cấu hình WiFi trong Cài đặt nhanh bị reset máy, tối ưu giải phóng port web server và bộ nhớ khi vào chế độ Hotspot AP",
           "modes": {
             "clean": {
               "title": "Cài mới hoàn toàn (Clean Install)",
