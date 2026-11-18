@@ -9,9 +9,9 @@
       "price": "Miễn Phí (1 Lần)",
       "versions": [
         {
-          "version": "v2.5.7-vn",
+          "version": "v2.5.8-vn",
           "releaseDate": "18/11/2026",
-          "changelog": "Tích hợp sẵn link OTA vào firmware (dùng được ngay không cần copy khi cài WiFi), hiển thị sẵn link trên trang cấu hình để tùy chỉnh hoặc xóa nếu muốn",
+          "changelog": "Khôi phục và tối ưu hóa nhận diện cắm sạc (hiện tia sét và tăng phần trăm pin khi sạc)",
           "modes": {
             "clean": {
               "title": "Cài mới hoàn toàn (Clean Install)",
