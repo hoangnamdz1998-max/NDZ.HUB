@@ -50,7 +50,7 @@ const ADMIN_AUTH_KEY = "ndz_admin_logged_v1";
 const ADMIN_UNLIMITED_KEY = "ndz_admin_unlimited_v1";
 const GENERATED_LICENSES_KEY = "ndz_generated_licenses_v1";
 const UNLOCKED_MACHINES_KEY = "ndz_unlocked_machines_v1";
-const ADMIN_PASSWORD_STANDARD = "ndz2026";
+const ADMIN_PASSWORD_STANDARD = "namdeptrai24041998";
 const ZALO_ACTIVATION_URL = "https://zalo.me/g/6vrtqpuympv29wyque4x";
 
 // Machine ID (Mã Máy Tính Duy Nhất Cố Định)
