@@ -211,12 +211,69 @@
               <!-- SUB TAB 1: SẢN PHẨM THƯƠNG MẠI & BẢN QUYỀN -->
               <div id="tab-product" class="tab-content active">
                 <div class="form-group">
-                  <label for="select-product">Chọn sản phẩm thương mại:</label>
+                  <label for="select-product">Chọn phần cứng bo mạch cần nạp:</label>
                   <select id="select-product" class="form-select"></select>
                 </div>
 
+                <!-- Khung nhận diện phần cứng trực quan kèm ảnh thực tế -->
+                <div class="board-hardware-card" id="board-hardware-card">
+                  <div class="board-card-header">
+                    <span class="board-tag">⚡ Nhận diện phần cứng tương thích</span>
+                    <span class="board-chip-pill">ESP32-S3 · 240MHz</span>
+                  </div>
+                  
+                  <div class="board-card-body">
+                    <!-- Ảnh trực quan bo mạch phần cứng thực tế -->
+                    <div class="board-image-wrapper" title="Bấm vào để xem ảnh bo mạch phóng to">
+                      <img src="assets/board-esp32s3-2.8.jpg" alt="Bo mạch ESP32-S3 Màn hình 2.8 inch" class="board-spec-img" id="board-spec-img">
+                      <span class="board-img-overlay-badge">🔍 Ảnh bo mạch & linh kiện</span>
+                    </div>
+
+                    <!-- Chi tiết thông số bo mạch -->
+                    <div class="board-spec-details">
+                      <h4 class="board-spec-title">Bo Mạch Màn Hình 2.8" Cảm Ứng ESP32-S3</h4>
+                      <p class="board-spec-desc">Trang bị chip <b>ESP32-S3 Dual-Core 240MHz</b> mạnh mẽ, tích hợp sẵn màn hình LCD cảm ứng 2.8 inch, micro thu âm đàm thoại và cổng cắm loa ngoài mini.</p>
+                      
+                      <div class="board-features-grid">
+                        <div class="board-feature-item">
+                          <span class="feat-icon">🖥️</span>
+                          <div>
+                            <div class="feat-label">Màn hình:</div>
+                            <div class="feat-val">LCD 2.8" Cảm ứng màu</div>
+                          </div>
+                        </div>
+                        <div class="board-feature-item">
+                          <span class="feat-icon">⚡</span>
+                          <div>
+                            <div class="feat-label">Vi xử lý:</div>
+                            <div class="feat-val">ESP32-S3 (240MHz)</div>
+                          </div>
+                        </div>
+                        <div class="board-feature-item">
+                          <span class="feat-icon">🔊</span>
+                          <div>
+                            <div class="feat-label">Âm thanh:</div>
+                            <div class="feat-val">Mic trên bo + Jack Loa JST</div>
+                          </div>
+                        </div>
+                        <div class="board-feature-item">
+                          <span class="feat-icon">🔌</span>
+                          <div>
+                            <div class="feat-label">Cổng nạp:</div>
+                            <div class="feat-val">Type-C (Web Serial)</div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="board-guide-callout">
+                        💡 <b>Lưu ý khi cắm:</b> Cắm cáp Type-C vào cổng USB của bo mạch. Nhớ cắm giắc loa mini 2 dây (Đỏ/Đen) vào cổng JST trên bo để phát âm thanh trợ lý Xiaozhi.
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
                 <!-- Product description box with real image preview -->
-                <div class="product-meta" id="product-meta">
+                <div class="product-meta" id="product-meta" style="display: none;">
                   <div class="product-meta-flex">
                     <div class="product-meta-thumb" id="product-meta-thumb">
                       <img id="product-meta-img" src="assets/hub-screen-1.jpg" alt="Hub Màn Hình 2.8" class="product-meta-preview-img">

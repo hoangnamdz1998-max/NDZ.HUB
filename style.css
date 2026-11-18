@@ -671,6 +671,166 @@ header.site-header {
   display: block;
 }
 
+/* Board Hardware Identification Card */
+.board-hardware-card {
+  background: #141721;
+  border: 2px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 16px;
+  margin-bottom: 20px;
+  box-shadow: 2px 2px 0px rgba(0, 0, 0, 0.4);
+}
+
+.board-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 14px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--border);
+}
+
+.board-tag {
+  font-size: 0.78rem;
+  font-weight: 800;
+  color: var(--accent);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.board-chip-pill {
+  font-size: 0.75rem;
+  font-weight: 800;
+  background: rgba(37, 99, 235, 0.18);
+  color: #60a5fa;
+  border: 1px solid #3b82f6;
+  padding: 3px 10px;
+  border-radius: var(--radius-full);
+}
+
+.board-card-body {
+  display: grid;
+  grid-template-columns: 190px 1fr;
+  gap: 16px;
+  align-items: center;
+}
+
+@media (max-width: 640px) {
+  .board-card-body {
+    grid-template-columns: 1fr;
+  }
+}
+
+.board-image-wrapper {
+  position: relative;
+  width: 100%;
+  height: 190px;
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  border: 1.5px solid var(--border);
+  background: #ffffff;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 2px 2px 0px rgba(0, 0, 0, 0.4);
+}
+
+.board-spec-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  transition: transform 0.3s ease;
+  display: block;
+}
+
+.board-image-wrapper:hover .board-spec-img {
+  transform: scale(1.05);
+}
+
+.board-img-overlay-badge {
+  position: absolute;
+  bottom: 6px;
+  left: 6px;
+  background: rgba(0, 0, 0, 0.82);
+  color: #fff;
+  font-size: 0.7rem;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: var(--radius-full);
+  pointer-events: none;
+}
+
+.board-spec-details {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.board-spec-title {
+  font-size: 1.05rem;
+  font-weight: 900;
+  color: var(--text-main);
+  margin: 0;
+}
+
+.board-spec-desc {
+  font-size: 0.84rem;
+  color: var(--text-secondary);
+  line-height: 1.45;
+  margin: 0;
+}
+
+.board-features-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin-top: 4px;
+}
+
+@media (max-width: 480px) {
+  .board-features-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.board-feature-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: #1a1e2b;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 6px 10px;
+}
+
+.feat-icon {
+  font-size: 1.1rem;
+}
+
+.feat-label {
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  font-weight: 600;
+}
+
+.feat-val {
+  font-size: 0.78rem;
+  color: var(--text-main);
+  font-weight: 800;
+}
+
+.board-guide-callout {
+  font-size: 0.8rem;
+  color: #fbbf24;
+  background: rgba(245, 158, 11, 0.1);
+  border-left: 3px solid #f59e0b;
+  padding: 6px 10px;
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  margin-top: 4px;
+  line-height: 1.4;
+}
+
 /* Product Meta Box */
 .product-meta {
   background: #191b24;

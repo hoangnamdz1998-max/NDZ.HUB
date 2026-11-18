@@ -591,10 +591,10 @@ const lightboxImg = document.getElementById("lightbox-img");
 const lightboxCaption = document.getElementById("lightbox-caption");
 const btnCloseLightbox = document.getElementById("btn-close-lightbox");
 
-document.querySelectorAll(".product-card-thumb").forEach(thumb => {
+document.querySelectorAll(".product-card-thumb, .board-image-wrapper").forEach(thumb => {
   thumb.addEventListener("click", () => {
     const img = thumb.querySelector("img");
-    const badge = thumb.querySelector(".thumb-badge");
+    const badge = thumb.querySelector(".thumb-badge, .board-img-overlay-badge");
     if (img && modalLightbox && lightboxImg) {
       lightboxImg.src = img.src;
       if (lightboxCaption) {
