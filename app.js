@@ -537,38 +537,29 @@ document.querySelectorAll(".btn-select-product").forEach(btn => {
   });
 });
 
-// Bộ lọc danh mục sản phẩm: Tất cả, Firmware (FW), Hoàn thiện, Vỏ nhựa in 3D
+// Bộ lọc danh mục sản phẩm: Hoàn thiện (complete) vs Vỏ nhựa in 3D (case)
 const catFilterBtns = document.querySelectorAll(".cat-filter-btn");
 const productCards = document.querySelectorAll(".product-card[data-category]");
 const catalogSections = document.querySelectorAll(".catalog-section[data-category-section]");
 
+function applyCategoryFilter(filter) {
+  catFilterBtns.forEach(b => b.classList.toggle("active", b.dataset.filter === filter));
+  catalogSections.forEach(s => {
+    s.style.display = (s.dataset.categorySection === filter) ? "" : "none";
+  });
+  productCards.forEach(c => {
+    c.style.display = (c.dataset.category === filter) ? "" : "none";
+  });
+}
+
 catFilterBtns.forEach(btn => {
   btn.addEventListener("click", () => {
-    const filter = btn.dataset.filter;
-    catFilterBtns.forEach(b => b.classList.remove("active"));
-    btn.classList.add("active");
-
-    if (filter === "all") {
-      catalogSections.forEach(s => s.style.display = "");
-      productCards.forEach(c => c.style.display = "");
-    } else {
-      catalogSections.forEach(s => {
-        if (s.dataset.categorySection === filter) {
-          s.style.display = "";
-        } else {
-          s.style.display = "none";
-        }
-      });
-      productCards.forEach(c => {
-        if (c.dataset.category === filter) {
-          c.style.display = "";
-        } else {
-          c.style.display = "none";
-        }
-      });
-    }
+    applyCategoryFilter(btn.dataset.filter);
   });
 });
+
+// Khởi tạo mặc định hiển thị Sản Phẩm Hoàn Thiện
+applyCategoryFilter("complete");
 
 // Modal Tư vấn & Đặt hàng sản phẩm / Đặt in vỏ 3D
 const modalOrder = document.getElementById("modal-order");
