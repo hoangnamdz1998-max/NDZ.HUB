@@ -1,4 +1,5 @@
 import { ESPLoader, Transport } from "./vendor/esptool-js.js";
+import { initI18n, t, getCurrentLang, onLanguageChange, setLanguage } from "./i18n.js";
 
 // State
 let transport = null;
@@ -179,21 +180,21 @@ function updateFlashAllowanceUI() {
 
   if (count >= MAX_FLASH_COUNT) {
     if (machineLicenseTag) {
-      machineLicenseTag.textContent = `❌ Đã hết lượt miễn phí (1/1)`;
+      machineLicenseTag.textContent = t("machine_limit_reached");
       machineLicenseTag.style.color = "#ef4444";
     }
     if (limitRuleBox) {
       limitRuleBox.classList.add("locked");
     }
     if (limitRuleTitle) {
-      limitRuleTitle.textContent = "Máy Tính Này Đã Sử Dụng Hết 1 Lượt Nạp Miễn Phí!";
+      limitRuleTitle.textContent = t("limit_rule_title_locked");
     }
     if (limitRuleDesc) {
-      const detailFlashes = (rec?.flashes || []).map((f, i) => `Lần ${i+1}: <b>${f.flashedAt}</b> (${f.mac})`).join(" | ");
-      limitRuleDesc.innerHTML = `Máy tính này đã hoàn tất lượt nạp miễn phí (${detailFlashes || '1 lần'}).<br>
-        <span style="color:#f87171; font-weight:700;">Nếu bạn muốn nạp thêm thiết bị, vui lòng tham gia nhóm Zalo để được kích hoạt thêm lượt:</span><br>
+      const detailFlashes = (rec?.flashes || []).map((f, i) => `${getCurrentLang() === 'en' ? 'Flash #' : 'Lần '}${i+1}: <b>${f.flashedAt}</b> (${f.mac})`).join(" | ");
+      limitRuleDesc.innerHTML = `${t("limit_rule_desc_locked_prefix")} (${detailFlashes || '1'}).<br>
+        <span style="color:#f87171; font-weight:700;">${t("limit_rule_desc_locked_cta")}</span><br>
         <a href="${ZALO_ACTIVATION_URL}" target="_blank" style="display:inline-flex; align-items:center; gap:8px; margin-top:10px; background:#0068ff; color:#fff; padding:8px 16px; border-radius:8px; font-weight:700; text-decoration:none; box-shadow:0 2px 8px rgba(0,104,255,0.4);">
-          💬 Tham Gia Nhóm Zalo Kích Hoạt Nạp Thêm
+          ${t("zalo_join_btn")}
         </a>`;
     }
     if (btnFlash) {
@@ -201,17 +202,17 @@ function updateFlashAllowanceUI() {
     }
   } else {
     if (machineLicenseTag) {
-      machineLicenseTag.textContent = `✅ Còn 1 lượt nạp miễn phí`;
+      machineLicenseTag.textContent = t("machine_free_remaining");
       machineLicenseTag.style.color = "#10b981";
     }
     if (limitRuleBox) {
       limitRuleBox.classList.remove("locked");
     }
     if (limitRuleTitle) {
-      limitRuleTitle.textContent = "Chính Sách Nạp Miễn Phí (1 Lần / Mỗi Máy Tính):";
+      limitRuleTitle.textContent = t("limit_rule_title_active");
     }
     if (limitRuleDesc) {
-      limitRuleDesc.innerHTML = `Mỗi máy tính được cấp <b>1 lượt nạp firmware miễn phí</b>. Nếu bạn muốn nạp thêm thiết bị tiếp theo, vui lòng liên hệ nhóm Zalo để kích hoạt: <a href="${ZALO_ACTIVATION_URL}" target="_blank" style="color:#38bdf8; font-weight:700; text-decoration:underline;">💬 Nhóm Zalo Kích Hoạt</a>.`;
+      limitRuleDesc.innerHTML = t("limit_rule_desc_active");
     }
   }
 }
@@ -224,11 +225,13 @@ function updateDeviceFlashStatus(mac) {
   // NẾU MÁY TÍNH NÀY ĐÃ ĐẠT 1 LẦN -> KHÓA VÀ HƯỚNG DẪN QUA ZALO
   if (count >= MAX_FLASH_COUNT) {
     if (chipLicenseTag) {
-      chipLicenseTag.textContent = "⛔ HẾT LƯỢT MIỄN PHÍ (Nhắn Zalo để kích hoạt)";
+      chipLicenseTag.textContent = t("chip_limit_reached");
       chipLicenseTag.style.color = "#ef4444";
     }
     if (btnFlash) btnFlash.disabled = true;
-    progressStatusText.textContent = `Máy tính này đã hoàn thành 1 lượt nạp miễn phí. Vui lòng tham gia nhóm Zalo để kích hoạt nạp thêm!`;
+    progressStatusText.textContent = (getCurrentLang() === "en" 
+      ? "This PC has completed its free flash. Please join Zalo group to unlock more!" 
+      : "Máy tính này đã hoàn thành 1 lượt nạp miễn phí. Vui lòng tham gia nhóm Zalo để kích hoạt nạp thêm!");
     logSystem(`[CẢNH BÁO TỪ CHỐI] Máy tính này đã hoàn thành 1 lượt nạp firmware miễn phí.`, "error");
     logSystem(`[KÍCH HOẠT THÊM LƯỢT] Bạn muốn nạp thêm chip [MAC: ${mac || 'Đang kết nối'}]? Vui lòng tham gia Zalo: ${ZALO_ACTIVATION_URL}`, "warn");
     return;
@@ -237,14 +240,14 @@ function updateDeviceFlashStatus(mac) {
   // Nếu máy tính chưa hết lượt:
   if (!mac || mac === "Unknown") {
     if (chipLicenseTag) {
-      chipLicenseTag.textContent = "Chờ cắm thiết bị";
+      chipLicenseTag.textContent = t("chip_waiting");
       chipLicenseTag.style.color = "#94a3b8";
     }
     return;
   }
 
   if (chipLicenseTag) {
-    chipLicenseTag.textContent = `✅ Sẵn sàng nạp (Miễn phí 1 lần)`;
+    chipLicenseTag.textContent = t("chip_ready_free");
     chipLicenseTag.style.color = "#10b981";
   }
   if (btnFlash) btnFlash.disabled = false;
@@ -304,12 +307,21 @@ function refreshFlashButtonState() {
 
 function updateConfirmedBoardName() {
   if (!confirmBoardName) return;
+  const isEn = getCurrentLang() === "en";
   const activeTab = (document.querySelector(".sub-tabs-nav .tab-btn.active") || document.querySelector(".tab-btn.active"))?.dataset?.tab || "tab-product";
   if (activeTab === "tab-custom") {
-    confirmBoardName.textContent = "Bo mạch DIY (File .BIN tự chọn)";
+    confirmBoardName.textContent = isEn ? "DIY Board (Custom .BIN File)" : "Bo mạch DIY (File .BIN tự chọn)";
   } else {
     const prod = manifestData?.products?.find(p => p.id === selectProduct?.value);
-    confirmBoardName.textContent = prod?.name || "ROBOT BÁNH XÍCH N1";
+    if (prod) {
+      if (prod.id === "hub-touch") {
+        confirmBoardName.textContent = isEn ? "2.8\" SMART TOUCH SCREEN HUB (XIAOZHI AI)" : prod.name;
+      } else {
+        confirmBoardName.textContent = prod.name;
+      }
+    } else {
+      confirmBoardName.textContent = isEn ? "ESP32 Board" : "Bo mạch ESP32";
+    }
   }
 }
 
@@ -399,12 +411,15 @@ async function loadManifest() {
 
 function populateProducts() {
   if (!manifestData || !manifestData.products) return;
+  const isEn = getCurrentLang() === "en";
+  const currentVal = selectProduct.value;
   selectProduct.innerHTML = "";
   manifestData.products.forEach((prod, idx) => {
     const opt = document.createElement("option");
     opt.value = prod.id;
-    opt.textContent = `${prod.name} (${prod.chipFamily})`;
-    if (idx === 0) opt.selected = true;
+    const nameStr = (isEn && prod.id === "hub-touch") ? "2.8\" TOUCH SCREEN HUB (XIAOZHI AI)" : prod.name;
+    opt.textContent = `${nameStr} (${prod.chipFamily})`;
+    if (currentVal ? prod.id === currentVal : idx === 0) opt.selected = true;
     selectProduct.appendChild(opt);
   });
   onProductChange();
@@ -414,10 +429,12 @@ function onProductChange() {
   const prodId = selectProduct.value;
   const prod = manifestData.products.find(p => p.id === prodId);
   if (!prod) return;
+  const isEn = getCurrentLang() === "en";
 
-  productDesc.textContent = prod.description || "";
+  const defaultEnDesc = "Xiaozhi AI assistant firmware for Freenove ESP32-S3 2.8\" touch LCD (Zing MP3, FM Radio, Real-time weather, Gold & Currency rates, Mic sensitivity).";
+  productDesc.textContent = isEn ? (prod.description_en || defaultEnDesc) : (prod.description || "");
   productChipBadge.textContent = prod.chipFamily || "ESP32";
-  productPriceBadge.textContent = prod.price ? `Giá: ${prod.price}` : "";
+  productPriceBadge.textContent = isEn ? "Price: Free (1 Time)" : (prod.price ? `Giá: ${prod.price}` : "");
   productPriceBadge.style.display = prod.price ? "inline-block" : "none";
 
   const thumbEl = document.getElementById("product-meta-thumb");
@@ -661,7 +678,7 @@ async function connectESP() {
 
     logSystem(`Đang kết nối vi điều khiển với baudrate ${baud}...`);
     statusDot.className = "status-dot flashing";
-    chipStatusText.textContent = "Đang đồng bộ bootloader...";
+    chipStatusText.textContent = t("chip_status_syncing");
 
     const chipName = await esploader.main();
     
@@ -684,12 +701,12 @@ async function connectESP() {
     // Cập nhật UI
     isConnected = true;
     statusDot.className = "status-dot connected";
-    chipStatusText.textContent = "Đã kết nối thành công";
+    chipStatusText.textContent = t("chip_status_connected");
     chipType.textContent = chipName || "ESP32";
     chipMac.textContent = currentChipMac;
     chipFlashSize.textContent = flashSize;
 
-    btnConnectText.textContent = "Ngắt Kết Nối";
+    btnConnectText.textContent = t("btn_connect_connected");
     btnConnect.classList.replace("btn-primary", "btn-outline");
     btnErase.disabled = false;
     btnMonitorToggle.disabled = false;
@@ -707,7 +724,7 @@ async function connectESP() {
   } catch (err) {
     logSystem(`Lỗi kết nối: ${err.message}`, "error");
     statusDot.className = "status-dot";
-    chipStatusText.textContent = "Kết nối thất bại";
+    chipStatusText.textContent = t("chip_status_failed");
   }
 }
 
@@ -723,7 +740,7 @@ async function disconnectESP() {
   currentChipMac = "";
 
   statusDot.className = "status-dot";
-  chipStatusText.textContent = "Chưa cắm thiết bị";
+  chipStatusText.textContent = t("chip_status_unplugged");
   chipType.textContent = "--";
   chipMac.textContent = "--:--:--:--:--:--";
   chipFlashSize.textContent = "--";
@@ -740,7 +757,7 @@ async function disconnectESP() {
   updateDeviceFlashStatus("");
   refreshFlashButtonState();
 
-  btnConnectText.textContent = "Chọn Cổng COM & Kết Nối";
+  btnConnectText.textContent = t("btn_connect_idle");
   btnConnect.classList.replace("btn-outline", "btn-primary");
   btnFlash.disabled = true;
   btnErase.disabled = true;
@@ -953,7 +970,7 @@ btnMonitorToggle.addEventListener("click", async () => {
   if (isMonitoring) {
     // Dừng đọc
     isMonitoring = false;
-    btnMonitorToggle.textContent = "Bắt đầu đọc Serial";
+    btnMonitorToggle.textContent = t("btn_monitor_start");
     btnMonitorToggle.classList.replace("btn-danger", "btn-primary");
     inputMonitorSend.disabled = true;
     btnMonitorSend.disabled = true;
@@ -966,7 +983,7 @@ btnMonitorToggle.addEventListener("click", async () => {
   } else {
     // Bắt đầu đọc
     isMonitoring = true;
-    btnMonitorToggle.textContent = "Dừng đọc Serial";
+    btnMonitorToggle.textContent = t("btn_monitor_stop");
     btnMonitorToggle.classList.replace("btn-primary", "btn-danger");
     inputMonitorSend.disabled = false;
     btnMonitorSend.disabled = false;
@@ -1053,3 +1070,20 @@ syncIndexedDB();
 updateFlashAllowanceUI();
 updateConfirmedBoardName();
 refreshFlashButtonState();
+
+// Lắng nghe thay đổi ngôn ngữ để cập nhật lại các trạng thái động
+onLanguageChange(() => {
+  btnConnectText.textContent = isConnected ? t("btn_connect_connected") : t("btn_connect_idle");
+  chipStatusText.textContent = isConnected ? t("chip_status_connected") : t("chip_status_unplugged");
+  btnMonitorToggle.textContent = isMonitoring ? t("btn_monitor_stop") : t("btn_monitor_start");
+  if (!isFlashing) {
+    progressStatusText.textContent = t("progress_ready");
+  }
+  populateProducts();
+  updateFlashAllowanceUI();
+  updateConfirmedBoardName();
+  refreshFlashButtonState();
+});
+
+// Khởi tạo i18n
+initI18n();

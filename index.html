@@ -19,24 +19,36 @@
         </div>
         <div class="brand-text">
           <h1>NDZ HUB <span class="brand-badge">FLASHER PRO</span></h1>
-          <p>Nền tảng Nạp Firmware & Bản Quyền Phần Cứng IoT</p>
+          <p data-i18n="brand_subtitle">Nền tảng Nạp Firmware & Bản Quyền Phần Cứng IoT</p>
         </div>
       </div>
 
       <div class="header-links">
+        <!-- Nút chuyển đổi ngôn ngữ Anh - Việt -->
+        <div class="lang-switch" id="lang-switch" role="group" aria-label="Language Selector">
+          <button type="button" class="lang-btn active" data-lang="vi" title="Tiếng Việt">
+            <span class="lang-flag">🇻🇳</span>
+            <span class="lang-label">VI</span>
+          </button>
+          <button type="button" class="lang-btn" data-lang="en" title="English">
+            <span class="lang-flag">🇬🇧</span>
+            <span class="lang-label">EN</span>
+          </button>
+        </div>
+
         <button class="btn-header" id="btn-driver-guide">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <circle cx="12" cy="12" r="10"></circle>
             <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
             <line x1="12" y1="17" x2="12.01" y2="17"></line>
           </svg>
-          Driver & Trợ giúp
+          <span data-i18n="btn_driver_guide">Driver & Trợ giúp</span>
         </button>
         <a href="#" class="btn-header btn-zalo" onclick="return false;">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
             <path d="M12 2C6.48 2 2 6.03 2 11c0 2.87 1.5 5.43 3.84 7.04L5 22l4.24-1.41C10.13 20.84 11.05 21 12 21c5.52 0 10-4.03 10-9s-4.48-9-10-9z"/>
           </svg>
-          Nhóm Zalo hỗ trợ
+          <span data-i18n="btn_zalo_support">Nhóm Zalo hỗ trợ</span>
         </a>
       </div>
     </div>
@@ -50,7 +62,7 @@
           <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
           </svg>
-          Nạp Firmware
+          <span data-i18n="nav_flasher">Nạp Firmware</span>
         </button>
 
         <button class="nav-tab-btn" data-nav="view-products">
@@ -59,7 +71,7 @@
             <line x1="3" y1="6" x2="21" y2="6"></line>
             <path d="M16 10a4 4 0 0 1-8 0"></path>
           </svg>
-          Sản Phẩm & Bản Quyền
+          <span data-i18n="nav_products">Sản Phẩm & Bản Quyền</span>
         </button>
 
         <button class="nav-tab-btn" data-nav="view-monitor">
@@ -67,7 +79,7 @@
             <polyline points="4 17 10 11 4 5"></polyline>
             <line x1="12" y1="19" x2="20" y2="19"></line>
           </svg>
-          Serial Monitor
+          <span data-i18n="nav_monitor">Serial Monitor</span>
         </button>
 
         <button class="nav-tab-btn" data-nav="view-guide">
@@ -75,7 +87,7 @@
             <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
             <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
           </svg>
-          Hướng Dẫn & Cài Driver
+          <span data-i18n="nav_guide">Hướng Dẫn & Cài Driver</span>
         </button>
       </div>
     </div>
@@ -88,7 +100,7 @@
       <line x1="12" y1="9" x2="12" y2="13"></line>
       <line x1="12" y1="17" x2="12.01" y2="17"></line>
     </svg>
-    <span>Trình duyệt hiện tại không hỗ trợ <b>Web Serial API</b>. Vui lòng mở trang web này bằng <b>Google Chrome</b>, <b>Microsoft Edge</b> hoặc <b>Opera / Cốc Cốc</b> trên máy tính để nạp firmware.</span>
+    <span data-i18n="browser_alert_text">Trình duyệt hiện tại không hỗ trợ <b>Web Serial API</b>. Vui lòng mở trang web này bằng <b>Google Chrome</b>, <b>Microsoft Edge</b> hoặc <b>Opera / Cốc Cốc</b> trên máy tính để nạp firmware.</span>
   </div>
 
   <main class="main-content">
@@ -105,13 +117,13 @@
             <img src="assets/ndz-logo.jpg" alt="NDZ HUB Logo" class="hero-logo-img">
           </div>
           <div class="intro-box-text">
-            <h2>Nạp Firmware Trực Tiếp Qua Trình Duyệt</h2>
-            <p>Kết nối cáp USB với máy tính, chọn cổng COM và nạp firmware cho dòng chip ESP32/ESP32-S3/ESP32-C3 chỉ trong vài giây mà không cần cài đặt Arduino IDE.</p>
+            <h2 data-i18n="hero_title">Nạp Firmware Trực Tiếp Qua Trình Duyệt</h2>
+            <p data-i18n="hero_desc">Kết nối cáp USB với máy tính, chọn cổng COM và nạp firmware cho dòng chip ESP32/ESP32-S3/ESP32-C3 chỉ trong vài giây mà không cần cài đặt Arduino IDE.</p>
           </div>
           <div class="intro-quick-badges">
-            <span class="quick-badge">⚡ Web Serial API</span>
-            <span class="quick-badge">🛡️ esptool-js 5.6</span>
-            <span class="quick-badge">🚀 Tốc độ 921600</span>
+            <span class="quick-badge" data-i18n="hero_badge_webserial">⚡ Web Serial API</span>
+            <span class="quick-badge" data-i18n="hero_badge_esptool">🛡️ esptool-js 5.6</span>
+            <span class="quick-badge" data-i18n="hero_badge_speed">🚀 Tốc độ 921600</span>
           </div>
         </div>
 
@@ -122,15 +134,15 @@
             <div class="card">
               <div class="card-title">
                 <span class="step-num">1</span>
-                <span>Kết nối Thiết bị</span>
+                <span data-i18n="step1_title">Kết nối Thiết bị</span>
               </div>
 
               <div class="form-group">
-                <label for="select-baud">Tốc độ nạp (Baudrate):</label>
+                <label for="select-baud" data-i18n="label_baud">Tốc độ nạp (Baudrate):</label>
                 <select id="select-baud" class="form-select">
-                  <option value="921600" selected>921600 (Siêu tốc - Khuyên dùng)</option>
-                  <option value="460800">460800 (Nhanh & Ổn định)</option>
-                  <option value="115200">115200 (Tiêu chuẩn - Chống nhiễu cáp)</option>
+                  <option value="921600" selected data-i18n="baud_921600">921600 (Siêu tốc - Khuyên dùng)</option>
+                  <option value="460800" data-i18n="baud_460800">460800 (Nhanh & Ổn định)</option>
+                  <option value="115200" data-i18n="baud_115200">115200 (Tiêu chuẩn - Chống nhiễu cáp)</option>
                 </select>
               </div>
 
@@ -139,42 +151,42 @@
                   <rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect>
                   <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
                 </svg>
-                <span id="btn-connect-text">Chọn Cổng COM & Kết Nối</span>
+                <span id="btn-connect-text" data-i18n="btn_connect_idle">Chọn Cổng COM & Kết Nối</span>
               </button>
 
               <!-- Box thông tin chip sau khi kết nối -->
               <div class="chip-info-box" id="chip-info-box">
                 <div class="chip-status-badge">
                   <span class="status-dot" id="status-dot"></span>
-                  <span id="chip-status-text">Chưa cắm thiết bị</span>
+                  <span id="chip-status-text" data-i18n="chip_status_unplugged">Chưa cắm thiết bị</span>
                 </div>
                 
                 <div class="chip-details-list">
                   <div class="chip-detail-item">
-                    <span class="label">Dòng vi điều khiển:</span>
+                    <span class="label" data-i18n="label_chip_type">Dòng vi điều khiển:</span>
                     <span class="val" id="chip-type">--</span>
                   </div>
                   <div class="chip-detail-item">
-                    <span class="label">Định danh MAC (Chip ID):</span>
+                    <span class="label" data-i18n="label_chip_mac">Định danh MAC (Chip ID):</span>
                     <span class="val" id="chip-mac">--:--:--:--:--:--</span>
                   </div>
                   <div class="chip-detail-item">
-                    <span class="label">Dung lượng Flash:</span>
+                    <span class="label" data-i18n="label_chip_flash">Dung lượng Flash:</span>
                     <span class="val" id="chip-flash-size">--</span>
                   </div>
                   <div class="chip-detail-item">
-                    <span class="label">Lượt nạp của máy này:</span>
-                    <span class="val" id="machine-license-tag" style="color: #10b981;">Còn 1 lượt nạp miễn phí</span>
+                    <span class="label" data-i18n="label_machine_limit">Lượt nạp của máy này:</span>
+                    <span class="val" id="machine-license-tag" style="color: #10b981;" data-i18n="machine_free_remaining">Còn 1 lượt nạp miễn phí</span>
                   </div>
                   <div class="chip-detail-item">
-                    <span class="label">Trạng thái chip cắm vào:</span>
-                    <span class="val" id="chip-license-tag" style="color: #94a3b8;">Chờ cắm thiết bị</span>
+                    <span class="label" data-i18n="label_chip_status">Trạng thái chip cắm vào:</span>
+                    <span class="val" id="chip-license-tag" style="color: #94a3b8;" data-i18n="chip_waiting">Chờ cắm thiết bị</span>
                   </div>
                 </div>
               </div>
 
               <!-- Mẹo nút BOOT -->
-              <div class="boot-tip-box">
+              <div class="boot-tip-box" data-i18n="boot_tip">
                 💡 <b>Mẹo khi mạch không nhận:</b> Nhấn giữ nút <b>BOOT</b> trên bo mạch, nhấn nhả nút <b>EN (RST)</b> rồi nhả nút <b>BOOT</b> ra để vào chế độ nạp (Download Mode).
               </div>
             </div>
@@ -186,7 +198,7 @@
               
               <div class="card-title">
                 <span class="step-num">2</span>
-                <span>Cấu hình Firmware & Nạp</span>
+                <span data-i18n="step2_title">Cấu hình Firmware & Nạp</span>
               </div>
 
               <!-- Sub Tabs (Sản phẩm vs File Custom) -->
@@ -197,28 +209,28 @@
                     <line x1="3" y1="6" x2="21" y2="6"></line>
                     <path d="M16 10a4 4 0 0 1-8 0"></path>
                   </svg>
-                  Firmware Sản Phẩm NDZ
+                  <span data-i18n="subtab_product">Firmware Sản Phẩm NDZ</span>
                 </button>
                 <button class="tab-btn" data-tab="tab-custom">
                   <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
                     <polyline points="14 2 14 8 20 8"></polyline>
                   </svg>
-                  File .BIN Tự Chọn (DIY)
+                  <span data-i18n="subtab_custom">File .BIN Tự Chọn (DIY)</span>
                 </button>
               </div>
 
               <!-- SUB TAB 1: SẢN PHẨM THƯƠNG MẠI & BẢN QUYỀN -->
               <div id="tab-product" class="tab-content active">
                 <div class="form-group">
-                  <label for="select-product">Chọn phần cứng bo mạch cần nạp:</label>
+                  <label for="select-product" data-i18n="label_select_product">Chọn phần cứng bo mạch cần nạp:</label>
                   <select id="select-product" class="form-select"></select>
                 </div>
 
                 <!-- Khung nhận diện phần cứng trực quan kèm ảnh thực tế -->
                 <div class="board-hardware-card" id="board-hardware-card">
                   <div class="board-card-header">
-                    <span class="board-tag">⚡ Nhận diện phần cứng tương thích</span>
+                    <span class="board-tag" data-i18n="board_tag">⚡ Nhận diện phần cứng tương thích</span>
                     <span class="board-chip-pill">ESP32-S3 · 240MHz</span>
                   </div>
                   
@@ -226,46 +238,46 @@
                     <!-- Ảnh trực quan bo mạch phần cứng thực tế -->
                     <div class="board-image-wrapper" title="Bấm vào để xem ảnh bo mạch phóng to">
                       <img src="assets/board-esp32s3-2.8.jpg" alt="Bo mạch ESP32-S3 Màn hình 2.8 inch" class="board-spec-img" id="board-spec-img">
-                      <span class="board-img-overlay-badge">🔍 Ảnh bo mạch & linh kiện</span>
+                      <span class="board-img-overlay-badge" data-i18n="board_img_overlay">🔍 Ảnh bo mạch & linh kiện</span>
                     </div>
 
                     <!-- Chi tiết thông số bo mạch -->
                     <div class="board-spec-details">
-                      <h4 class="board-spec-title">Bo Mạch Màn Hình 2.8" Cảm Ứng ESP32-S3</h4>
-                      <p class="board-spec-desc">Trang bị chip <b>ESP32-S3 Dual-Core 240MHz</b> mạnh mẽ, tích hợp sẵn màn hình LCD cảm ứng 2.8 inch, micro thu âm đàm thoại và cổng cắm loa ngoài mini.</p>
+                      <h4 class="board-spec-title" data-i18n="board_spec_title">Bo Mạch Màn Hình 2.8" Cảm Ứng ESP32-S3</h4>
+                      <p class="board-spec-desc" data-i18n="board_spec_desc">Trang bị chip <b>ESP32-S3 Dual-Core 240MHz</b> mạnh mẽ, tích hợp sẵn màn hình LCD cảm ứng 2.8 inch, micro thu âm đàm thoại và cổng cắm loa ngoài mini.</p>
                       
                       <div class="board-features-grid">
                         <div class="board-feature-item">
                           <span class="feat-icon">🖥️</span>
                           <div>
-                            <div class="feat-label">Màn hình:</div>
-                            <div class="feat-val">LCD 2.8" Cảm ứng màu</div>
+                            <div class="feat-label" data-i18n="feat_screen_label">Màn hình:</div>
+                            <div class="feat-val" data-i18n="feat_screen_val">LCD 2.8" Cảm ứng màu</div>
                           </div>
                         </div>
                         <div class="board-feature-item">
                           <span class="feat-icon">⚡</span>
                           <div>
-                            <div class="feat-label">Vi xử lý:</div>
-                            <div class="feat-val">ESP32-S3 (240MHz)</div>
+                            <div class="feat-label" data-i18n="feat_mcu_label">Vi xử lý:</div>
+                            <div class="feat-val" data-i18n="feat_mcu_val">ESP32-S3 (240MHz)</div>
                           </div>
                         </div>
                         <div class="board-feature-item">
                           <span class="feat-icon">🔊</span>
                           <div>
-                            <div class="feat-label">Âm thanh:</div>
-                            <div class="feat-val">Mic trên bo + Jack Loa JST</div>
+                            <div class="feat-label" data-i18n="feat_audio_label">Âm thanh:</div>
+                            <div class="feat-val" data-i18n="feat_audio_val">Mic trên bo + Jack Loa JST</div>
                           </div>
                         </div>
                         <div class="board-feature-item">
                           <span class="feat-icon">🔌</span>
                           <div>
-                            <div class="feat-label">Cổng nạp:</div>
-                            <div class="feat-val">Type-C (Web Serial)</div>
+                            <div class="feat-label" data-i18n="feat_port_label">Cổng nạp:</div>
+                            <div class="feat-val" data-i18n="feat_port_val">Type-C (Web Serial)</div>
                           </div>
                         </div>
                       </div>
 
-                      <div class="board-guide-callout">
+                      <div class="board-guide-callout" data-i18n="board_guide_callout">
                         💡 <b>Lưu ý khi cắm:</b> Cắm cáp Type-C vào cổng USB của bo mạch. Nhớ cắm giắc loa mini 2 dây (Đỏ/Đen) vào cổng JST trên bo để phát âm thanh trợ lý Xiaozhi.
                       </div>
                     </div>
@@ -289,18 +301,18 @@
                 </div>
 
                 <div class="form-group">
-                  <label for="select-version">Phiên bản Firmware:</label>
+                  <label for="select-version" data-i18n="label_select_version">Phiên bản Firmware:</label>
                   <select id="select-version" class="form-select"></select>
                 </div>
 
                 <!-- Chế độ nạp (Cài mới hoàn toàn) -->
                 <div class="form-group">
-                  <label>Chế độ cài đặt:</label>
+                  <label data-i18n="label_mode">Chế độ cài đặt:</label>
                   <div class="mode-options">
                     <label class="mode-card selected" id="mode-card-clean" style="cursor: default; width: 100%;">
                       <input type="radio" name="flash-mode" value="clean" checked style="display: none;">
-                      <div class="title">⚡ Cài mới hoàn toàn (Clean Install)</div>
-                      <div class="sub">Tự động xóa trắng bộ nhớ Flash, nạp Bootloader + Phân vùng + Ứng dụng sạch từ đầu.</div>
+                      <div class="title" data-i18n="mode_clean_title">⚡ Cài mới hoàn toàn (Clean Install)</div>
+                      <div class="sub" data-i18n="mode_clean_desc">Tự động xóa trắng bộ nhớ Flash, nạp Bootloader + Phân vùng + Ứng dụng sạch từ đầu.</div>
                     </label>
                   </div>
                 </div>
@@ -311,15 +323,15 @@
                     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2.5">
                       <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
                     </svg>
-                    <span id="limit-rule-title">Chính Sách Nạp Miễn Phí (1 Lần / Mỗi Máy Tính):</span>
+                    <span id="limit-rule-title" data-i18n="limit_rule_title_active">Chính Sách Nạp Miễn Phí (1 Lần / Mỗi Máy Tính):</span>
                   </div>
-                  <p id="limit-rule-desc">Hệ thống hỗ trợ <b>1 lượt nạp miễn phí</b> cho mỗi máy tính. Nếu bạn muốn kích hoạt nạp thêm thiết bị, vui lòng tham gia nhóm Zalo để được hỗ trợ: <a href="https://zalo.me/g/6vrtqpuympv29wyque4x" target="_blank" style="color: #38bdf8; font-weight: 700; text-decoration: underline;">💬 Nhóm Zalo Kích Hoạt Nạp Thêm</a>.</p>
+                  <p id="limit-rule-desc" data-i18n="limit_rule_desc_active">Hệ thống hỗ trợ <b>1 lượt nạp miễn phí</b> cho mỗi máy tính. Nếu bạn muốn kích hoạt nạp thêm thiết bị, vui lòng tham gia nhóm Zalo để được hỗ trợ: <a href="https://zalo.me/g/6vrtqpuympv29wyque4x" target="_blank" style="color: #38bdf8; font-weight: 700; text-decoration: underline;">💬 Nhóm Zalo Kích Hoạt Nạp Thêm</a>.</p>
                 </div>
               </div>
 
               <!-- SUB TAB 2: NẠP FILE TÙY CHỌN .BIN -->
               <div id="tab-custom" class="tab-content">
-                <p style="font-size: 0.86rem; color: var(--text-muted); margin-bottom: 14px;">
+                <p style="font-size: 0.86rem; color: var(--text-muted); margin-bottom: 14px;" data-i18n="custom_tab_desc">
                   Dành cho lập trình viên nạp file tự biên dịch từ Arduino IDE hoặc ESP-IDF. Nhập địa chỉ phân vùng (Offset) dạng Hex (ví dụ: 0x0000, 0x8000, 0x10000).
                 </p>
                 
@@ -332,12 +344,12 @@
                 </div>
 
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 12px; margin-bottom: 16px;">
-                  <button type="button" id="btn-add-file-row" class="btn btn-outline" style="width: auto; padding: 6px 14px; font-size: 0.84rem;">
+                  <button type="button" id="btn-add-file-row" class="btn btn-outline" style="width: auto; padding: 6px 14px; font-size: 0.84rem;" data-i18n="btn_add_partition">
                     + Thêm file phân vùng
                   </button>
                   <label style="font-size: 0.85rem; color: var(--text-secondary); display: flex; align-items: center; gap: 6px; cursor: pointer;">
                     <input type="checkbox" id="check-custom-erase">
-                    Xóa trắng Flash trước khi nạp
+                    <span data-i18n="check_custom_erase">Xóa trắng Flash trước khi nạp</span>
                   </label>
                 </div>
               </div>
@@ -349,7 +361,7 @@
                     <path d="M9 11l3 3L22 4"></path>
                     <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path>
                   </svg>
-                  <span>Các Bước Tích Xác Nhận Bắt Buộc Trước Khi Nạp:</span>
+                  <span data-i18n="checklist_header">Các Bước Tích Xác Nhận Bắt Buộc Trước Khi Nạp:</span>
                 </div>
 
                 <div class="checklist-items">
@@ -357,8 +369,8 @@
                   <label class="checklist-item" id="item-check-plugged">
                     <input type="checkbox" id="check-board-plugged">
                     <div class="check-content">
-                      <span class="check-title">1. Xác nhận đã cắm mạch:</span>
-                      <span class="check-desc">Tôi xác nhận đã cắm bo mạch ESP32 vào cổng USB máy tính qua cáp truyền dữ liệu và đã bấm kết nối thành công.</span>
+                      <span class="check-title" data-i18n="check1_title">1. Xác nhận đã cắm mạch:</span>
+                      <span class="check-desc" data-i18n="check1_desc">Tôi xác nhận đã cắm bo mạch ESP32 vào cổng USB máy tính qua cáp truyền dữ liệu và đã bấm kết nối thành công.</span>
                     </div>
                   </label>
 
@@ -366,11 +378,11 @@
                   <label class="checklist-item" id="item-check-board-type">
                     <input type="checkbox" id="check-board-type">
                     <div class="check-content">
-                      <span class="check-title">2. Xác nhận đúng loại mạch:</span>
+                      <span class="check-title" data-i18n="check2_title">2. Xác nhận đúng loại mạch:</span>
                       <span class="check-desc">
-                        Tôi xác nhận bo mạch đang cầm trên tay đúng là: 
+                        <span data-i18n="check2_desc_before">Tôi xác nhận bo mạch đang cầm trên tay đúng là: </span>
                         <b class="highlight-target-board" id="confirm-board-name">ROBOT BÁNH XÍCH N1</b> 
-                        (khớp với phần cứng cần nạp, tránh nạp nhầm gây hỏng mạch).
+                        <span data-i18n="check2_desc_after">(khớp với phần cứng cần nạp, tránh nạp nhầm gây hỏng mạch).</span>
                       </span>
                     </div>
                   </label>
@@ -380,7 +392,7 @@
               <!-- FLASH PROGRESS & ACTION BUTTONS -->
               <div class="progress-container">
                 <div class="progress-header">
-                  <span class="status-text" id="progress-status-text">Sẵn sàng</span>
+                  <span class="status-text" id="progress-status-text" data-i18n="progress_ready">Sẵn sàng</span>
                   <span id="progress-percent" style="font-weight: 700; color: var(--accent);">0%</span>
                 </div>
                 <div class="progress-track">
@@ -393,10 +405,10 @@
                   <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
                     <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
                   </svg>
-                  <span>Bắt Đầu Nạp Firmware</span>
+                  <span data-i18n="btn_flash_text">Bắt Đầu Nạp Firmware</span>
                 </button>
 
-                <button id="btn-erase" class="btn btn-danger" disabled title="Xóa sạch toàn bộ bộ nhớ flash của ESP">
+                <button id="btn-erase" class="btn btn-danger" disabled title="Xóa sạch toàn bộ bộ nhớ flash của ESP" data-i18n="btn_erase_text">
                   Xóa Flash
                 </button>
               </div>
@@ -404,14 +416,14 @@
               <!-- TERMINAL CONSOLE -->
               <div class="terminal-card">
                 <div class="terminal-header">
-                  <span>Nhật ký nạp (Console Log):</span>
+                  <span data-i18n="console_title">Nhật ký nạp (Console Log):</span>
                   <div class="actions">
-                    <button type="button" class="terminal-btn" id="btn-copy-log">Sao chép</button>
-                    <button type="button" class="terminal-btn" id="btn-clear-log">Xóa</button>
+                    <button type="button" class="terminal-btn" id="btn-copy-log" data-i18n="btn_copy_log">Sao chép</button>
+                    <button type="button" class="terminal-btn" id="btn-clear-log" data-i18n="btn_clear_log">Xóa</button>
                   </div>
                 </div>
                 <div class="terminal-body" id="terminal-body">
-<span class="log-info">[Hệ thống] Sẵn sàng. Vui lòng cắm cáp USB và bấm 'Chọn Cổng COM & Kết Nối'.</span>
+<span class="log-info" data-i18n="log_ready_init">[Hệ thống] Sẵn sàng. Vui lòng cắm cáp USB và bấm 'Chọn Cổng COM & Kết Nối'.</span>
                 </div>
               </div>
 
@@ -431,18 +443,18 @@
             <div class="catalog-logo-badge">
               <img src="assets/ndz-logo.jpg" alt="NDZ Logo" class="catalog-logo-img">
             </div>
-            <span class="catalog-brand-label">HỆ SINH THÁI IOT CHÍNH HÃNG NDZ</span>
+            <span class="catalog-brand-label" data-i18n="catalog_badge">HỆ SINH THÁI IOT CHÍNH HÃNG NDZ</span>
           </div>
-          <h2>Hệ Sinh Thái Sản Phẩm NDZ HUB</h2>
-          <p>Khám phá trọn bộ <b>Thiết bị hoàn thiện</b> sẵn sàng chạy và <b>Vỏ nhựa in 3D</b> chất lượng cao.</p>
+          <h2 data-i18n="catalog_title">Hệ Sinh Thái Sản Phẩm NDZ HUB</h2>
+          <p data-i18n="catalog_subtitle">Khám phá trọn bộ <b>Thiết bị hoàn thiện</b> sẵn sàng chạy và <b>Vỏ nhựa in 3D</b> chất lượng cao.</p>
         </div>
 
         <!-- Category Filter Pills (Phong cách Cute Đen Trắng Cam) -->
         <div class="product-category-filters">
-          <button type="button" class="cat-filter-btn active" data-filter="complete">
+          <button type="button" class="cat-filter-btn active" data-filter="complete" data-i18n="filter_complete">
             <span class="cat-icon">🤖</span> Sản Phẩm Hoàn Thiện (3)
           </button>
-          <button type="button" class="cat-filter-btn" data-filter="case">
+          <button type="button" class="cat-filter-btn" data-filter="case" data-i18n="filter_case">
             <span class="cat-icon">🧱</span> Vỏ Nhựa In 3D (3)
           </button>
         </div>
@@ -450,40 +462,40 @@
         <!-- =================== NHÓM 2: SẢN PHẨM HOÀN THIỆN =================== -->
         <div class="catalog-section" data-category-section="complete">
           <div class="catalog-section-header">
-            <div class="catalog-section-title">
+            <div class="catalog-section-title" data-i18n="sec_complete_title">
               <span>🤖</span> Sản Phẩm Hoàn Thiện (Cắm Nguồn Là Chạy)
             </div>
-            <span class="catalog-section-badge badge-device-sec">Full Kit Lắp Sẵn</span>
+            <span class="catalog-section-badge badge-device-sec" data-i18n="sec_complete_badge">Full Kit Lắp Sẵn</span>
           </div>
 
           <div class="products-grid">
             <!-- Complete Card 1 -->
             <div class="product-card" data-category="complete">
               <div class="product-card-top">
-                <div class="product-cat-tag tag-device">🤖 Sản Phẩm Hoàn Thiện</div>
-                <span class="product-chip-badge">ESP32 · Sẵn Hàng</span>
-                <h3>ROBOT BÁNH XÍCH N1</h3>
+                <div class="product-cat-tag tag-device" data-i18n="tag_complete">🤖 Sản Phẩm Hoàn Thiện</div>
+                <span class="product-chip-badge" data-i18n="n1_chip_badge">ESP32 · Sẵn Hàng</span>
+                <h3 data-i18n="n1_title">ROBOT BÁNH XÍCH N1</h3>
                 <div class="price-row">
-                  <span class="price" style="font-size: 1.3rem; color: #2563eb;">Full Box 100%</span>
-                  <span class="price-note">/ Đầy đủ linh kiện & pin</span>
+                  <span class="price" style="font-size: 1.3rem; color: #2563eb;" data-i18n="n1_price">Full Box 100%</span>
+                  <span class="price-note" data-i18n="n1_price_note">/ Đầy đủ linh kiện & pin</span>
                 </div>
                 <ul class="product-specs-list">
                   <li>
                     <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                    <span>Lắp sẵn 100%: Khung gầm, cụm xích tải cao su, 2 động cơ giảm tốc.</span>
+                    <span data-i18n="n1_spec1">Lắp sẵn 100%: Khung gầm, cụm xích tải cao su, 2 động cơ giảm tốc.</span>
                   </li>
                   <li>
                     <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                    <span>Mạch vi điều khiển nạp sẵn Firmware NDZ chính thức, kích hoạt sẵn.</span>
+                    <span data-i18n="n1_spec2">Mạch vi điều khiển nạp sẵn Firmware NDZ chính thức, kích hoạt sẵn.</span>
                   </li>
                   <li>
                     <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                    <span>Kèm khối pin sạc dung lượng cao + cáp Type-C, mở hộp là chạy.</span>
+                    <span data-i18n="n1_spec3">Kèm khối pin sạc dung lượng cao + cáp Type-C, mở hộp là chạy.</span>
                   </li>
                 </ul>
               </div>
               <div class="product-card-actions">
-                <button type="button" class="btn btn-order-action btn-order-device" data-product-name="Robot Bánh Xích N1 (Bản Hoàn Thiện 100%)">
+                <button type="button" class="btn btn-order-action btn-order-device" data-product-name="Robot Bánh Xích N1 (Bản Hoàn Thiện 100%)" data-i18n="btn_order_device">
                   💬 Tư Vấn & Mua Hàng (Zalo)
                 </button>
               </div>
@@ -493,33 +505,33 @@
             <div class="product-card" data-category="complete">
               <div class="product-card-thumb" title="Bấm vào để xem ảnh phóng to">
                 <img src="assets/robot-t1.jpg" alt="Robot Bánh Xích T1" class="product-thumb-img pos-robot">
-                <span class="thumb-badge">Ảnh thực tế Robot T1 🔍</span>
+                <span class="thumb-badge" data-i18n="t1_thumb_badge">Ảnh thực tế Robot T1 🔍</span>
               </div>
               <div class="product-card-top">
-                <div class="product-cat-tag tag-device">🤖 Sản Phẩm Hoàn Thiện</div>
-                <span class="product-chip-badge">ESP32 · Bản Pro</span>
-                <h3>ROBOT BÁNH XÍCH T1</h3>
+                <div class="product-cat-tag tag-device" data-i18n="tag_complete">🤖 Sản Phẩm Hoàn Thiện</div>
+                <span class="product-chip-badge" data-i18n="t1_chip_badge">ESP32 · Bản Pro</span>
+                <h3 data-i18n="t1_title">ROBOT BÁNH XÍCH T1</h3>
                 <div class="price-row">
-                  <span class="price" style="font-size: 1.3rem; color: #2563eb;">Bản Pro Tải Nặng</span>
-                  <span class="price-note">/ Cảm biến & Camera</span>
+                  <span class="price" style="font-size: 1.3rem; color: #2563eb;" data-i18n="t1_price">Bản Pro Tải Nặng</span>
+                  <span class="price-note" data-i18n="t1_price_note">/ Cảm biến & Camera</span>
                 </div>
                 <ul class="product-specs-list">
                   <li>
                     <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                    <span>Khung xe bánh xích hạng nặng hợp kim gia cố chịu tải lớn.</span>
+                    <span data-i18n="t1_spec1">Khung xe bánh xích hạng nặng hợp kim gia cố chịu tải lớn.</span>
                   </li>
                   <li>
                     <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                    <span>Trang bị cụm quét chướng ngại vật & ngàm gắn camera FPV.</span>
+                    <span data-i18n="t1_spec2">Trang bị cụm quét chướng ngại vật & ngàm gắn camera FPV.</span>
                   </li>
                   <li>
                     <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                    <span>Mạch công suất tản nhiệt nhôm, nạp sẵn FW cân bằng lực kéo.</span>
+                    <span data-i18n="t1_spec3">Mạch công suất tản nhiệt nhôm, nạp sẵn FW cân bằng lực kéo.</span>
                   </li>
                 </ul>
               </div>
               <div class="product-card-actions">
-                <button type="button" class="btn btn-order-action btn-order-device" data-product-name="Robot Bánh Xích T1 (Bản Pro Vượt Địa Hình)">
+                <button type="button" class="btn btn-order-action btn-order-device" data-product-name="Robot Bánh Xích T1 (Bản Pro Vượt Địa Hình)" data-i18n="btn_order_device">
                   💬 Tư Vấn & Mua Hàng (Zalo)
                 </button>
               </div>
@@ -529,33 +541,33 @@
             <div class="product-card" data-category="complete">
               <div class="product-card-thumb" title="Bấm vào để xem ảnh phóng to">
                 <img src="assets/hub-screen-1.jpg" alt="Hub Màn Hình Để Bàn" class="product-thumb-img pos-hub">
-                <span class="thumb-badge">Ảnh góc Setup bàn làm việc 🔍</span>
+                <span class="thumb-badge" data-i18n="hub_thumb_badge">Ảnh góc Setup bàn làm việc 🔍</span>
               </div>
               <div class="product-card-top">
-                <div class="product-cat-tag tag-device">🤖 Sản Phẩm Hoàn Thiện</div>
-                <span class="product-chip-badge">ESP32-S3 · Để Bàn</span>
-                <h3>HUB MÀN HÌNH CẢM ỨNG</h3>
+                <div class="product-cat-tag tag-device" data-i18n="tag_complete">🤖 Sản Phẩm Hoàn Thiện</div>
+                <span class="product-chip-badge" data-i18n="hub_chip_badge">ESP32-S3 · Để Bàn</span>
+                <h3 data-i18n="hub_title">HUB MÀN HÌNH CẢM ỨNG</h3>
                 <div class="price-row">
-                  <span class="price" style="font-size: 1.3rem; color: #2563eb;">Full Box Để Bàn</span>
-                  <span class="price-note">/ Cắm nguồn dùng ngay</span>
+                  <span class="price" style="font-size: 1.3rem; color: #2563eb;" data-i18n="hub_price">Full Box Để Bàn</span>
+                  <span class="price-note" data-i18n="hub_price_note">/ Cắm nguồn dùng ngay</span>
                 </div>
                 <ul class="product-specs-list">
                   <li>
                     <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                    <span>Màn hình màu cảm ứng đa điểm sắc nét, độ phản hồi cực nhanh.</span>
+                    <span data-i18n="hub_spec1">Màn hình màu cảm ứng đa điểm sắc nét, độ phản hồi cực nhanh.</span>
                   </li>
                   <li>
                     <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                    <span>Vỏ hộp để bàn góc nghiêng thẩm mỹ, chân đế cao su chống trượt.</span>
+                    <span data-i18n="hub_spec2">Vỏ hộp để bàn góc nghiêng thẩm mỹ, chân đế cao su chống trượt.</span>
                   </li>
                   <li>
                     <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                    <span>Nạp sẵn hệ điều hành NDZ Touch OS, kết nối WiFi / BLE tức thì.</span>
+                    <span data-i18n="hub_spec3">Nạp sẵn hệ điều hành NDZ Touch OS, kết nối WiFi / BLE tức thì.</span>
                   </li>
                 </ul>
               </div>
               <div class="product-card-actions">
-                <button type="button" class="btn btn-order-action btn-order-device" data-product-name="Hub Màn Hình Cảm Ứng (Bản Full Box)">
+                <button type="button" class="btn btn-order-action btn-order-device" data-product-name="Hub Màn Hình Cảm Ứng (Bản Full Box)" data-i18n="btn_order_device">
                   💬 Tư Vấn & Mua Hàng (Zalo)
                 </button>
               </div>
@@ -566,40 +578,40 @@
         <!-- =================== NHÓM 3: VỎ NHỰA IN 3D =================== -->
         <div class="catalog-section" data-category-section="case">
           <div class="catalog-section-header">
-            <div class="catalog-section-title">
+            <div class="catalog-section-title" data-i18n="sec_case_title">
               <span>🧱</span> Vỏ Nhựa In 3D (Dành Cho Anh Em DIY & Sửa Chữa)
             </div>
-            <span class="catalog-section-badge badge-case-sec">In 3D / File STL</span>
+            <span class="catalog-section-badge badge-case-sec" data-i18n="sec_case_badge">In 3D / File STL</span>
           </div>
 
           <div class="products-grid">
             <!-- Case Card 1 -->
             <div class="product-card" data-category="case">
               <div class="product-card-top">
-                <div class="product-cat-tag tag-case">🧱 Vỏ Nhựa In 3D</div>
+                <div class="product-cat-tag tag-case" data-i18n="tag_case">🧱 Vỏ Nhựa In 3D</div>
                 <span class="product-chip-badge">PLA+ / PETG</span>
-                <h3>VỎ NHỰA ROBOT N1</h3>
+                <h3 data-i18n="n1_case_title">VỎ NHỰA ROBOT N1</h3>
                 <div class="price-row">
-                  <span class="price" style="font-size: 1.3rem; color: #9333ea;">Đặt In / File STL</span>
-                  <span class="price-note">/ Nhiều tùy chọn màu</span>
+                  <span class="price" style="font-size: 1.3rem; color: #9333ea;" data-i18n="n1_case_price">Đặt In / File STL</span>
+                  <span class="price-note" data-i18n="n1_case_price_note">/ Nhiều tùy chọn màu</span>
                 </div>
                 <ul class="product-specs-list">
                   <li>
                     <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#9333ea" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                    <span>Trọn bộ chi tiết: Khung thân, ngàm motor, bánh gai xích & nắp chụp.</span>
+                    <span data-i18n="n1_case_spec1">Trọn bộ chi tiết: Khung thân, ngàm motor, bánh gai xích & nắp chụp.</span>
                   </li>
                   <li>
                     <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#9333ea" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                    <span>In công nghệ FDM độ phân giải cao 0.16mm, infill dày dặn chống gãy.</span>
+                    <span data-i18n="n1_case_spec2">In công nghệ FDM độ phân giải cao 0.16mm, infill dày dặn chống gãy.</span>
                   </li>
                   <li>
                     <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#9333ea" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                    <span>Chuẩn xác từng lỗ ốc M3, khớp khít hoàn hảo bo mạch ESP32.</span>
+                    <span data-i18n="n1_case_spec3">Chuẩn xác từng lỗ ốc M3, khớp khít hoàn hảo bo mạch ESP32.</span>
                   </li>
                 </ul>
               </div>
               <div class="product-card-actions">
-                <button type="button" class="btn btn-order-action btn-order-case" data-product-name="Bộ Vỏ Nhựa In 3D - Robot N1">
+                <button type="button" class="btn btn-order-action btn-order-case" data-product-name="Bộ Vỏ Nhựa In 3D - Robot N1" data-i18n="btn_order_case">
                   📦 Đặt In Nhựa / Tải File STL
                 </button>
               </div>
@@ -609,33 +621,33 @@
             <div class="product-card" data-category="case">
               <div class="product-card-thumb" title="Bấm vào để xem ảnh phóng to">
                 <img src="assets/robot-t1.jpg" alt="Vỏ Nhựa Robot T1" class="product-thumb-img pos-robot">
-                <span class="thumb-badge">Ảnh khung vỏ Robot T1 🔍</span>
+                <span class="thumb-badge" data-i18n="t1_case_thumb_badge">Ảnh khung vỏ Robot T1 🔍</span>
               </div>
               <div class="product-card-top">
-                <div class="product-cat-tag tag-case">🧱 Vỏ Nhựa In 3D</div>
+                <div class="product-cat-tag tag-case" data-i18n="tag_case">🧱 Vỏ Nhựa In 3D</div>
                 <span class="product-chip-badge">PETG / ABS Chịu Lực</span>
-                <h3>VỎ NHỰA ROBOT T1</h3>
+                <h3 data-i18n="t1_case_title">VỎ NHỰA ROBOT T1</h3>
                 <div class="price-row">
-                  <span class="price" style="font-size: 1.3rem; color: #9333ea;">Đặt In / File STL</span>
-                  <span class="price-note">/ Chống va đập</span>
+                  <span class="price" style="font-size: 1.3rem; color: #9333ea;" data-i18n="t1_case_price">Đặt In / File STL</span>
+                  <span class="price-note" data-i18n="t1_case_price_note">/ Chống va đập</span>
                 </div>
                 <ul class="product-specs-list">
                   <li>
                     <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#9333ea" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                    <span>Khung xe chịu lực cấu trúc tổ ong, chống biến dạng khi leo trèo.</span>
+                    <span data-i18n="t1_case_spec1">Khung xe chịu lực cấu trúc tổ ong, chống biến dạng khi leo trèo.</span>
                   </li>
                   <li>
                     <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#9333ea" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                    <span>Có sẵn khe luồn dây cáp nguồn và ngàm kẹp cảm biến khoảng cách.</span>
+                    <span data-i18n="t1_case_spec2">Có sẵn khe luồn dây cáp nguồn và ngàm kẹp cảm biến khoảng cách.</span>
                   </li>
                   <li>
                     <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#9333ea" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                    <span>Cung cấp file 3D STL gốc hoặc nhận in thành phẩm giao tận nhà.</span>
+                    <span data-i18n="t1_case_spec3">Cung cấp file 3D STL gốc hoặc nhận in thành phẩm giao tận nhà.</span>
                   </li>
                 </ul>
               </div>
               <div class="product-card-actions">
-                <button type="button" class="btn btn-order-action btn-order-case" data-product-name="Bộ Vỏ Nhựa In 3D - Robot T1">
+                <button type="button" class="btn btn-order-action btn-order-case" data-product-name="Bộ Vỏ Nhựa In 3D - Robot T1" data-i18n="btn_order_case">
                   📦 Đặt In Nhựa / Tải File STL
                 </button>
               </div>
@@ -645,33 +657,33 @@
             <div class="product-card" data-category="case">
               <div class="product-card-thumb" title="Bấm vào để xem ảnh phóng to">
                 <img src="assets/hub-screen-1.jpg" alt="Vỏ Nhựa In 3D Hub Cảm Ứng" class="product-thumb-img pos-hub">
-                <span class="thumb-badge">Case viền cam + Dock phím cơ 🔍</span>
+                <span class="thumb-badge" data-i18n="hub_case_thumb_badge">Case viền cam + Dock phím cơ 🔍</span>
               </div>
               <div class="product-card-top">
-                <div class="product-cat-tag tag-case">🧱 Vỏ Nhựa In 3D</div>
+                <div class="product-cat-tag tag-case" data-i18n="tag_case">🧱 Vỏ Nhựa In 3D</div>
                 <span class="product-chip-badge">PLA+ Đẹp Mịn</span>
-                <h3>VỎ HUB CẢM ỨNG</h3>
+                <h3 data-i18n="hub_case_title">VỎ HUB CẢM ỨNG</h3>
                 <div class="price-row">
-                  <span class="price" style="font-size: 1.3rem; color: #9333ea;">Đặt In / File STL</span>
-                  <span class="price-note">/ Để bàn công thái học</span>
+                  <span class="price" style="font-size: 1.3rem; color: #9333ea;" data-i18n="hub_case_price">Đặt In / File STL</span>
+                  <span class="price-note" data-i18n="hub_case_price_note">/ Để bàn công thái học</span>
                 </div>
                 <ul class="product-specs-list">
                   <li>
                     <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#9333ea" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                    <span>Góc nghiêng 60 độ công thái học cho góc nhìn màn hình rõ nét nhất.</span>
+                    <span data-i18n="hub_case_spec1">Góc nghiêng 60 độ công thái học cho góc nhìn màn hình rõ nét nhất.</span>
                   </li>
                   <li>
                     <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#9333ea" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                    <span>Khoét chuẩn cổng sạc Type-C, khe thẻ nhớ và nút bấm cạnh hông.</span>
+                    <span data-i18n="hub_case_spec2">Khoét chuẩn cổng sạc Type-C, khe thẻ nhớ và nút bấm cạnh hông.</span>
                   </li>
                   <li>
                     <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#9333ea" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                    <span>Khớp ngàm bấm không cần keo dán, tháo lắp cực kỳ dễ dàng.</span>
+                    <span data-i18n="hub_case_spec3">Khớp ngàm bấm không cần keo dán, tháo lắp cực kỳ dễ dàng.</span>
                   </li>
                 </ul>
               </div>
               <div class="product-card-actions">
-                <button type="button" class="btn btn-order-action btn-order-case" data-product-name="Vỏ Nhựa In 3D - Hub Cảm Ứng">
+                <button type="button" class="btn btn-order-action btn-order-case" data-product-name="Vỏ Nhựa In 3D - Hub Cảm Ứng" data-i18n="btn_order_case">
                   📦 Đặt In Nhựa / Tải File STL
                 </button>
               </div>
@@ -686,8 +698,8 @@
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
             </div>
             <div class="trust-text">
-              <h4>Bản Quyền Theo MAC</h4>
-              <p>Mỗi key gắn chặt với chip phần cứng của bạn, an toàn tuyệt đối và vĩnh viễn.</p>
+              <h4 data-i18n="trust1_title">Bản Quyền Theo MAC</h4>
+              <p data-i18n="trust1_desc">Mỗi key gắn chặt với chip phần cứng của bạn, an toàn tuyệt đối và vĩnh viễn.</p>
             </div>
           </div>
 
@@ -696,8 +708,8 @@
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline><polyline points="17 6 23 6 23 12"></polyline></svg>
             </div>
             <div class="trust-text">
-              <h4>Cập Nhật Trực Tuyến</h4>
-              <p>Dễ dàng nạp các bản cập nhật mới nhất từ NDZ HUB chỉ với 1 cú click chuột.</p>
+              <h4 data-i18n="trust2_title">Cập Nhật Trực Tuyến</h4>
+              <p data-i18n="trust2_desc">Dễ dàng nạp các bản cập nhật mới nhất từ NDZ HUB chỉ với 1 cú click chuột.</p>
             </div>
           </div>
 
@@ -706,8 +718,8 @@
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
             </div>
             <div class="trust-text">
-              <h4>Hỗ Trợ Kỹ Thuật Zalo</h4>
-              <p>Hỗ trợ cấu hình từ xa qua Ultraview/AnyDesk khi gặp khó khăn phần cứng.</p>
+              <h4 data-i18n="trust3_title">Hỗ Trợ Kỹ Thuật Zalo</h4>
+              <p data-i18n="trust3_desc">Hỗ trợ cấu hình từ xa qua Ultraview/AnyDesk khi gặp khó khăn phần cứng.</p>
             </div>
           </div>
         </div>
@@ -721,10 +733,10 @@
         <div class="monitor-view-card">
           <div class="monitor-toolbar">
             <div class="monitor-toolbar-left">
-              <button type="button" id="btn-monitor-toggle" class="btn btn-primary" style="width: auto; padding: 8px 16px;" disabled>
+              <button type="button" id="btn-monitor-toggle" class="btn btn-primary" style="width: auto; padding: 8px 16px;" disabled data-i18n="btn_monitor_start">
                 Bắt đầu đọc Serial
               </button>
-              <button type="button" id="btn-monitor-clear" class="btn btn-outline" style="width: auto; padding: 8px 16px;">
+              <button type="button" id="btn-monitor-clear" class="btn btn-outline" style="width: auto; padding: 8px 16px;" data-i18n="btn_monitor_clear">
                 Xóa màn hình
               </button>
               <select id="select-monitor-baud" class="form-select" style="width: auto; padding: 8px 12px; font-size: 0.85rem;">
@@ -734,18 +746,18 @@
                 <option value="921600">921600 baud</option>
               </select>
             </div>
-            <div style="font-size: 0.85rem; color: var(--text-muted);">
+            <div style="font-size: 0.85rem; color: var(--text-muted);" data-i18n="monitor_sub_desc">
               Đọc dữ liệu debug thời gian thực từ chip ESP32
             </div>
           </div>
 
-          <div class="monitor-screen" id="monitor-screen">
+          <div class="monitor-screen" id="monitor-screen" data-i18n="monitor_screen_init">
 [Serial Monitor] Sẵn sàng. Vui lòng kết nối cổng COM ở tab 'Nạp Firmware' trước khi bắt đầu đọc log.
           </div>
 
           <div class="monitor-input-row">
-            <input type="text" id="input-monitor-send" class="form-control" placeholder="Nhập chuỗi lệnh AT hoặc ký tự gửi xuống ESP32..." disabled>
-            <button type="button" id="btn-monitor-send" class="btn btn-primary" style="width: 120px;" disabled>
+            <input type="text" id="input-monitor-send" class="form-control" placeholder="Nhập chuỗi lệnh AT hoặc ký tự gửi xuống ESP32..." data-i18n-placeholder="input_monitor_placeholder" disabled>
+            <button type="button" id="btn-monitor-send" class="btn btn-primary" style="width: 120px;" disabled data-i18n="btn_monitor_send">
               Gửi (Send)
             </button>
           </div>
@@ -762,23 +774,23 @@
           <div class="guide-card">
             <h3>
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
-              1. Cài đặt Driver USB Serial
+              <span data-i18n="guide1_title">1. Cài đặt Driver USB Serial</span>
             </h3>
-            <p>Hầu hết bo mạch ESP32 giao tiếp với máy tính qua chip nạp UART **CH340** hoặc **CP2102**. Nếu bấm "Chọn Cổng COM" mà danh sách trống:</p>
+            <p data-i18n="guide1_desc">Hầu hết bo mạch ESP32 giao tiếp với máy tính qua chip nạp UART **CH340** hoặc **CP2102**. Nếu bấm "Chọn Cổng COM" mà danh sách trống:</p>
             <div class="driver-download-box">
               <div class="driver-item">
                 <div>
-                  <b>Driver CH340 / CH341 (Phổ biến nhất)</b>
-                  <div style="font-size: 0.8rem; color: var(--text-muted);">Dành cho hầu hết các kit ESP32 giá rẻ, NodeMCU</div>
+                  <b data-i18n="guide1_ch340_title">Driver CH340 / CH341 (Phổ biến nhất)</b>
+                  <div style="font-size: 0.8rem; color: var(--text-muted);" data-i18n="guide1_ch340_sub">Dành cho hầu hết các kit ESP32 giá rẻ, NodeMCU</div>
                 </div>
-                <a href="https://www.wch-ic.com/downloads/CH341SER_EXE.html" target="_blank" rel="noopener" class="btn btn-outline" style="width: auto; padding: 6px 12px; font-size: 0.82rem;">Tải Driver</a>
+                <a href="https://www.wch-ic.com/downloads/CH341SER_EXE.html" target="_blank" rel="noopener" class="btn btn-outline" style="width: auto; padding: 6px 12px; font-size: 0.82rem;" data-i18n="btn_download_driver">Tải Driver</a>
               </div>
               <div class="driver-item">
                 <div>
-                  <b>Driver Silicon Labs CP210x</b>
-                  <div style="font-size: 0.8rem; color: var(--text-muted);">Dành cho ESP32 DevKit chính hãng, Doit</div>
+                  <b data-i18n="guide1_cp210_title">Driver Silicon Labs CP210x</b>
+                  <div style="font-size: 0.8rem; color: var(--text-muted);" data-i18n="guide1_cp210_sub">Dành cho ESP32 DevKit chính hãng, Doit</div>
                 </div>
-                <a href="https://www.silabs.com/developers/usb-to-uart-bridge-vcp-drivers" target="_blank" rel="noopener" class="btn btn-outline" style="width: auto; padding: 6px 12px; font-size: 0.82rem;">Tải Driver</a>
+                <a href="https://www.silabs.com/developers/usb-to-uart-bridge-vcp-drivers" target="_blank" rel="noopener" class="btn btn-outline" style="width: auto; padding: 6px 12px; font-size: 0.82rem;" data-i18n="btn_download_driver">Tải Driver</a>
               </div>
             </div>
           </div>
@@ -786,37 +798,37 @@
           <div class="guide-card">
             <h3>
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 14 14"></polyline></svg>
-              2. Mẹo Nhấn Nút BOOT & EN
+              <span data-i18n="guide2_title">2. Mẹo Nhấn Nút BOOT & EN</span>
             </h3>
-            <p>Một số bo mạch không có mạch tự động kích hoạt Download Mode (DTR/RTS). Khi gặp thông báo lỗi kết nối hoặc Timeout:</p>
+            <p data-i18n="guide2_desc">Một số bo mạch không có mạch tự động kích hoạt Download Mode (DTR/RTS). Khi gặp thông báo lỗi kết nối hoặc Timeout:</p>
             <ol>
-              <li>Dùng ngón tay <b>nhấn và giữ nút BOOT</b> (hoặc IO0) trên bo mạch.</li>
-              <li>Nhấn nhanh rồi nhả nút <b>EN (hoặc RST)</b>.</li>
-              <li>Thả ngón tay khỏi nút <b>BOOT</b>.</li>
-              <li>Bấm lại nút <b>"Chọn Cổng COM & Kết Nối"</b> trên trang web.</li>
+              <li data-i18n="guide2_step1">Dùng ngón tay <b>nhấn và giữ nút BOOT</b> (hoặc IO0) trên bo mạch.</li>
+              <li data-i18n="guide2_step2">Nhấn nhanh rồi nhả nút <b>EN (hoặc RST)</b>.</li>
+              <li data-i18n="guide2_step3">Thả ngón tay khỏi nút <b>BOOT</b>.</li>
+              <li data-i18n="guide2_step4">Bấm lại nút <b>"Chọn Cổng COM & Kết Nối"</b> trên trang web.</li>
             </ol>
           </div>
 
           <div class="guide-card">
             <h3>
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg>
-              3. Lưu ý về Cáp USB
+              <span data-i18n="guide3_title">3. Lưu ý về Cáp USB</span>
             </h3>
-            <p>Rất nhiều loại cáp điện thoại giá rẻ chỉ có 2 dây truyền điện (chỉ dùng sạc pin), <b>hoàn toàn không có 2 dây truyền dữ liệu (D+ và D-)</b>.</p>
-            <p>Vui lòng đảm bảo bạn sử dụng cáp dữ liệu (Data Cable) chất lượng tốt, cắm trực tiếp vào cổng USB sau máy tính (tránh cắm qua Hub nối dài giá rẻ).</p>
+            <p data-i18n="guide3_p1">Rất nhiều loại cáp điện thoại giá rẻ chỉ có 2 dây truyền điện (chỉ dùng sạc pin), <b>hoàn toàn không có 2 dây truyền dữ liệu (D+ và D-)</b>.</p>
+            <p data-i18n="guide3_p2">Vui lòng đảm bảo bạn sử dụng cáp dữ liệu (Data Cable) chất lượng tốt, cắm trực tiếp vào cổng USB sau máy tính (tránh cắm qua Hub nối dài giá rẻ).</p>
           </div>
 
           <div class="guide-card">
             <h3>
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
-              4. Quy Trình Nạp & Các Bước Tích Xác Nhận
+              <span data-i18n="guide4_title">4. Quy Trình Nạp & Các Bước Tích Xác Nhận</span>
             </h3>
-            <p>Quy trình các bước nạp an toàn của NDZ HUB:</p>
+            <p data-i18n="guide4_desc">Quy trình các bước nạp an toàn của NDZ HUB:</p>
             <ol>
-              <li><b>Cắm & Kết nối:</b> Cắm bo mạch ESP32 vào máy tính qua cáp dữ liệu và bấm <b>"Chọn Cổng COM & Kết Nối"</b>.</li>
-              <li><b>Tích xác nhận 1:</b> Tích vào ô xác nhận đã cắm bo mạch chắc chắn vào máy tính.</li>
-              <li><b>Tích xác nhận 2:</b> Chọn đúng sản phẩm (Robot N1, T1 hoặc Hub Cảm Ứng) và tích xác nhận đúng loại mạch bạn đang cầm trên tay.</li>
-              <li><b>Bắt đầu nạp:</b> Khi hoàn tất đủ 2 tích xác nhận an toàn, nút <b>"Bắt Đầu Nạp Firmware"</b> sẽ sáng lên để bạn nạp miễn phí (1 lần cho mỗi máy tính, muốn nạp thêm liên hệ nhóm Zalo kích hoạt).</li>
+              <li data-i18n="guide4_step1"><b>Cắm & Kết nối:</b> Cắm bo mạch ESP32 vào máy tính qua cáp dữ liệu và bấm <b>"Chọn Cổng COM & Kết Nối"</b>.</li>
+              <li data-i18n="guide4_step2"><b>Tích xác nhận 1:</b> Tích vào ô xác nhận đã cắm bo mạch chắc chắn vào máy tính.</li>
+              <li data-i18n="guide4_step3"><b>Tích xác nhận 2:</b> Chọn đúng sản phẩm (Robot N1, T1 hoặc Hub Cảm Ứng) và tích xác nhận đúng loại mạch bạn đang cầm trên tay.</li>
+              <li data-i18n="guide4_step4"><b>Bắt đầu nạp:</b> Khi hoàn tất đủ 2 tích xác nhận an toàn, nút <b>"Bắt Đầu Nạp Firmware"</b> sẽ sáng lên để bạn nạp miễn phí (1 lần cho mỗi máy tính, muốn nạp thêm liên hệ nhóm Zalo kích hoạt).</li>
             </ol>
           </div>
 
@@ -831,27 +843,27 @@
   <div class="modal-overlay" id="modal-driver">
     <div class="modal-box" style="max-width: 540px;">
       <div class="modal-header">
-        <h3>Hướng Dẫn Cài Driver & Kết Nối</h3>
+        <h3 data-i18n="modal_driver_title">Hướng Dẫn Cài Driver & Kết Nối</h3>
         <button type="button" class="modal-close" id="btn-close-driver">&times;</button>
       </div>
       <div class="modal-body" style="font-size: 0.9rem; color: var(--text-secondary); line-height: 1.6;">
-        <h4 style="color: var(--text-main); margin-bottom: 6px;">1. Máy tính không nhận cổng COM?</h4>
-        <p style="margin-bottom: 12px;">Hầu hết các mạch ESP32 sử dụng chip nạp UART USB CH340 hoặc CP2102. Nếu bấm kết nối mà không thấy cổng nào xuất hiện:</p>
+        <h4 style="color: var(--text-main); margin-bottom: 6px;" data-i18n="modal_driver_h1">1. Máy tính không nhận cổng COM?</h4>
+        <p style="margin-bottom: 12px;" data-i18n="modal_driver_p1">Hầu hết các mạch ESP32 sử dụng chip nạp UART USB CH340 hoặc CP2102. Nếu bấm kết nối mà không thấy cổng nào xuất hiện:</p>
         <ul style="padding-left: 20px; margin-bottom: 16px;">
-          <li><a href="https://www.wch-ic.com/downloads/CH341SER_EXE.html" target="_blank" rel="noopener">Tải Driver CH340 / CH341 (Windows)</a></li>
-          <li><a href="https://www.silabs.com/developers/usb-to-uart-bridge-vcp-drivers" target="_blank" rel="noopener">Tải Driver CP210x (Windows / macOS)</a></li>
+          <li><a href="https://www.wch-ic.com/downloads/CH341SER_EXE.html" target="_blank" rel="noopener" data-i18n="modal_driver_link_ch340">Tải Driver CH340 / CH341 (Windows)</a></li>
+          <li><a href="https://www.silabs.com/developers/usb-to-uart-bridge-vcp-drivers" target="_blank" rel="noopener" data-i18n="modal_driver_link_cp210">Tải Driver CP210x (Windows / macOS)</a></li>
         </ul>
 
-        <h4 style="color: var(--text-main); margin-bottom: 6px;">2. Cáp USB sạc hay cáp dữ liệu?</h4>
-        <p style="margin-bottom: 16px;">Rất nhiều loại cáp điện thoại giá rẻ chỉ có 2 dây nguồn để sạc, không có 2 dây truyền dữ liệu (D+/D-). Vui lòng đổi sang cáp truyền dữ liệu tốt.</p>
+        <h4 style="color: var(--text-main); margin-bottom: 6px;" data-i18n="modal_driver_h2">2. Cáp USB sạc hay cáp dữ liệu?</h4>
+        <p style="margin-bottom: 16px;" data-i18n="modal_driver_p2">Rất nhiều loại cáp điện thoại giá rẻ chỉ có 2 dây nguồn để sạc, không có 2 dây truyền dữ liệu (D+/D-). Vui lòng đổi sang cáp truyền dữ liệu tốt.</p>
 
-        <h4 style="color: var(--text-main); margin-bottom: 6px;">3. Lỗi Timeout / Không vào được Bootloader</h4>
-        <p>Nếu gặp lỗi <i>"Failed to connect to ESP32: Timed out waiting for packet header"</i>:</p>
+        <h4 style="color: var(--text-main); margin-bottom: 6px;" data-i18n="modal_driver_h3">3. Lỗi Timeout / Không vào được Bootloader</h4>
+        <p data-i18n="modal_driver_p3">Nếu gặp lỗi <i>"Failed to connect to ESP32: Timed out waiting for packet header"</i>:</p>
         <ol style="padding-left: 20px;">
-          <li>Nhấn và giữ nút <b>BOOT</b> trên bo mạch.</li>
-          <li>Nhấn rồi thả nút <b>EN (hoặc RST)</b>.</li>
-          <li>Thả nút <b>BOOT</b> ra.</li>
-          <li>Bấm lại nút <b>Chọn Cổng COM & Kết Nối</b> trên trang web.</li>
+          <li data-i18n="guide2_step1">Nhấn và giữ nút <b>BOOT</b> trên bo mạch.</li>
+          <li data-i18n="guide2_step2">Nhấn rồi thả nút <b>EN (hoặc RST)</b>.</li>
+          <li data-i18n="guide2_step3">Thả nút <b>BOOT</b> ra.</li>
+          <li data-i18n="guide2_step4">Bấm lại nút <b>Chọn Cổng COM & Kết Nối</b> trên trang web.</li>
         </ol>
       </div>
     </div>
@@ -862,19 +874,19 @@
     <div class="modal-box" style="max-width: 520px;">
       <div class="modal-header">
         <div>
-          <h3 id="order-product-title">Tư Vấn & Đặt Hàng NDZ HUB</h3>
-          <p style="font-size: 0.82rem; color: var(--text-muted); margin-top: 4px;">Sản Phẩm Hoàn Thiện · Vỏ Nhựa In 3D · Hỗ Trợ Kỹ Thuật</p>
+          <h3 id="order-product-title" data-i18n="modal_order_title">Tư Vấn & Đặt Hàng NDZ HUB</h3>
+          <p style="font-size: 0.82rem; color: var(--text-muted); margin-top: 4px;" data-i18n="modal_order_sub">Sản Phẩm Hoàn Thiện · Vỏ Nhựa In 3D · Hỗ Trợ Kỹ Thuật</p>
         </div>
         <button type="button" class="modal-close" id="btn-close-order">&times;</button>
       </div>
       <div class="modal-body" style="font-size: 0.92rem; color: var(--text-secondary); line-height: 1.6;">
         <div style="background: var(--bg-subtle); border: 2px solid var(--border); border-radius: var(--radius-md); padding: 16px; margin-bottom: 18px; box-shadow: 2px 2px 0 var(--border);">
-          <div style="font-weight: 800; color: var(--text-main); margin-bottom: 6px;">📞 Liên Hệ Đặt Hàng Trực Tiếp:</div>
-          <p style="margin-bottom: 8px;">Để đặt mua sản phẩm hoàn thiện, nhận file STL hoặc đặt in 3D theo màu yêu cầu, vui lòng liên hệ ngay đội ngũ NDZ:</p>
+          <div style="font-weight: 800; color: var(--text-main); margin-bottom: 6px;" data-i18n="modal_order_contact_title">📞 Liên Hệ Đặt Hàng Trực Tiếp:</div>
+          <p style="margin-bottom: 8px;" data-i18n="modal_order_contact_desc">Để đặt mua sản phẩm hoàn thiện, nhận file STL hoặc đặt in 3D theo màu yêu cầu, vui lòng liên hệ ngay đội ngũ NDZ:</p>
           <ul style="padding-left: 18px; display: flex; flex-direction: column; gap: 6px; font-weight: 600;">
-            <li>💬 <b>Nhóm Zalo hỗ trợ:</b> Giải đáp kỹ thuật & báo giá nhanh nhất.</li>
-            <li>🚀 <b>Giao hàng toàn quốc:</b> Nhận hàng kiểm tra chạy thử mới thanh toán.</li>
-            <li>🛡️ <b>Bảo hành phần cứng:</b> Hỗ trợ kỹ thuật 1 - 1 qua Zalo/Ultraview.</li>
+            <li data-i18n="modal_order_li1">💬 <b>Nhóm Zalo hỗ trợ:</b> Giải đáp kỹ thuật & báo giá nhanh nhất.</li>
+            <li data-i18n="modal_order_li2">🚀 <b>Giao hàng toàn quốc:</b> Nhận hàng kiểm tra chạy thử mới thanh toán.</li>
+            <li data-i18n="modal_order_li3">🛡️ <b>Bảo hành phần cứng:</b> Hỗ trợ kỹ thuật 1 - 1 qua Zalo/Ultraview.</li>
           </ul>
         </div>
 
@@ -883,9 +895,9 @@
             <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
               <path d="M12 2C6.48 2 2 6.03 2 11c0 2.87 1.5 5.43 3.84 7.04L5 22l4.24-1.41C10.13 20.84 11.05 21 12 21c5.52 0 10-4.03 10-9s-4.48-9-10-9z"/>
             </svg>
-            Nhắn Tin Tư Vấn Qua Nhóm Zalo
+            <span data-i18n="btn_order_zalo">Nhắn Tin Tư Vấn Qua Nhóm Zalo</span>
           </a>
-          <button type="button" class="btn btn-outline" id="btn-order-close-confirm" style="justify-content: center;">
+          <button type="button" class="btn btn-outline" id="btn-order-close-confirm" style="justify-content: center;" data-i18n="btn_order_close">
             Đóng cửa sổ
           </button>
         </div>
@@ -897,7 +909,7 @@
   <div class="modal-overlay" id="modal-lightbox">
     <div class="modal-box modal-lightbox-box">
       <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
-        <span id="lightbox-caption" class="lightbox-caption" style="margin: 0;">Ảnh Sản Phẩm Thực Tế</span>
+        <span id="lightbox-caption" class="lightbox-caption" style="margin: 0;" data-i18n="modal_lightbox_caption">Ảnh Sản Phẩm Thực Tế</span>
         <button type="button" class="modal-close" id="btn-close-lightbox">&times;</button>
       </div>
       <img id="lightbox-img" src="" alt="Ảnh sản phẩm full size" class="lightbox-full-img">
@@ -912,7 +924,7 @@
           <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
           <polyline points="9 22 9 12 15 12 15 22"></polyline>
         </svg>
-        <span>Trang chủ</span>
+        <span data-i18n="dock_home">Trang chủ</span>
       </button>
 
       <button type="button" class="dock-btn" data-nav="view-products">
@@ -921,7 +933,7 @@
           <line x1="8" y1="21" x2="16" y2="21"></line>
           <line x1="12" y1="17" x2="12" y2="21"></line>
         </svg>
-        <span>Sản phẩm</span>
+        <span data-i18n="dock_products">Sản phẩm</span>
       </button>
 
       <!-- Center NDZ Logo Dock Mascot -->
@@ -934,7 +946,7 @@
           <polyline points="4 17 10 11 4 5"></polyline>
           <line x1="12" y1="19" x2="20" y2="19"></line>
         </svg>
-        <span>Monitor</span>
+        <span data-i18n="dock_monitor">Monitor</span>
       </button>
 
       <button type="button" class="dock-btn" data-nav="view-guide">
@@ -943,7 +955,7 @@
           <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
           <line x1="12" y1="17" x2="12.01" y2="17"></line>
         </svg>
-        <span>Hướng dẫn</span>
+        <span data-i18n="dock_guide">Hướng dẫn</span>
       </button>
     </nav>
   </div>
@@ -955,7 +967,7 @@
         <img src="assets/ndz-logo.jpg" alt="NDZ Logo" class="footer-logo-img">
         <span class="footer-brand-text">NDZ HUB</span>
       </div>
-      <p>© 2026 NDZ HUB · Nền Tảng Nạp Firmware ESP32 Trực Tuyến & Hệ Sinh Thái Phần Cứng Thông Minh.</p>
+      <p data-i18n="footer_text">© 2026 NDZ HUB · Nền Tảng Nạp Firmware ESP32 Trực Tuyến & Hệ Sinh Thái Phần Cứng Thông Minh.</p>
     </div>
   </footer>
 
