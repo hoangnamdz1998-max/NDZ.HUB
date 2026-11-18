@@ -9,9 +9,9 @@
       "price": "Miễn Phí",
       "versions": [
         {
-          "version": "v2.5.2-vn",
+          "version": "v2.5.3-vn",
           "releaseDate": "18/11/2026",
-          "changelog": "Bản mới nhất: Tùy chỉnh độ nhạy micro trong Cài đặt nhanh, cập nhật tỷ giá & giá vàng thời gian thực",
+          "changelog": "Tùy chỉnh độ nhạy micro trong Cài đặt nhanh, tỷ giá ngoại tệ USD & giá vàng SJC, crypto BTC/ETH, xăng dầu realtime, tối ưu OTA GitHub Releases",
           "modes": {
             "clean": {
               "title": "Cài mới hoàn toàn (Clean Install)",
