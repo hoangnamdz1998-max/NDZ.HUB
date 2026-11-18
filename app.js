@@ -602,6 +602,90 @@ if (modalOrder) {
   });
 }
 
+// Modal Chi Tiết Màn Hình Hub 2.8" (Specs table & multi-photo gallery)
+const modalHubDetails = document.getElementById("modal-hub-details");
+const btnCloseHubModal = document.getElementById("btn-close-hub-modal");
+const btnHubModalToFlash = document.getElementById("btn-hub-modal-to-flash");
+const hubMainPreviewImg = document.getElementById("hub-main-preview-img");
+const hubGalleryBadge = document.getElementById("hub-gallery-badge");
+const hubThumbBtns = document.querySelectorAll(".hub-thumb-btn");
+
+function openHubDetailsModal() {
+  if (modalHubDetails) {
+    modalHubDetails.classList.add("active");
+  }
+}
+
+function closeHubDetailsModal() {
+  if (modalHubDetails) {
+    modalHubDetails.classList.remove("active");
+  }
+}
+
+// Bấm nút "Xem Bảng Mô Tả & Hình Ảnh" trên thẻ Màn hình
+document.querySelectorAll(".btn-open-hub-details").forEach(btn => {
+  btn.addEventListener("click", (e) => {
+    e.stopPropagation();
+    openHubDetailsModal();
+  });
+});
+
+// Bấm vào thẻ sản phẩm Màn hình (HUB MÀN HÌNH / VỎ HUB CẢM ỨNG)
+document.querySelectorAll('.product-card[data-is-hub="true"]').forEach(card => {
+  card.style.cursor = "pointer";
+  card.addEventListener("click", (e) => {
+    // Nếu bấm vào nút Đặt hàng Zalo thì không mở modal specs
+    if (e.target.closest(".btn-order-action") || e.target.closest(".btn-view-hub-specs")) {
+      return;
+    }
+    openHubDetailsModal();
+  });
+});
+
+// Chuyển ảnh trong gallery của modal Hub
+hubThumbBtns.forEach(btn => {
+  btn.addEventListener("click", () => {
+    hubThumbBtns.forEach(b => b.classList.remove("active"));
+    btn.classList.add("active");
+    const targetSrc = btn.dataset.img;
+    const captionKey = btn.dataset.captionKey;
+    const captionFallback = btn.dataset.caption;
+    if (hubMainPreviewImg && targetSrc) {
+      hubMainPreviewImg.src = targetSrc;
+    }
+    if (hubGalleryBadge) {
+      hubGalleryBadge.textContent = t ? t(captionKey, captionFallback) : captionFallback;
+    }
+  });
+});
+
+if (btnCloseHubModal) {
+  btnCloseHubModal.addEventListener("click", closeHubDetailsModal);
+}
+if (modalHubDetails) {
+  modalHubDetails.addEventListener("click", (e) => {
+    if (e.target === modalHubDetails) {
+      closeHubDetailsModal();
+    }
+  });
+}
+
+// Nút chuyển sang nạp Firmware từ modal Hub
+if (btnHubModalToFlash) {
+  btnHubModalToFlash.addEventListener("click", () => {
+    closeHubDetailsModal();
+    const flasherTabBtn = document.querySelector('[data-nav="view-flasher"]');
+    if (flasherTabBtn) flasherTabBtn.click();
+    if (selectProduct) {
+      selectProduct.value = "hub_28";
+      if (typeof onProductChange === "function") {
+        onProductChange();
+      }
+    }
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  });
+}
+
 // Lightbox xem ảnh full size khi click vào thumbnail
 const modalLightbox = document.getElementById("modal-lightbox");
 const lightboxImg = document.getElementById("lightbox-img");
@@ -609,7 +693,14 @@ const lightboxCaption = document.getElementById("lightbox-caption");
 const btnCloseLightbox = document.getElementById("btn-close-lightbox");
 
 document.querySelectorAll(".product-card-thumb, .board-image-wrapper").forEach(thumb => {
-  thumb.addEventListener("click", () => {
+  thumb.addEventListener("click", (e) => {
+    // Nếu là ảnh của thẻ Hub màn hình, ưu tiên mở Modal Chi Tiết Màn Hình Hub
+    const parentHubCard = thumb.closest('.product-card[data-is-hub="true"]');
+    if (parentHubCard) {
+      e.stopPropagation();
+      openHubDetailsModal();
+      return;
+    }
     const img = thumb.querySelector("img");
     const badge = thumb.querySelector(".thumb-badge, .board-img-overlay-badge");
     if (img && modalLightbox && lightboxImg) {
@@ -634,6 +725,16 @@ if (modalLightbox) {
     }
   });
 }
+
+// Đóng modal khi bấm ESC
+window.addEventListener("keydown", (e) => {
+  if (e.key === "Escape") {
+    if (modalHubDetails?.classList.contains("active")) closeHubDetailsModal();
+    if (modalLightbox?.classList.contains("active")) modalLightbox.classList.remove("active");
+    if (modalOrder?.classList.contains("active")) modalOrder.classList.remove("active");
+    if (modalDriver?.classList.contains("open")) modalDriver.classList.remove("open");
+  }
+});
 
 // Mode card radio toggle
 if (modeCardUpdate) {
@@ -1083,6 +1184,10 @@ onLanguageChange(() => {
   updateFlashAllowanceUI();
   updateConfirmedBoardName();
   refreshFlashButtonState();
+  const activeThumb = document.querySelector(".hub-thumb-btn.active");
+  if (activeThumb && hubGalleryBadge) {
+    hubGalleryBadge.textContent = t(activeThumb.dataset.captionKey, activeThumb.dataset.caption);
+  }
 });
 
 // Khởi tạo i18n

@@ -538,7 +538,7 @@
             </div>
 
             <!-- Complete Card 3 -->
-            <div class="product-card" data-category="complete">
+            <div class="product-card" data-category="complete" data-is-hub="true">
               <div class="product-card-thumb" title="Bấm vào để xem ảnh phóng to">
                 <img src="assets/hub-screen-1.jpg" alt="Hub Màn Hình Để Bàn" class="product-thumb-img pos-hub">
                 <span class="thumb-badge" data-i18n="hub_thumb_badge">Ảnh góc Setup bàn làm việc 🔍</span>
@@ -567,6 +567,9 @@
                 </ul>
               </div>
               <div class="product-card-actions">
+                <button type="button" class="btn btn-view-hub-specs btn-open-hub-details" data-i18n="btn_view_hub_details">
+                  🔍 Xem Bảng Mô Tả & Hình Ảnh
+                </button>
                 <button type="button" class="btn btn-order-action btn-order-device" data-product-name="Hub Màn Hình Cảm Ứng (Bản Full Box)" data-i18n="btn_order_device">
                   💬 Tư Vấn & Mua Hàng (Zalo)
                 </button>
@@ -654,7 +657,7 @@
             </div>
 
             <!-- Case Card 3 -->
-            <div class="product-card" data-category="case">
+            <div class="product-card" data-category="case" data-is-hub="true">
               <div class="product-card-thumb" title="Bấm vào để xem ảnh phóng to">
                 <img src="assets/hub-screen-1.jpg" alt="Vỏ Nhựa In 3D Hub Cảm Ứng" class="product-thumb-img pos-hub">
                 <span class="thumb-badge" data-i18n="hub_case_thumb_badge">Case viền cam + Dock phím cơ 🔍</span>
@@ -683,6 +686,9 @@
                 </ul>
               </div>
               <div class="product-card-actions">
+                <button type="button" class="btn btn-view-hub-specs btn-open-hub-details" data-i18n="btn_view_hub_details">
+                  🔍 Xem Bảng Mô Tả & Hình Ảnh
+                </button>
                 <button type="button" class="btn btn-order-action btn-order-case" data-product-name="Vỏ Nhựa In 3D - Hub Cảm Ứng" data-i18n="btn_order_case">
                   📦 Đặt In Nhựa / Tải File STL
                 </button>
@@ -913,6 +919,193 @@
         <button type="button" class="modal-close" id="btn-close-lightbox">&times;</button>
       </div>
       <img id="lightbox-img" src="" alt="Ảnh sản phẩm full size" class="lightbox-full-img">
+    </div>
+  </div>
+
+  <!-- MODAL: BẢNG MÔ TẢ & HÌNH ẢNH MÀN HÌNH HUB 2.8" -->
+  <div class="modal-overlay" id="modal-hub-details">
+    <div class="modal-box modal-hub-box">
+      <div class="modal-header">
+        <div class="hub-modal-title-group">
+          <span class="hub-modal-chip-badge" data-i18n="hub_modal_chip">ESP32-S3 · MÀN HÌNH MÀU CẢM ỨNG 2.8" · GIAO DIỆN ĐỒ HỌA LVGL V8</span>
+          <h3 class="modal-title" style="margin:0;" data-i18n="hub_modal_title">HUB MÀN HÌNH CẢM ỨNG 2.8 INCH (XIAOZHI AI)</h3>
+        </div>
+        <button type="button" class="modal-close" id="btn-close-hub-modal">&times;</button>
+      </div>
+
+      <div class="hub-modal-body">
+        <!-- Gallery Section -->
+        <div class="hub-modal-gallery">
+          <div class="hub-modal-main-img-wrap">
+            <img id="hub-main-preview-img" src="assets/hub-screen-1.jpg" alt="Hub Screen Preview" class="hub-main-preview-img">
+            <span class="hub-gallery-badge" id="hub-gallery-badge">Góc Setup Bàn Làm Việc (Vỏ Cam Đen)</span>
+          </div>
+          <div class="hub-modal-thumbs-row">
+            <button type="button" class="hub-thumb-btn active" data-img="assets/hub-screen-1.jpg" data-caption-key="hub_caption_1" data-caption="Góc Setup Bàn Làm Việc (Vỏ Cam Đen)">
+              <img src="assets/hub-screen-1.jpg" alt="Thumb 1">
+              <span data-i18n="hub_thumb_1">Ảnh Setup Bàn</span>
+            </button>
+            <button type="button" class="hub-thumb-btn" data-img="assets/hub-screen-2.jpg" data-caption-key="hub_caption_2" data-caption="Cận Cảnh Màn Hình & Phím Cơ Bàn Phím">
+              <img src="assets/hub-screen-2.jpg" alt="Thumb 2">
+              <span data-i18n="hub_thumb_2">Cận Cảnh Thiết Bị</span>
+            </button>
+            <button type="button" class="hub-thumb-btn" data-img="assets/board-esp32s3-2.8.jpg" data-caption-key="hub_caption_3" data-caption="Mạch ESP32-S3 2.8 Inch Cảm Ứng, Loa, Mic & Cáp">
+              <img src="assets/board-esp32s3-2.8.jpg" alt="Thumb 3">
+              <span data-i18n="hub_thumb_3">Bo Mạch & Phụ Kiện</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Hardware Specs Table Section -->
+        <div class="hub-detail-section">
+          <h4 class="hub-detail-sec-title">
+            <span class="sec-icon">⚙️</span>
+            <span data-i18n="hub_modal_hw_title">Bảng Thông Số Phần Cứng Chi Tiết</span>
+          </h4>
+          <div class="hub-specs-table-wrap">
+            <table class="hub-specs-table">
+              <tbody>
+                <tr>
+                  <td class="spec-name" data-i18n="hub_spec_mcu_name">Vi điều khiển (MCU)</td>
+                  <td class="spec-value" data-i18n="hub_spec_mcu_val"><strong>ESP32-S3 Dual-Core Xtensa LX7</strong> xung nhịp cao đến 240MHz</td>
+                </tr>
+                <tr>
+                  <td class="spec-name" data-i18n="hub_spec_mem_name">Bộ nhớ (Memory)</td>
+                  <td class="spec-value" data-i18n="hub_spec_mem_val"><strong>16MB Flash ROM</strong> + <strong>8MB Octal PSRAM</strong> (xử lý đa nhiệm mượt mà, lưu trữ nhiều hình nền)</td>
+                </tr>
+                <tr>
+                  <td class="spec-name" data-i18n="hub_spec_screen_name">Màn hình hiển thị</td>
+                  <td class="spec-value" data-i18n="hub_spec_screen_val">Màn hình màu TFT LCD <strong>2.8 inch</strong>, độ phân giải <strong>240x320 pixels</strong>, màu sắc rực rỡ</td>
+                </tr>
+                <tr>
+                  <td class="spec-name" data-i18n="hub_spec_touch_name">Cảm ứng (Touch)</td>
+                  <td class="spec-value" data-i18n="hub_spec_touch_val">Cảm ứng độ nhạy cao, thao tác chạm vuốt mượt mà, hỗ trợ cử chỉ</td>
+                </tr>
+                <tr>
+                  <td class="spec-name" data-i18n="hub_spec_audio_name">Âm thanh & Voice AI</td>
+                  <td class="spec-value" data-i18n="hub_spec_audio_val">Tích hợp sẵn <strong>Microphone</strong> thu âm nhạy + Cổng kết nối kèm <strong>Loa ngoài công suất lớn</strong></td>
+                </tr>
+                <tr>
+                  <td class="spec-name" data-i18n="hub_spec_conn_name">Kết nối không dây</td>
+                  <td class="spec-value" data-i18n="hub_spec_conn_val">Wi-Fi 802.11 b/g/n (2.4GHz) + Bluetooth 5.0 (BLE)</td>
+                </tr>
+                <tr>
+                  <td class="spec-name" data-i18n="hub_spec_port_name">Cổng kết nối & Nguồn</td>
+                  <td class="spec-value" data-i18n="hub_spec_port_val">Cổng Type-C cấp nguồn 5V DC, hỗ trợ nạp Firmware trực tuyến qua trình duyệt Web Serial</td>
+                </tr>
+                <tr>
+                  <td class="spec-name" data-i18n="hub_spec_ui_name">Giao diện đồ họa</td>
+                  <td class="spec-value" data-i18n="hub_spec_ui_val">Nền tảng <strong>LVGL v8</strong> tối ưu hóa phần cứng, hiệu ứng mượt mà và chuyển cảnh nhanh</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Features & Apps Grid Section -->
+        <div class="hub-detail-section">
+          <h4 class="hub-detail-sec-title">
+            <span class="sec-icon">📱</span>
+            <span data-i18n="hub_modal_features_title">Tất Cả Ứng Dụng & Tính Năng Tích Hợp Sẵn</span>
+          </h4>
+          <div class="hub-features-grid-modal">
+            <div class="hub-modal-feat-card">
+              <span class="feat-card-icon">🕒</span>
+              <div class="feat-card-content">
+                <b data-i18n="hub_feat_standby_title">4 Giao Diện Đồng Hồ Standby</b>
+                <p data-i18n="hub_feat_standby_desc">Nhiều kiểu mặt đồng hồ kỹ thuật số và hiện đại, tự đồng bộ giờ qua NTP Internet chính xác từng giây.</p>
+              </div>
+            </div>
+            <div class="hub-modal-feat-card">
+              <span class="feat-card-icon">⚡</span>
+              <div class="feat-card-content">
+                <b data-i18n="hub_feat_quick_title">Quick Settings Menu</b>
+                <p data-i18n="hub_feat_quick_desc">Bảng cài đặt nhanh: chỉnh độ sáng màn hình, âm lượng loa, quét và kết nối WiFi tức thì.</p>
+              </div>
+            </div>
+            <div class="hub-modal-feat-card">
+              <span class="feat-card-icon">🎵</span>
+              <div class="feat-card-content">
+                <b data-i18n="hub_feat_mp3_title">Zing MP3 Online Player</b>
+                <p data-i18n="hub_feat_mp3_desc">Phát nhạc trực tuyến qua Zing MP3, duyệt BXH Top ca khúc, tìm kiếm và phát trực tiếp qua loa tích hợp.</p>
+              </div>
+            </div>
+            <div class="hub-modal-feat-card">
+              <span class="feat-card-icon">🤖</span>
+              <div class="feat-card-content">
+                <b data-i18n="hub_feat_ai_title">Trợ Lý Giọng Nói Xiaozhi AI</b>
+                <p data-i18n="hub_feat_ai_desc">Biểu cảm khuôn mặt chuyển động linh hoạt sống động, trò chuyện hỏi đáp trực tiếp bằng giọng nói Tiếng Việt thông minh.</p>
+              </div>
+            </div>
+            <div class="hub-modal-feat-card">
+              <span class="feat-card-icon">📅</span>
+              <div class="feat-card-content">
+                <b data-i18n="hub_feat_lunar_title">Lịch Vạn Niên & Âm Lịch</b>
+                <p data-i18n="hub_feat_lunar_desc">Xem ngày dương, ngày âm lịch Việt Nam, giờ hoàng đạo và lịch can chi tiện dụng ngay trên bàn làm việc.</p>
+              </div>
+            </div>
+            <div class="hub-modal-feat-card">
+              <span class="feat-card-icon">⛅</span>
+              <div class="feat-card-content">
+                <b data-i18n="hub_feat_weather_title">Dự Báo Thời Tiết Thời Gian Thực</b>
+                <p data-i18n="hub_feat_weather_desc">Cập nhật nhiệt độ, độ ẩm, biểu tượng thời tiết theo vị trí TP.HCM, Hà Nội hoặc tùy chỉnh theo tỉnh thành.</p>
+              </div>
+            </div>
+            <div class="hub-modal-feat-card">
+              <span class="feat-card-icon">🪙</span>
+              <div class="feat-card-content">
+                <b data-i18n="hub_feat_rates_title">Tỷ Giá Vàng SJC & Ngoại Tệ</b>
+                <p data-i18n="hub_feat_rates_desc">Theo dõi biến động giá vàng SJC trong nước và các tỷ giá ngoại tệ (USD, EUR,...) trực tiếp từ máy chủ tài chính.</p>
+              </div>
+            </div>
+            <div class="hub-modal-feat-card">
+              <span class="feat-card-icon">⏱️</span>
+              <div class="feat-card-content">
+                <b data-i18n="hub_feat_clock_title">Báo Thức, Bấm Giờ & Đếm Ngược</b>
+                <p data-i18n="hub_feat_clock_desc">Bộ công cụ quản lý thời gian trọn vẹn: chuông báo thức, bấm giờ nhiều vòng (lap), hẹn giờ Pomodoro làm việc hiệu quả.</p>
+              </div>
+            </div>
+            <div class="hub-modal-feat-card">
+              <span class="feat-card-icon">📻</span>
+              <div class="feat-card-content">
+                <b data-i18n="hub_feat_radio_title">Đài FM Radio Trực Tuyến</b>
+                <p data-i18n="hub_feat_radio_desc">Nghe các kênh phát thanh trực tuyến chất lượng cao như VOV1, VOV2, VOV Giao Thông, VOH mượt mà qua WiFi.</p>
+              </div>
+            </div>
+            <div class="hub-modal-feat-card">
+              <span class="feat-card-icon">🧮</span>
+              <div class="feat-card-content">
+                <b data-i18n="hub_feat_calc_title">Máy Tính Bỏ Túi Cảm Ứng</b>
+                <p data-i18n="hub_feat_calc_desc">Giao diện máy tính điện tử tiện dụng với đầy đủ các phép tính cơ bản phục vụ tính toán nhanh trên bàn làm việc.</p>
+              </div>
+            </div>
+            <div class="hub-modal-feat-card">
+              <span class="feat-card-icon">🖼️</span>
+              <div class="feat-card-content">
+                <b data-i18n="hub_feat_wallpapers_title">Bộ Sưu Tập Hình Nền Đa Dạng</b>
+                <p data-i18n="hub_feat_wallpapers_desc">Tùy chọn chuyển đổi nhiều ảnh nền phong cách thể thao, siêu xe, cyberpunk hoặc tải ảnh nền yêu thích lên.</p>
+              </div>
+            </div>
+            <div class="hub-modal-feat-card">
+              <span class="feat-card-icon">🌐</span>
+              <div class="feat-card-content">
+                <b data-i18n="hub_feat_web_title">Web Server Nội Bộ & Cập Nhật OTA</b>
+                <p data-i18n="hub_feat_web_desc">Truy cập giao diện Web trên máy tính hoặc điện thoại cùng mạng WiFi để cài đặt, tải hình nền và cập nhật phần mềm.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Modal Actions Footer -->
+        <div class="hub-modal-actions">
+          <button type="button" class="btn btn-hub-action-flash" id="btn-hub-modal-to-flash">
+            <span data-i18n="hub_modal_btn_flash">⚡ Chuyển Sang Nạp Firmware Trực Tiếp</span>
+          </button>
+          <a href="https://zalo.me/g/6vrtqpuympv29wyque4x" target="_blank" rel="noopener noreferrer" class="btn btn-hub-action-order">
+            <span data-i18n="hub_modal_btn_zalo">💬 Nhắn Tin Tư Vấn & Mua Hàng (Zalo)</span>
+          </a>
+        </div>
+      </div>
     </div>
   </div>
 
