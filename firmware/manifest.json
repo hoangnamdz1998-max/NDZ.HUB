@@ -9,9 +9,9 @@
       "price": "Miễn Phí (1 Lần)",
       "versions": [
         {
-          "version": "v2.5.9-vn",
+          "version": "v2.6.0-vn",
           "releaseDate": "19/11/2026",
-          "changelog": "Hiển thị pin mượt mà như smartphone (chống nhảy số ảo khi cắm/rút sạc), thêm thông tin phiên bản firmware vào Cài đặt nhanh",
+          "changelog": "Khắc phục lỗi Chatbot Xiaozhi không mở được và sửa phần phát nhạc Zing MP3 có tiếng rõ ràng, mượt mà.",
           "modes": {
             "clean": {
               "title": "Cài mới hoàn toàn (Clean Install)",
