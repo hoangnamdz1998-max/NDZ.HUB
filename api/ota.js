@@ -14,7 +14,7 @@ module.exports = (req, res) => {
       timezone_offset: 0
     },
     firmware: {
-      version: "2.5.8",
+      version: "2.5.9",
       url: "https://ndztech.vercel.app/firmware/xiaozhi.bin",
       force: 0
     }
