@@ -627,8 +627,7 @@ function onProductChange() {
     const opt = document.createElement("option");
     opt.value = v.version;
     const dateStr = v.releaseDate ? ` (${v.releaseDate})` : "";
-    const logStr = v.changelog ? ` - ${v.changelog}` : "";
-    opt.textContent = `${v.version}${dateStr}${logStr}`;
+    opt.textContent = `${v.version}${dateStr}`;
     if (idx === 0) opt.selected = true;
     selectVersion.appendChild(opt);
   });
